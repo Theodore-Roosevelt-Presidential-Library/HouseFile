@@ -1,0 +1,94 @@
+# HouseFile dashboard configuration
+# ---------------------------------------------------------------
+# Everything the collector needs to know about *your* Constant Contact
+# account lives here, so the code can be reused by another organization
+# without edits. Nothing in this file is personal data.
+
+site:
+  title: "TRPL Email House File"
+  subtitle: "Constant Contact health, updated daily"
+  timezone: "America/Denver"
+
+# Field-completeness rules.
+# The collector first looks at the contact's standard Constant Contact
+# street address. If that is empty it falls back to the custom fields
+# listed here (many sync tools write addresses into custom fields).
+address_fallbacks:
+  street: ["Acme - Billing Street"]
+  city:   ["Acme - Billing City"]
+  state:  ["Acme - Billing State"]
+  zip:    ["Acme - Billing Zip"]
+  country: ["Acme - Billing Country"]
+
+# Source systems that feed the house file.
+# A contact is attributed to a source when ANY of the match rules hit:
+#   list:          contact is a member of a list with this exact name
+#   source_system: the "Source System" custom field equals this value
+#   custom_field_prefix: contact has any custom field whose label starts with this
+# "last created" and "last updated" for each source are the newest
+# created_at / updated_at among matching contacts, which is what tells you
+# whether the nightly sync is still running.
+source_system_field: "Source System"
+sources:
+  - key: acme
+    label: "ACME"
+    match:
+      list: "Acme"
+      source_system: "Acme"
+      custom_field_prefix: "Acme - "
+    opt_in_field: "Acme Opt In"
+  - key: trailblazer
+    label: "Trailblazer"
+    match:
+      list: "Trailblazer"
+      source_system: "Trailblazer"
+      custom_field_prefix: "Trailblazer - "
+  - key: shopify
+    label: "Shopify"
+    match:
+      list: "Shopify"
+      source_system: "Shopify"
+      custom_field_prefix: "Shopify - "
+    opt_in_field: "Shopify Opt In"
+  - key: clover
+    label: "Clover"
+    match:
+      list: "Clover"
+      source_system: "Clover"
+      custom_field_prefix: "Clover - "
+    opt_in_field: "Clover Opt In"
+  - key: donorperfect
+    label: "DonorPerfect"
+    match:
+      list: "DonorPerfect"
+      source_system: "DonorPerfect"
+      custom_field_prefix: "DonorPerfect - "
+    opt_in_field: "Donor Perfect Opt In"
+
+# Lists offered on the public sign-up page (https://www.trlibrary.com/newsletter).
+# Matched on the text before " - " in the Constant Contact list name, so the
+# long public descriptions can change without breaking the dashboard.
+public_lists:
+  - "Library News & History"
+  - "Events & Programs"
+  - "From the Archive"
+  - "The Badlands"
+  - "Conservation & Sustainability"
+  - "Salt+Scoria"
+  - "The Shop"
+  - "Educators & Homeschool"
+  - "Press & Media"
+
+# Publish a table of EVERY list and its size? Internal list names can reveal
+# things about donors and segments, so this is off by default.
+include_all_lists: false
+
+geo:
+  # ZIP codes with fewer contacts than this are rolled into the state total
+  # and never plotted individually.
+  min_zip_count: 3
+  # Where ZIP centroids come from (public reference data, not contact data).
+  centroids_file: "docs/data/zip_centroids.json"
+
+# A contact is "stale" if it hasn't been updated in this many days.
+stale_days: 365
