@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 <title>House File Dashboard</title>
 <meta name="description" content="Aggregate health metrics for the email house file in Constant Contact. No personal data.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a78d6'/%3E%3Cpath d='M7 22h4V12H7zm7 0h4V8h-4zm7 0h4v-7h-4z' fill='%23fff'/%3E%3C/svg%3E">
@@ -183,6 +184,7 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
     <section><h2>How contacts were created</h2><p class="hint">"Contact" means the person signed up themselves; "Account" means staff or a sync added them.</p><div id="create-source"></div></section>
     <section><h2>List memberships per contact</h2><p class="hint">How many lists each contact sits on.</p><div id="list-hist"></div></section>
     <section><h2>Top email domains</h2><p class="hint">Share of the file by mailbox provider.</p><div id="domains"></div></section>
+    <section><h2>ZIP ↔ state consistency</h2><p class="hint">Cross-check between the two location fields. Mismatches compare the ZIP's state (GeoNames) with the state on file.</p><div id="quality"></div></section>
   </div>
 
   <div id="all-lists"></div>
@@ -322,6 +324,12 @@ async function main() {
   document.getElementById("create-source").innerHTML = kv(s.create_source, {Account: "Added by account / sync", Contact: "Self sign-up"});
   document.getElementById("list-hist").innerHTML = Object.entries(s.list_membership_hist).map(([k, v]) => `<div class="kv"><span>${k === "5" ? "5 or more lists" : k === "0" ? "No lists" : k === "1" ? "1 list" : k + " lists"}</span><span>${fmt(v)} <span style="color:var(--muted)">· ${pct1(100 * v / N)}</span></span></div>`).join("");
   document.getElementById("domains").innerHTML = (s.top_email_domains || []).map(d => `<div class="kv"><span>${d.domain}</span><span>${fmt(d.count)} <span style="color:var(--muted)">· ${pct1(d.pct)}</span></span></div>`).join("");
+  const q = s.geo.quality;
+  if (q) document.getElementById("quality").innerHTML = [
+    ["Both ZIP and state", q.zip_and_state], ["ZIP but no state", q.zip_without_state],
+    ["  of which state fillable from ZIP", q.state_inferable_from_zip], ["State but no ZIP", q.state_without_zip],
+    ["ZIP and state disagree", q.zip_state_mismatch], ["Neither", q.neither],
+  ].map(([k, v]) => `<div class="kv"><span style="${k.startsWith(" ") ? "padding-left:14px;color:var(--muted)" : ""}">${k.trim()}</span><span>${fmt(v)} <span style="color:var(--muted)">· ${pct1(100 * v / N)}</span></span></div>`).join("");
   if (s.all_lists) document.getElementById("all-lists").innerHTML = `<section><h2>All lists</h2><table><thead><tr><th>List</th><th class="num">Members</th></tr></thead><tbody>${s.all_lists.map(l => `<tr><td>${l.name}</td><td class="num">${fmt(l.count)}</td></tr>`).join("")}</tbody></table></section>`;
 
   // --- Geo ------------------------------------------------------------------------

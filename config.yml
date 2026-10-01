@@ -89,6 +89,10 @@ geo:
   min_zip_count: 3
   # Where ZIP centroids come from (public reference data, not contact data).
   centroids_file: "docs/data/zip_centroids.json"
+  # When a contact has a US ZIP but no state, derive the state from the ZIP
+  # for the map and the "State (incl. inferred)" completeness line.
+  # The plain "State" completeness figure always reflects what is on file.
+  infer_state_from_zip: true
 
 # A contact is "stale" if it hasn't been updated in this many days.
 stale_days: 365

@@ -200,8 +200,9 @@ def month_range(months) -> list:
 # Aggregator (checkpointable; holds counters only)
 # --------------------------------------------------------------------------- #
 class Agg:
-    def __init__(self, cfg, cf_labels, list_names):
+    def __init__(self, cfg, cf_labels, list_names, centroids=None):
         self.cfg = cfg
+        self.centroids = centroids or {}       # zip -> [lat, lng, state]; reference data
         self.cf_labels = cf_labels          # custom_field_id -> label
         self.list_names = list_names        # list_id -> name
         self.now = dt.datetime.now(dt.timezone.utc)
@@ -229,13 +230,13 @@ class Agg:
 
     # -- (de)serialization for checkpoints ---------------------------------
     def to_dict(self):
-        d = {k: v for k, v in self.__dict__.items() if k not in ("cfg", "cf_labels", "list_names", "now")}
+        d = {k: v for k, v in self.__dict__.items() if k not in ("cfg", "cf_labels", "list_names", "now", "centroids")}
         d["now"] = self.now.isoformat()
         return d
 
     @classmethod
-    def from_dict(cls, d, cfg, cf_labels, list_names):
-        a = cls(cfg, cf_labels, list_names)
+    def from_dict(cls, d, cfg, cf_labels, list_names, centroids=None):
+        a = cls(cfg, cf_labels, list_names, centroids)
         for k, v in d.items():
             if k == "now":
                 a.now = dt.datetime.fromisoformat(v)
@@ -297,6 +298,23 @@ class Agg:
             self.zips[zip_] += 1
         if state:
             self.c["state_complete"] += 1
+        # Cross-checks between ZIP and state
+        if zip_ and not state:
+            self.c["zip_without_state"] += 1
+            z = self.centroids.get(zip_)
+            if z and len(z) > 2 and z[2] in US_STATES:
+                self.c["state_inferable_from_zip"] += 1
+                if cfg.get("geo", {}).get("infer_state_from_zip", True):
+                    state = z[2]
+                    self.c["state_inferred"] += 1
+        elif state and not zip_:
+            self.c["state_without_zip"] += 1
+        elif zip_ and state:
+            self.c["zip_and_state"] += 1
+            z = self.centroids.get(zip_)
+            if z and len(z) > 2 and z[2] in US_STATES and state in US_STATES and z[2] != state:
+                self.c["zip_state_mismatch"] += 1
+        if state:
             self.states[state] += 1
         if street and city and state and zip_:
             self.c["full_address_complete"] += 1
@@ -384,7 +402,8 @@ def fetch_centroids(path: Path):
         for line in io.TextIOWrapper(fh, encoding="utf-8"):
             p = line.rstrip("\n").split("\t")
             if len(p) >= 11 and p[1].isdigit() and p[9] and p[10]:
-                out[p[1]] = [round(float(p[9]), 3), round(float(p[10]), 3)]
+                # [lat, lng, state code]
+                out[p[1]] = [round(float(p[9]), 3), round(float(p[10]), 3), p[4]]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, separators=(",", ":")))
     print(f"Wrote {len(out)} ZIP centroids to {path}")
@@ -406,6 +425,8 @@ def build_stats(agg: Agg, cfg, lists, counts, centroids):
         comp("full_address_complete", "Full address (street, city, state, ZIP)"),
         comp("zip_complete", "ZIP code"),
         comp("state_complete", "State"),
+        {"key": "state_or_zip", "label": "State (incl. inferred from ZIP)", "count": c["state_complete"] + c["state_inferred"],
+         "pct": pct(c["state_complete"] + c["state_inferred"], n), "hint": "state on file, or derived from a US ZIP code"},
         comp("has_phone", "Phone number"),
         comp("has_source_system", "Source System tagged"),
     ]
@@ -520,6 +541,15 @@ def build_stats(agg: Agg, cfg, lists, counts, centroids):
             "contacts_in_suppressed_zips": suppressed_contacts,
             "contacts_in_unmapped_zips": unmapped,
             "contacts_with_zip": c["zip_complete"],
+            "quality": {
+                "zip_and_state": c["zip_and_state"],
+                "zip_without_state": c["zip_without_state"],
+                "state_inferable_from_zip": c["state_inferable_from_zip"],
+                "state_inferred_for_map": c["state_inferred"],
+                "state_without_zip": c["state_without_zip"],
+                "zip_state_mismatch": c["zip_state_mismatch"],
+                "neither": n - c["zip_and_state"] - c["zip_without_state"] - c["state_without_zip"],
+            },
         },
         "growth": growth,
         "growth_by_source": growth_by_source,
@@ -580,12 +610,13 @@ def main():
         lists.extend(page.get("lists", []))
     list_names = {l["list_id"]: l["name"] for l in lists}
 
+    centroids = json.loads(centroids_path.read_text()) if centroids_path.exists() else {}
     ckpt = Path(args.checkpoint) if args.checkpoint else None
     if ckpt and ckpt.exists():
-        agg = Agg.from_dict(json.loads(ckpt.read_text()), cfg, cf_labels, list_names)
+        agg = Agg.from_dict(json.loads(ckpt.read_text()), cfg, cf_labels, list_names, centroids)
         print(f"Resuming from checkpoint: {agg.n} contacts already aggregated")
     else:
-        agg = Agg(cfg, cf_labels, list_names)
+        agg = Agg(cfg, cf_labels, list_names, centroids)
 
     t0 = time.time()
     first = agg.cursor or "/contacts"
@@ -606,7 +637,6 @@ def main():
                 return 2
     print(f"\nAggregated {agg.n} contacts (API reports {counts.get('total')})")
 
-    centroids = json.loads(centroids_path.read_text()) if centroids_path.exists() else {}
     stats = build_stats(agg, cfg, lists, counts, centroids)
 
     if args.dry_run:

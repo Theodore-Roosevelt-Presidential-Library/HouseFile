@@ -20,6 +20,11 @@ and GitHub Pages serves docs/ at housefile.labs.trlibrary.com.
 - `docs/index.html` — the static dashboard. Reads `data/stats.json`; no build step.
 - `docs/data/zip_centroids.json` — public ZIP-code centroids from [GeoNames](https://www.geonames.org/) (CC BY 4.0). Reference data, not contact data. Rebuild with `python collect.py --fetch-centroids`.
 - `authorize.py` — one-time OAuth helper that produces the refresh token.
+- `fill_state.py` — data-quality fixer: for contacts with a US ZIP but no state, derives the state from the ZIP table and writes it to the contact's standard Constant Contact address (never to custom fields, so a nightly sync can't undo it). Dry run by default; `--apply` writes, `--limit N` for a cautious batch, `--checkpoint` to resume. Run it by hand after reviewing the "ZIP ↔ state consistency" panel.
+
+### Search engines
+
+The page is intentionally not indexable: `docs/robots.txt` disallows everything and `index.html` carries `noindex, nofollow, noarchive, nosnippet`. Anyone with the URL can still open it.
 
 ### Source attribution
 
@@ -29,6 +34,7 @@ A contact is attributed to a source when **any** rule in its `match` block hits:
 
 - **Name** — first *and* last name present.
 - **ZIP / State / Full address** — standard Constant Contact street address first; if empty, the custom fields listed under `address_fallbacks` (ACME writes billing addresses there).
+- **State (incl. inferred from ZIP)** — adds contacts whose state is blank but whose US ZIP resolves to one; the map uses this. Controlled by `geo.infer_state_from_zip`.
 - **Full address** requires street, city, state and ZIP.
 
 ### Privacy design
