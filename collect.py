@@ -180,6 +180,22 @@ def list_base_name(name: str) -> str:
     return name.split(" - ", 1)[0].strip()
 
 
+def month_range(months) -> list:
+    """Continuous list of YYYY-MM strings from the earliest to the latest given."""
+    months = sorted(m for m in months if m)
+    if not months:
+        return []
+    y, mo = map(int, months[0].split("-"))
+    y2, mo2 = map(int, months[-1].split("-"))
+    out = []
+    while (y, mo) <= (y2, mo2):
+        out.append(f"{y:04d}-{mo:02d}")
+        mo += 1
+        if mo > 12:
+            y, mo = y + 1, 1
+    return out
+
+
 # --------------------------------------------------------------------------- #
 # Aggregator (checkpointable; holds counters only)
 # --------------------------------------------------------------------------- #
@@ -208,6 +224,7 @@ class Agg:
                                "opt_in_true": 0, "opt_in_false": 0}
                     for s in cfg["sources"]}
         self.list_members = collections.Counter()   # list_id -> members seen in scan
+        self.src_created_month = collections.Counter()  # "source_key|YYYY-MM" -> contacts created
         self.cursor = None
 
     # -- (de)serialization for checkpoints ---------------------------------
@@ -328,6 +345,8 @@ class Agg:
             st["total"] += 1
             if created:
                 iso = created.isoformat()
+                if hits == 1:   # primary source = first match in config order (keeps the growth chart additive)
+                    self.src_created_month[f"{s['key']}|{created.strftime('%Y-%m')}"] += 1
                 st["last_created"] = max(st["last_created"] or iso, iso)
                 st["first_created"] = min(st["first_created"] or iso, iso)
                 age = (self.now - created).days
@@ -348,6 +367,8 @@ class Agg:
         self.source_count_hist[str(min(hits, 3))] += 1
         if hits == 0:
             self.c["unattributed"] += 1
+            if created:
+                self.src_created_month[f"_none|{created.strftime('%Y-%m')}"] += 1
 
 
 # --------------------------------------------------------------------------- #
@@ -440,10 +461,26 @@ def build_stats(agg: Agg, cfg, lists, counts, centroids):
     states = {k: v for k, v in agg.states.items() if k in US_STATES}
     other_states = sum(v for k, v in agg.states.items() if k not in US_STATES)
 
-    months = sorted(set(agg.created_month) | set(agg.updated_month))[-24:]
+    months = month_range(set(agg.created_month) | set(agg.updated_month))[-24:]
     growth = [{"month": m, "created": agg.created_month.get(m, 0), "updated": agg.updated_month.get(m, 0)} for m in months]
 
     top_domains = [{"domain": d, "count": k, "pct": pct(k, n)} for d, k in agg.domains.most_common(10)]
+
+    # Growth by source: contacts created per month, per source, plus running totals.
+    all_months = month_range({k.split("|", 1)[1] for k in agg.src_created_month})
+    series = []
+    for s in cfg["sources"] + [{"key": "_none", "label": "No source"}]:
+        monthly = [agg.src_created_month.get(f"{s['key']}|{m}", 0) for m in all_months]
+        if sum(monthly) == 0 and s["key"] != "_none":
+            series.append({"key": s["key"], "label": s["label"], "monthly": [0] * len(all_months), "cumulative": [0] * len(all_months)})
+            continue
+        run, cum = 0, []
+        for v in monthly:
+            run += v
+            cum.append(run)
+        series.append({"key": s["key"], "label": s["label"], "monthly": monthly, "cumulative": cum})
+    growth_by_source = {"months": all_months, "series": series,
+                        "note": "Each contact is counted once, under the first matching source in config.yml order; deleted contacts are not visible."}
 
     return {
         "generated_at": gen.isoformat(),
@@ -485,6 +522,7 @@ def build_stats(agg: Agg, cfg, lists, counts, centroids):
             "contacts_with_zip": c["zip_complete"],
         },
         "growth": growth,
+        "growth_by_source": growth_by_source,
         "top_email_domains": top_domains,
     }
 

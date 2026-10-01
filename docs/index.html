@@ -14,7 +14,7 @@
   color-scheme: light;
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,.10);
-  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s-none: #a3a29b;
   --seq-100: #cde2fb; --seq-250: #86b6ef; --seq-400: #3987e5; --seq-550: #1c5cab; --seq-700: #0d366b;
   --good: #0ca30c; --good-text: #006300; --warn: #fab219; --serious: #ec835a; --crit: #d03b3b;
   --track: #e6eef9;
@@ -24,7 +24,7 @@
     color-scheme: dark;
     --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,.10);
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s-none: #6b6a65;
     --seq-100: #184f95; --seq-250: #256abf; --seq-400: #3987e5; --seq-550: #86b6ef; --seq-700: #cde2fb;
     --good-text: #0ca30c; --track: #22314a;
   }
@@ -79,6 +79,8 @@ td.num,th.num{text-align:right}
 .toolbar button{font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--ink-2);cursor:pointer}
 .toolbar button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:6px}
+.legend .key{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2);font-size:13px}
+.legend .key i{width:10px;height:10px;border-radius:3px;display:inline-block}
 .legend .ramp{height:8px;width:140px;border-radius:4px;background:linear-gradient(90deg,var(--seq-100),var(--seq-400),var(--seq-700))}
 .tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .08s;z-index:10;white-space:nowrap}
 .state-list{font-size:14px}
@@ -150,6 +152,18 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
         <div id="geo-foot" class="hint" style="margin-top:12px"></div>
       </div>
     </div>
+  </section>
+
+  <section class="chart">
+    <h2>House file growth by source</h2>
+    <p class="hint" id="gbs-hint">New contacts each month, by the system that brought them in, last 24 months.</p>
+    <div class="toolbar" role="group" aria-label="Growth view">
+      <button id="gbs-monthly" aria-pressed="true">Added per month</button>
+      <button id="gbs-cum" aria-pressed="false">Cumulative</button>
+    </div>
+    <div id="gbs-legend" class="legend" style="gap:14px;flex-wrap:wrap;margin:0 0 6px"></div>
+    <div id="gbs"></div>
+    <details><summary>Table view</summary><div style="overflow-x:auto;margin-top:8px"><table id="gbs-table"></table></div></details>
   </section>
 
   <div class="grid two">
@@ -292,6 +306,9 @@ async function main() {
       <td class="num">${p.found ? fmt(p.count) : "—"}</td><td class="num" style="color:var(--ink-2)">${p.found ? pct1(p.pct) : "—"}</td>
     </tr>`).join("")}</tbody>`;
 
+  // --- Growth by source --------------------------------------------------------------
+  if (s.growth_by_source) growthBySource(s.growth_by_source, colors);
+
   // --- Growth (created per month) ------------------------------------------------
   barChart(document.getElementById("growth"), s.growth.map(g => ({x: g.month, y: g.created})), d => d3.timeFormat("%b ’%y")(d3.timeParse("%Y-%m")(d)));
 
@@ -352,6 +369,75 @@ function lineChart(el, data) {
   svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).attr("fill", "transparent")
     .on("mousemove", e => { const [mx] = d3.pointer(e); const i = d3.bisector(d => d.x).center(data, x.invert(mx)); const d = data[i]; hover.style("display", null).attr("transform", `translate(${x(d.x)},0)`); hover.select("circle").attr("cy", y(d.y)); showTip(e, `<b>${d3.timeFormat("%b %-d, %Y")(d.x)}</b> · ${fmt(d.y)} contacts`); })
     .on("mouseleave", () => { hover.style("display", "none"); hideTip(); });
+}
+
+function growthBySource(gbs, colors) {
+  const months = gbs.months.slice(-24), off = gbs.months.length - months.length;
+  const series = gbs.series
+    .map((sr, i) => ({...sr, color: sr.key === "_none" ? cssVar("--s-none") : cssVar(colors[i % colors.length]),
+                      monthly: sr.monthly.slice(off), cumulative: sr.cumulative.slice(off)}))
+    .filter(sr => d3.sum(sr.monthly) > 0 || sr.cumulative[sr.cumulative.length - 1] > 0);
+  const fmtM = d => d3.timeFormat("%b ’%y")(d3.timeParse("%Y-%m")(d));
+  document.getElementById("gbs-legend").innerHTML = series.map(sr => `<span class="key"><i style="background:${sr.color}"></i>${sr.label}</span>`).join("");
+  document.getElementById("gbs-hint").textContent = gbs.note;
+  document.getElementById("gbs-table").innerHTML = `<thead><tr><th>Month</th>${series.map(sr => `<th class="num">${sr.label}</th>`).join("")}<th class="num">Total</th></tr></thead><tbody>${months.map((m, i) => `<tr><td>${fmtM(m)}</td>${series.map(sr => `<td class="num">${fmt(sr.monthly[i])}</td>`).join("")}<td class="num"><b>${fmt(d3.sum(series, sr => sr.monthly[i]))}</b></td></tr>`).join("")}</tbody>`;
+
+  const el = document.getElementById("gbs");
+  const W = 1120, H = 300, m = {t: 14, r: 150, b: 34, l: 52};
+  const render = cumulative => {
+    const svg = d3.select(el).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", "House file growth by source");
+    const yMax = cumulative ? d3.max(series, sr => d3.max(sr.cumulative)) : d3.max(months.map((_, i) => d3.sum(series, sr => sr.monthly[i])));
+    const y = d3.scaleLinear([0, yMax || 1], [H - m.b, m.t]).nice();
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format("~s")).tickSize(-(W - m.l - m.r))).call(a => a.select(".domain").remove());
+    const every = Math.ceil(months.length / 12);
+    if (!cumulative) {
+      const x = d3.scaleBand(months, [m.l, W - m.r]).paddingInner(0.3);
+      svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(months.filter((_, i) => i % every === 0)).tickFormat(fmtM).tickSize(0)).call(a => a.select(".domain").attr("stroke", cssVar("--axis")));
+      const bw = Math.min(24, x.bandwidth()), gap = 2;
+      months.forEach((mo, i) => {
+        let base = 0;
+        const stack = series.map(sr => { const v = sr.monthly[i]; const seg = {sr, v, y0: base, y1: base + v}; base += v; return seg; }).filter(d => d.v > 0);
+        const g = svg.append("g").attr("transform", `translate(${x(mo) + (x.bandwidth() - bw) / 2},0)`);
+        stack.forEach((d, j) => {
+          const top = y(d.y1), bot = y(d.y0) - (j > 0 ? gap : 0), h = Math.max(0, bot - top);
+          const isTop = j === stack.length - 1, r = isTop ? Math.min(4, h / 2, bw / 2) : 0;
+          g.append("path").attr("fill", d.sr.color)
+            .attr("d", `M0,${bot}V${top + r}a${r},${r} 0 0 1 ${r},-${r}h${bw - 2 * r}a${r},${r} 0 0 1 ${r},${r}V${bot}Z`)
+            .on("mousemove", e => showTip(e, `<b>${fmtM(mo)}</b> · ${d.sr.label}: ${fmt(d.v)} of ${fmt(base)}`)).on("mouseleave", hideTip);
+        });
+        if (i === months.length - 1 && base > 0) svg.append("text").attr("x", x(mo) + x.bandwidth() / 2).attr("y", y(base) - 6).attr("text-anchor", "middle").attr("fill", cssVar("--ink-2")).attr("font-size", 11).text(fmt(base));
+      });
+    } else {
+      const x = d3.scalePoint(months, [m.l, W - m.r]);
+      svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(months.filter((_, i) => i % every === 0)).tickFormat(fmtM).tickSize(0)).call(a => a.select(".domain").attr("stroke", cssVar("--axis")));
+      const line = d3.line().x((d, i) => x(months[i])).y(d => y(d)).curve(d3.curveMonotoneX);
+      const ends = [];
+      series.forEach(sr => {
+        svg.append("path").attr("d", line(sr.cumulative)).attr("fill", "none").attr("stroke", sr.color).attr("stroke-width", 2).attr("stroke-linejoin", "round").attr("stroke-linecap", "round");
+        const last = sr.cumulative[sr.cumulative.length - 1];
+        svg.append("circle").attr("cx", x(months[months.length - 1])).attr("cy", y(last)).attr("r", 4).attr("fill", sr.color).attr("stroke", cssVar("--surface")).attr("stroke-width", 2);
+        ends.push({label: `${sr.label} ${compact(last)}`, y: y(last), color: sr.color});
+      });
+      // end labels with collision nudging + leader lines
+      ends.sort((a, b) => a.y - b.y);
+      let prev = m.t - 6; ends.forEach(e => { e.ly = Math.max(e.y, prev + 13); prev = e.ly; });
+      const over = (ends[ends.length - 1]?.ly || 0) - (H - m.b); if (over > 0) ends.forEach(e => e.ly -= over);
+      const xe = x(months[months.length - 1]);
+      ends.forEach(e => {
+        if (Math.abs(e.ly - e.y) > 2) svg.append("path").attr("d", `M${xe + 6},${e.y}L${xe + 14},${e.ly}`).attr("stroke", cssVar("--axis")).attr("fill", "none");
+        svg.append("text").attr("x", xe + 18).attr("y", e.ly + 4).attr("fill", cssVar("--ink-2")).attr("font-size", 11).text(e.label);
+      });
+      const hover = svg.append("g").style("display", "none");
+      hover.append("line").attr("y1", m.t).attr("y2", H - m.b).attr("stroke", cssVar("--axis"));
+      svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).attr("fill", "transparent")
+        .on("mousemove", e => { const [mx] = d3.pointer(e); const i = Math.round((mx - m.l) / x.step()); const mo = months[Math.max(0, Math.min(months.length - 1, i))]; hover.style("display", null).attr("transform", `translate(${x(mo)},0)`); showTip(e, `<b>${fmtM(mo)}</b><br>${series.map(sr => `${sr.label}: ${fmt(sr.cumulative[months.indexOf(mo)])}`).join("<br>")}`); })
+        .on("mouseleave", () => { hover.style("display", "none"); hideTip(); });
+    }
+  };
+  const bm = document.getElementById("gbs-monthly"), bc = document.getElementById("gbs-cum");
+  const set = cum => { render(cum); bm.setAttribute("aria-pressed", String(!cum)); bc.setAttribute("aria-pressed", String(cum)); };
+  bm.onclick = () => set(false); bc.onclick = () => set(true);
+  set(false);
 }
 
 async function drawMap(g) {
