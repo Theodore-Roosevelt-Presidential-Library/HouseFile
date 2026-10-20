@@ -1,0 +1,175 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T-3 Know Before You Go",
+  "subject": "Three days to the Badlands: what to know before you go",
+  "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-3-know-before-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Three Days to the Badlands",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>In three days, on <b>[[custom.acme_-_visit_date_next]]</b>, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Welcome back, member.</b> Use the member line at the entrance, and remember 25% off extra admission tickets and 10% off in the Library Shop and at Salt+Scoria.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "m5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Thinking about membership?</b> Ask at the Welcome Desk on the day: the Library can apply what you paid for these tickets toward a membership and keep your reservation as it is.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "m5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Your Entry Window",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Leave a few minutes for the walk from the lot and a quick security check.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "Only service animals go inside; leashed dogs are welcome on the grounds. Never leave a pet in a parked car.",
+        "columns": [
+          "Bring",
+          "Leave in the car"
+        ],
+        "rows": [
+          [
+            "Comfortable shoes and a layer for the wind",
+            "Bags larger than 12 × 12 × 6 inches (free lockers hold a day bag)"
+          ],
+          [
+            "A water bottle with a sealed lid; refill stations inside",
+            "Pocket knives (staff will hold one for you); no weapons on site"
+          ],
+          [
+            "A card or phone: the campus is cashless",
+            "Double-wide strollers (single strollers are welcome)"
+          ]
+        ],
+        "rowLabels": false,
+        "highlight": null,
+        "style": "standard"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Parking",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Parking is free. Take the first roundabout into the main lot under the solar canopies. Driving an RV or towing? Use the Medora Musical lot instead. Accessible spaces and a drop-off sit right by the entrance, and EV chargers are first come, first served.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Make a Day of It",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many visitors pair the Library with the national park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "image",
+      "props": {
+        "src": "https://i.ytimg.com/vi/qrwdZmqFO5A/maxresdefault.jpg",
+        "alt": "Your Journey Starts Here: The Trailblazer",
+        "href": "https://www.trlibrary.com/video/view/qrwdZmqFO5A?pid=PLafKMriNZlgo",
+        "caption": "Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit."
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Check the <a href=\"https://www.trlibrary.com/visit/hours\">hours</a>, the <a href=\"https://trlibrary.com/weather/\">Medora weather</a> and, in winter, <a href=\"https://travel.dot.nd.gov/\">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Everything to Know",
+        "href": "https://www.trlibrary.com/visit/faq"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Visit Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you have tickets to the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T14:26:02+00:00",
+ "rebuilt_at": "2026-10-20T14:58:54+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -17,6 +17,8 @@
   "custom.acme_-_membership_level": "Family",
   "custom.acme_-_membership_expiration_date": "December 31",
   "custom.acme_-_ticket_type_last": "Member Adult",
+  "custom.acme_-_visit_date_next": "Saturday, June 12, 2027",
+  "custom.acme_-_is_active_member": "active",
   "account.OrganizationName": "Theodore Roosevelt Presidential Library Foundation",
   "account.AddressLine1": "401 East Main Avenue, Suite 201",
   "account.City": "Bismarck",
@@ -29,6 +31,67 @@
    "label": "Pre-visit",
    "description": "Ticket holders before they arrive. Triggered off the ACME visit date.",
    "paths": [
+    {
+     "name": "VISIT: T-30 Plan Ahead",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": -30,
+      "label": "30 days before the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), Library hours by season, winter road advice, two short gallery and boardwalk videos, and the membership offer or a member thank-you.",
+     "emails": [
+      {
+       "slug": "visit-t-30-plan-ahead",
+       "task": "VISIT: T-30 Plan Ahead",
+       "subject": "One month to Medora: your planning checklist",
+       "preheader": "Lodging, seasonal hours and what to book before you go.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-30-plan-ahead.html",
+       "proposed": true,
+       "notes": [
+        "Hours by season are copied from trlibrary.com/visit (Oct 2026). Update this email whenever the hours change."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "VISIT: T-3 Know Before You Go",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": -3,
+      "label": "3 days before the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Proposed replacement for the live T-3 email: the entry window, a bring / leave-in-the-car table, parking, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk.",
+     "emails": [
+      {
+       "slug": "visit-t-3-know-before",
+       "task": "VISIT: T-3 Know Before You Go",
+       "subject": "Three days to the Badlands: what to know before you go",
+       "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-3-know-before.html",
+       "proposed": true,
+       "notes": [
+        "Would replace VISIT: T-3 Pre-Visit Excitement. Keep that one running until this is approved and built.",
+        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
+       ],
+       "stats": {}
+      }
+     ]
+    },
     {
      "name": "VISIT: T-3 Pre-Visit Excitement",
      "status": "active",
@@ -88,6 +151,41 @@
         "opens": 17336,
         "clicks": 12343
        }
+      }
+     ]
+    },
+    {
+     "name": "VISIT: T+0 Welcome",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Last Purchase Date",
+      "offset_days": 0,
+      "label": "On the Acme - Last Purchase Date"
+     },
+     "filters": [
+      "Acme - Visit Date (Next) is at least 4 days after the purchase (if Constant Contact can filter on it; otherwise everyone)"
+     ],
+     "action": "Sent the day tickets are bought: the 3\u00bd-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept.",
+     "emails": [
+      {
+       "slug": "visit-t0-welcome",
+       "task": "VISIT: T+0 Welcome",
+       "subject": "You're going to Medora. Here's how to plan it.",
+       "preheader": "Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]].",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t0-welcome.html",
+       "proposed": true,
+       "notes": [
+        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t0-welcome.buildsheet.txt.",
+        "Confirm with the membership team how a ticket refund is applied to a membership and that the reservation is kept; the email asks people to write to membership@trlibrary.com with their order number or ask at the Welcome Desk.",
+        "Confirm the merge-tag spelling for Acme - Visit Date (Next) and how it prints (the preview assumes a long date).",
+        "Check whether Constant Contact can trigger on Acme - Last Purchase Date the same day, and whether a path can skip visits in the next 3 days."
+       ],
+       "stats": {}
       }
      ]
     }

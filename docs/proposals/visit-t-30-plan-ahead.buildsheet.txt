@@ -1,0 +1,62 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T-30 Plan Ahead
+Subject:    One month to Medora: your planning checklist
+Preheader:  Lodging, seasonal hours and what to book before you go.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · One Month to Medora
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Your visit to the Theodore Roosevelt Pr
+      everyone
+  4. Text · Thank you for planning another visit as a member. Bringing friends? Your
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group m3]
+  5. Heading · Your Checklist
+      everyone
+  6. Table · To do / Why now / 
+      everyone
+  7. Heading · Library Hours by Season
+      everyone
+  8. Table · Season / Dates / Hours
+      everyone
+  9. Text · Coming between late fall and spring? Snow and high winds can close I-94 
+      everyone
+ 10. Divider
+      everyone
+ 11. Heading · A Preview of What Is Waiting
+      everyone
+ 12. Two columns · The River of Doubt
+      everyone
+ 13. Text · Know someone who would love it here? As a member you take 10% off gift m
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group m4]
+ 14. Divider
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 15. Heading · Make This Visit a Membership
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 16. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 17. Table · Level / Free admission for / A year
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 18. Text · To switch, write to membership@trlibrary.com with your order number, [[c
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 19. Button · See Membership Levels
+      DEFAULT ROW (group m4): contacts who match none of the group's other rows
+ 20. Divider
+      everyone
+ 21. Text · Questions? Write to hello@trlibrary.com. The Welcome Team is glad to hel
+      everyone
+ 22. Button · Plan Your Visit
+      everyone
+ 23. Footer
+      everyone
+
+GROUPS
+  m3: Acme - Is Active Member — rows 4; values active, new; no default row (contacts matching nothing see none of these rows)
+  m4: Acme - Is Active Member — rows 13, 14, 15, 16, 17, 18, 19; values active, new; has a default row

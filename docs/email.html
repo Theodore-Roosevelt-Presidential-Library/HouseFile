@@ -211,7 +211,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const tags = allTags.filter(t => t !== trigTag);
   const longDate = d => d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
   const syncTrigger = () => { if (trigTag) sample[trigTag.key] = longDate(visit); };
-  const whenWord = /expir/i.test(path.trigger.field || "") ? "membership expires" : /visit/i.test(path.trigger.field || "") ? "visit is" : (path.trigger.field || "trigger date") + " is";
+  const whenWord = /expir/i.test(path.trigger.field || "") ? "membership expires" : /purchase/i.test(path.trigger.field || "") ? "tickets are bought" : /visit/i.test(path.trigger.field || "") ? "visit is" : (path.trigger.field || "trigger date") + " is";
   syncTrigger();
 
 

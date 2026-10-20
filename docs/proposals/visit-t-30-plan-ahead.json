@@ -1,0 +1,350 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T-30 Plan Ahead",
+  "subject": "One month to Medora: your planning checklist",
+  "preheader": "Lodging, seasonal hours and what to book before you go.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-30-plan-ahead-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "One Month to Medora",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away, on <b>[[custom.acme_-_visit_date_next]]</b>. This is the right moment to lock in the parts of a Badlands trip that fill up.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Thank you for planning another visit as a member.</b> Bringing friends? Your membership takes 25% off their admission tickets.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "m3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Your Checklist",
+        "align": "center"
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "",
+        "columns": [
+          "To do",
+          "Why now",
+          ""
+        ],
+        "rows": [
+          [
+            "Book a place to stay",
+            "Medora is a small town. When it is full, Dickinson is 35 minutes east on I-94.",
+            "<a href=\"https://www.trlibrary.com/visit/lodging/availability\">Check availability</a>"
+          ],
+          [
+            "Pick your evenings",
+            "The Medora Musical and many attractions run on a summer season, roughly Memorial Day to Labor Day.",
+            "<a href=\"https://www.trlibrary.com/visit/activities\">Things to do</a>"
+          ],
+          [
+            "Map the drive",
+            "Mobile coverage is limited in parts of the Badlands. Download your route before you go.",
+            "<a href=\"https://www.trlibrary.com/visit/directions\">Directions</a>"
+          ],
+          [
+            "Plan a park day",
+            "The South Unit is minutes from the Library; the quieter North Unit is about 70 minutes north.",
+            "<a href=\"https://www.trlibrary.com/visit/national-park\">The park</a>"
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Library Hours by Season",
+        "align": "center"
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "Closed Thanksgiving, Christmas Day and New Year's Day. Salt+Scoria is open whenever the Library is, and no admission ticket is needed to dine.",
+        "columns": [
+          "Season",
+          "Dates",
+          "Hours"
+        ],
+        "rows": [
+          [
+            "Spring",
+            "March 2 – May 31",
+            "Tue–Fri 10am–4pm<br>Sat–Sun 10am–5pm"
+          ],
+          [
+            "Summer",
+            "June 1 – Sept. 13",
+            "Daily 9am–6pm"
+          ],
+          [
+            "Fall",
+            "Sept. 14 – Nov. 30",
+            "Tue–Fri 9am–4pm<br>Sat–Sun 9am–6pm"
+          ],
+          [
+            "Winter",
+            "Dec. 1 – March 1",
+            "Wed–Sun 10am–4pm"
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Coming between late fall and spring?</b> Snow and high winds can close I-94 in western North Dakota. Check road conditions before you set out and give yourself extra time.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "A Preview of What Is Waiting",
+        "align": "center"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "https://i.ytimg.com/vi/yEEsRy7sdng/maxresdefault.jpg",
+            "alt": "Step into the Amazon: Theodore Roosevelt's River of Doubt",
+            "heading": "The River of Doubt",
+            "text": "Step into Roosevelt's Amazon expedition, one of the galleries you will walk through.",
+            "label": "Watch (0:53)",
+            "href": "https://www.trlibrary.com/video/view/yEEsRy7sdng?pid=PLafKMriNZlgo"
+          },
+          {
+            "src": "https://i.ytimg.com/vi/zRPJAdE-IBI/maxresdefault.jpg",
+            "alt": "The TR Library Boardwalk through the Badlands",
+            "heading": "The Boardwalk",
+            "text": "A one-mile loop through restored prairie, with Badlands views the whole way.",
+            "label": "Watch (1:34)",
+            "href": "https://www.trlibrary.com/video/view/zRPJAdE-IBI?pid=PLafKMriNZlgo"
+          }
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "align": "center"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "divider",
+      "props": {},
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Make This Visit a Membership",
+        "align": "center"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Admission is $26 for adults and $16 for youth. A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip. <b>Already have tickets? You don't lose them.</b> The Library will refund your tickets and put what you paid toward a membership, and your reservation stays exactly as it is.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "Every level adds the member line, 25% off extra admission tickets, and 10% off in the Library Shop and at Salt+Scoria. Save 10% more with auto-renew or two years.",
+        "columns": [
+          "Level",
+          "Free admission for",
+          "A year"
+        ],
+        "rows": [
+          [
+            "Individual",
+            "You",
+            "$50"
+          ],
+          [
+            "Dual",
+            "You and a guest",
+            "$95"
+          ],
+          [
+            "Family",
+            "You and three guests, plus family programming",
+            "$175"
+          ],
+          [
+            "Contributing",
+            "You and five guests, plus a commemorative gift",
+            "$250"
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "To switch, write to <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> with your order number, <b>[[custom.acme_-_recent_order_id]]</b>, or ask at the Welcome Desk when you arrive.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "See Membership Levels",
+        "href": "https://www.trlibrary.com/membership"
+      },
+      "cond": {
+        "group": "m4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Questions? Write to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>. The Welcome Team is glad to help you plan.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Plan Your Visit",
+        "href": "https://www.trlibrary.com/visit"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Visit Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you have tickets to the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}

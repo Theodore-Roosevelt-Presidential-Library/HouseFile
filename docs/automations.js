@@ -198,6 +198,7 @@
   function anchorWord(field) {
     if (/visit/i.test(field || "")) return "Visit";
     if (/expir/i.test(field || "")) return "Expires";
+    if (/purchase/i.test(field || "")) return "Purchase";
     return "T";
   }
 
