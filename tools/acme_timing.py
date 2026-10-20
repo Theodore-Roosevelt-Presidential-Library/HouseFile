@@ -77,8 +77,9 @@ def main():
                         t = when(s["created_time"])
                         hours[t.hour] += 1
                         by_day[t.date().isoformat()][t.hour] += 1
-            except Exception as e:  # report shape only; never the response body
-                print(f"  ! {name}: sends report unavailable ({type(e).__name__})")
+            except Exception as e:  # status only; never the response body
+                code = getattr(getattr(e, "response", None), "status_code", "?")
+                print(f"  ! {name}: sends report unavailable (HTTP {code}, role {act.get('role')})")
         show(f"{name} sends", hours, by_day)
 
 
