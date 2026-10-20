@@ -149,6 +149,9 @@ automations:
     custom.acme_-_membership_expiration_date: "December 31"   # the preview page sets this from the trigger date
     custom.acme_-_ticket_type_last: "Member Adult"
     custom.acme_-_visit_date_next: "Saturday, June 12, 2027"  # the preview page sets this from the trigger date when the email is timed off it
+    custom.acme_-_visit_date_text: "Saturday, June 12, 2027"  # text copy written daily by sync_date_text.py; the preview sets it from the trigger date
+    custom.acme_-_last_purchase_date_text: "October 18, 2026"
+    custom.acme_-_membership_expiration_text: "December 31, 2026"
     custom.acme_-_is_active_member: "active"                  # ACME writes active / new / dropped            # Acme - Ticket Type (Last); drives the "visited as a member" rows
     # Account tags (the Library's own details, filled by Constant Contact at send time)
     account.OrganizationName: "Theodore Roosevelt Presidential Library Foundation"

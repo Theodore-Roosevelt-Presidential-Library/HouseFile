@@ -20,8 +20,10 @@ const TEASER = `${IMG}video-W9sq8PuGQVo-teaser.gif`;
 const HELLO = '<a href="mailto:hello@trlibrary.com">hello@trlibrary.com</a>';
 const MEMBERSHIP_MAIL = '<a href="mailto:membership@trlibrary.com">membership@trlibrary.com</a>';
 const GREET = 'Hello [[FIRSTNAME OR "Friend"]],';
-// Constant Contact only prints TEXT custom fields; date fields (Visit Date (Next), Last Purchase
-// Date, Membership Expiration Date) can trigger paths but can't appear in an email.
+// Constant Contact only prints TEXT custom fields; date fields can trigger paths but can't
+// appear in an email. sync_date_text.py writes a text copy of each date daily, which can.
+// The fallback reads naturally if a contact's copy is missing.
+const VISIT_DAY = '<b>[[custom.acme_-_visit_date_text OR "your visit date"]]</b>';
 const ORDER = '[[custom.acme_-_recent_order_id]]';
 const NOTE = 'You are receiving this email because you have tickets to the Theodore Roosevelt Presidential Library.';
 
@@ -86,7 +88,7 @@ const emails = [
     blocks: [
       header('visit-t1-welcome'),
       h("You're Coming to the Badlands"),
-      p(`${GREET}<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked, and your date and entry time are on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.`),
+      p(`${GREET}<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked for ${VISIT_DAY}, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.`),
       ...memberOnly(MEMBER_THANKS),
       img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'A 3½-minute look at the galleries, the building, Medora and the national park'),
       div,
@@ -129,7 +131,7 @@ const emails = [
     blocks: [
       header('visit-t-30-plan-ahead'),
       h('One Month to Medora'),
-      p(`${GREET}<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away. This is the right moment to lock in the parts of a Badlands trip that fill up.`),
+      p(`${GREET}<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away, on ${VISIT_DAY}. This is the right moment to lock in the parts of a Badlands trip that fill up.`),
       ...memberOnly(p('<b>Thank you for planning another visit as a member.</b> Bringing friends? Your membership takes 25% off their admission tickets.')),
       h('Your Checklist'),
       table({
@@ -143,7 +145,7 @@ const emails = [
         ],
       }),
       h('Your Visit Day'),
-      p(`Your date and entry time are on your ticket confirmation. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.`),
+      p(`You are coming on ${VISIT_DAY}, and your entry time is on your ticket confirmation. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.`),
       btn('Hours for Your Visit', `${SITE}/visit/hours`),
       p('<b>Coming between late fall and spring?</b> Snow and high winds can close I-94 in western North Dakota. Check road conditions before you set out and give yourself extra time.'),
       div,
@@ -170,7 +172,7 @@ const emails = [
     blocks: [
       header('visit-t-3-know-before'),
       h('Three Days to the Badlands'),
-      p(`${GREET}<br><br>In three days, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.`),
+      p(`${GREET}<br><br>In three days, on ${VISIT_DAY}, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.`),
       ...memberRows(
         [p('<b>Welcome back, member.</b> Use the member line at the entrance, and remember 25% off extra admission tickets and 10% off in the Library Shop and at Salt+Scoria.')],
         [p(`<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email ${MEMBERSHIP_MAIL} before you come.`)]),

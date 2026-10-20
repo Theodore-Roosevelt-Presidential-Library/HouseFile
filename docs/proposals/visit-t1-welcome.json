@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked, and your date and entry time are on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked for <b>[[custom.acme_-_visit_date_text OR \"your visit date\"]]</b>, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.",
         "align": "left"
       }
     },

@@ -209,10 +209,16 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   // The trigger date field, when the email also prints it, is driven by the date picker.
   const trigKey = path.trigger.field ? "custom." + path.trigger.field.toLowerCase().replace(/\s+/g, "_") : null;
   const norm = k => String(k).toLowerCase().replace(/[^a-z0-9]/g, "");
-  const trigTag = trigKey ? allTags.find(t => norm(t.key) === norm(trigKey)) : null;
-  const tags = allTags.filter(t => t !== trigTag);
+  // ...and so are the text copies of date fields (sync_date_text.py writes them daily),
+  // e.g. Acme - Visit Date (Next) -> Acme - Visit Date (Text).
+  const TWINS = { acmevisitdatenext: "acmevisitdatetext", acmemembershipexpirationdate: "acmemembershipexpirationtext", acmelastpurchasedate: "acmelastpurchasedatetext" };
+  const trigNorms = trigKey ? [norm(trigKey), TWINS[norm(trigKey).replace(/^custom/, "")] && "custom" + TWINS[norm(trigKey).replace(/^custom/, "")]].filter(Boolean) : [];
+  const trigTags = allTags.filter(t => trigNorms.includes(norm(t.key)));
+  const trigTag = trigTags[0] || null;
+  const tags = allTags.filter(t => !trigTags.includes(t));
   const longDate = d => d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
-  const syncTrigger = () => { if (trigTag) sample[trigTag.key] = longDate(visit); };
+  const dayDate = d => d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const syncTrigger = () => trigTags.forEach(t => { sample[t.key] = /visit/i.test(t.key) ? dayDate(visit) : longDate(visit); });
   const whenWord = /expir/i.test(path.trigger.field || "") ? "membership expires" : /purchase/i.test(path.trigger.field || "") ? "tickets are bought" : /visit/i.test(path.trigger.field || "") ? "visit is" : (path.trigger.field || "trigger date") + " is";
   syncTrigger();
 
