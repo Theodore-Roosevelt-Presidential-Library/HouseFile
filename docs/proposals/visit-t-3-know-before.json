@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>In three days, on <b>[[custom.acme_-_visit_date_next]]</b>, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>In three days, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.",
         "align": "left"
       }
     },

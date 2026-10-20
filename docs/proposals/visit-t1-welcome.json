@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "title": "VISIT: T+1 Welcome",
   "subject": "You're going to Medora. Here's how to plan it.",
-  "preheader": "Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]].",
+  "preheader": "Where to stay, how to get here and what to see before your visit.",
   "fromName": "Theodore Roosevelt Presidential Library",
   "blocks": [
     {
@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your tickets to the Theodore Roosevelt Presidential Library are set for <b>[[custom.acme_-_visit_date_next]]</b>, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked, and your date and entry time are on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.",
         "align": "left"
       }
     },

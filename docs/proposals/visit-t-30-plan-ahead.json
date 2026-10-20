@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away, on <b>[[custom.acme_-_visit_date_next]]</b>. This is the right moment to lock in the parts of a Badlands trip that fill up.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away. This is the right moment to lock in the parts of a Badlands trip that fill up.",
         "align": "left"
       }
     },
@@ -101,7 +101,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>[[custom.acme_-_visit_date_next]]</b> is on your ticket, with your entry time. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.",
+        "html": "Your date and entry time are on your ticket confirmation. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.",
         "align": "left"
       }
     },

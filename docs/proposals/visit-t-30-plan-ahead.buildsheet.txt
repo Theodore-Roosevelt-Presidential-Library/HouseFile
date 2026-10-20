@@ -24,7 +24,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   7. Heading · Your Visit Day
       everyone
-  8. Text · [[custom.acme_-_visit_date_next]] is on your ticket, with your entry tim
+  8. Text · Your date and entry time are on your ticket confirmation. The Library's 
       everyone
   9. Button · Hours for Your Visit
       everyone

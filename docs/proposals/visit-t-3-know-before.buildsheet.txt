@@ -14,7 +14,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   2. Heading · Three Days to the Badlands
       everyone
-  3. Text · Hello [[FIRSTNAME OR "Friend"]], In three days, on [[custom.acme_-_visit
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], In three days, you will stand where a y
       everyone
   4. Text · Welcome back, member. Use the member line at the entrance, and remember 
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m5]
