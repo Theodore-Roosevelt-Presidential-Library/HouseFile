@@ -1,0 +1,204 @@
+{
+ "generated_at": "2026-10-20T12:30:00+00:00",
+ "source": "seed",
+ "sample_contact": {
+  "FIRSTNAME": "Jane",
+  "LASTNAME": "Doe",
+  "EMAILADDRESS": "jane.doe@example.com",
+  "COMPANYNAME": "Doe Family Ranch",
+  "JOBTITLE": "Teacher",
+  "CITY": "Bismarck",
+  "STATE": "ND",
+  "POSTALCODE": "58501",
+  "PHONE": "(701) 555-0100",
+  "custom.acme_-_recent_order_id": "100482731"
+ },
+ "flows": [
+  {
+   "key": "pre-visit",
+   "label": "Pre-visit",
+   "description": "Ticket holders before they arrive. Triggered off the ACME visit date.",
+   "paths": [
+    {
+     "name": "VISIT: T-3 Pre-Visit Excitement",
+     "status": "active",
+     "activated": "2026-07-18",
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": -3,
+      "label": "3 days before the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Send one email: what to expect, how long to plan, what to wear, parking and accessibility.",
+     "emails": [
+      {
+       "slug": "visit-t-3-pre-visit-excitement",
+       "task": "VISIT: T-3 Pre-Visit Excitement",
+       "subject": "Your Badlands adventure is almost here",
+       "preheader": "A few things to know before you step into the country that made a president.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "data/emails/visit-t-3-pre-visit-excitement.html",
+       "stats": {
+        "started": 19848,
+        "sends": 19823,
+        "opens": 11930,
+        "clicks": 3840
+       }
+      }
+     ]
+    },
+    {
+     "name": "VISIT: T-24h Trailblazer",
+     "status": "active",
+     "activated": "2026-07-30",
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": -1,
+      "label": "1 day before the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Send one email asking the visitor to pre-register their Trailblazer wristband (link carries their ACME order ID).",
+     "emails": [
+      {
+       "slug": "visit-t-24h-trailblazer",
+       "task": "VISIT: T-24h Trailblazer Activation",
+       "subject": "Do this tonight to speed up your arrival experience",
+       "preheader": "Set up your Trailblazer wristband before you arrive at the Library.",
+       "from_name": "Theodore Roosevelt Presidential Library Foundation",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "data/emails/visit-t-24h-trailblazer.html",
+       "stats": {
+        "started": 25650,
+        "sends": 25600,
+        "opens": 17336,
+        "clicks": 12343
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "key": "post-visit",
+   "label": "Post-visit",
+   "description": "Follow-up after the visit: shop, stay connected, private events, what's next.",
+   "paths": [
+    {
+     "name": "VISIT: T+3 Retail",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 3,
+      "label": "3 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    },
+    {
+     "name": "VISIT: T+12 Stay Connected",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 12,
+      "label": "12 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    },
+    {
+     "name": "VISIT: T+30 Stay Engaged",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 30,
+      "label": "30 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    },
+    {
+     "name": "VISIT: T+45 Private Events",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 45,
+      "label": "45 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    },
+    {
+     "name": "VISIT: T+60 What's Next",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 60,
+      "label": "60 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    }
+   ]
+  },
+  {
+   "key": "membership",
+   "label": "Membership",
+   "description": "Turning a one-time ticket buyer into a member.",
+   "paths": [
+    {
+     "name": "VISIT: T+5 Ticket to Member",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 5,
+      "label": "5 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "No email built yet.",
+     "emails": []
+    }
+   ]
+  },
+  {
+   "key": "other",
+   "label": "Other",
+   "description": "Paths not yet assigned to a flow.",
+   "paths": [
+    {
+     "name": "Date-based Created 2026/07/18 03:12:15PM",
+     "status": "draft",
+     "activated": null,
+     "trigger": {
+      "type": "on_date",
+      "label": "On a date (not set)"
+     },
+     "filters": [],
+     "action": "Untitled draft with no email. Safe to delete in Constant Contact if unused.",
+     "emails": []
+    }
+   ]
+  }
+ ]
+}

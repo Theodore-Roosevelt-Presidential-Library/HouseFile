@@ -652,6 +652,17 @@ def main():
     stats["history"] = append_history(out / "history.json", stats)[-90:]
     (out / "stats.json").write_text(json.dumps(stats, separators=(",", ":"), default=str))
     print(f"Wrote {out / 'stats.json'} and history.json")
+
+    # Automations tab. Runs in the same process so it shares the access token
+    # (Constant Contact may rotate the refresh token on every exchange). A failure
+    # here never blocks the contact stats; the last good automations data stays.
+    if cfg.get("automations"):
+        try:
+            from collect_automations import collect as collect_automations
+            print("Collecting automations…")
+            collect_automations(cfg, cc, out, dry=False)
+        except (Exception, SystemExit) as e:
+            print(f"WARNING: automations not refreshed: {e}", file=sys.stderr)
     if ckpt and ckpt.exists():
         ckpt.unlink()
     return 0

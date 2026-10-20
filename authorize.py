@@ -28,7 +28,7 @@ import requests
 from collect import TOKEN_URL, load_env
 
 AUTH_URL = "https://authz.constantcontact.com/oauth2/default/v1/authorize"
-SCOPES = "contact_data offline_access"
+SCOPES = "contact_data campaign_data account_read offline_access"
 
 
 def main():

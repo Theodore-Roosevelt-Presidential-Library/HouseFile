@@ -17,7 +17,9 @@ and GitHub Pages serves docs/ at housefile.labs.trlibrary.com.
 
 - `collect.py` — pages through every contact, tallies counters, writes `docs/data/stats.json` and appends a daily row to `docs/data/history.json`. A privacy guard in the workflow fails the run if anything resembling an email, phone number, or record ID appears in the output.
 - `config.yml` — everything specific to this account: source systems and how to recognise them, the public newsletter lists, address-fallback custom fields, ZIP suppression threshold. Another organisation can reuse this repo by editing this file only.
-- `docs/index.html` — the static dashboard. Reads `data/stats.json`; no build step.
+- `docs/index.html` — the static dashboard, in two tabs: **House file** (reads `data/stats.json`) and **Automations** (reads `data/automations.json`; open directly with `#automations`). No build step.
+- `docs/email.html?e=<slug>` — full preview of one automated email: the HTML in an iframe (desktop/mobile), subject, preheader, from name and address, the trigger and timing, send stats, every Constant Contact merge field it uses (editable sample values), and every link with its query-string data.
+- `collect_automations.py` — refreshes the Automations tab. Runs inside `collect.py` after the contact stats, or on its own.
 - `docs/data/zip_centroids.json` — public ZIP-code centroids from [GeoNames](https://www.geonames.org/) (CC BY 4.0). Reference data, not contact data. Rebuild with `python collect.py --fetch-centroids`.
 - `authorize.py` — one-time OAuth helper that produces the refresh token.
 - `fill_state.py` — data-quality fixer: for contacts with a US ZIP but no state, derives the state from the ZIP table and writes it to the contact's standard Constant Contact address (never to custom fields, so a nightly sync can't undo it). Dry run by default; `--apply` writes, `--limit N` for a cautious batch, `--checkpoint` to resume. Run it by hand after reviewing the "ZIP ↔ state consistency" panel.
@@ -45,9 +47,18 @@ A contact is attributed to a source when **any** rule in its `match` block hits:
 - `include_all_lists` is `false` by default so internal segment names (donor tiers, staff lists) stay off the public page.
 - The optional `--checkpoint` file holds the same counters, never records, and is gitignored.
 
+## Automations tab
+
+Shows every Constant Contact automation path, grouped by flow (pre-visit, post-visit, membership) and ordered by when it sends relative to the trigger date, with a thumbnail of each email.
+
+- **Where the data comes from.** Constant Contact's public API can read an automation's emails but not the path itself. So the trigger, timing, filters and flow of each path live under `automations:` in `config.yml`; the subject, sender, preheader, rendered HTML and send stats come from the API (`/emails/{campaign_id}`, `/emails/activities/{id}/previews`, `/reports/stats/email_campaign_activities/{id}`). When a path changes in Constant Contact, update its block in `config.yml`. A path's `campaign_id` is the ID in its URL (`…/pages/cjb/workflow-reporting/<campaign_id>`).
+- **Sample contact.** Previews fill merge tags (`[[FIRSTNAME]]`, `[[custom.acme_-_recent_order_id]]`, …) with the fake contact in `automations.sample_contact` (Jane Doe). Viewers can edit the values on the preview page.
+- **Privacy.** Constant Contact renders previews with the account's own name and contact email filled in. The collector swaps those back to merge tags using `/account/summary`, refuses to publish if it can't, and `python collect_automations.py --check` (run by the workflow's privacy guard) fails on any email address other than the senders, `allowed_emails`, or the sample contact's domain. No contact records are read.
+- **Scopes.** Needs `campaign_data` and `account_read` in addition to `contact_data`. After pulling this change, run `python authorize.py` once and update the `CC_REFRESH_TOKEN` secret. Until then the contact stats keep refreshing and the Automations tab shows the snapshot taken on 2026-10-20.
+
 ## Setup
 
-1. **Developer app.** In the [Constant Contact developer portal](https://developer.constantcontact.com/) create an app with scopes `contact_data` and `offline_access`, redirect URI `http://localhost:8080/callback`.
+1. **Developer app.** In the [Constant Contact developer portal](https://developer.constantcontact.com/) create an app with scopes `contact_data`, `campaign_data`, `account_read` and `offline_access`, redirect URI `http://localhost:8080/callback`.
 2. **Local `.env`.** `cp .env.example .env`, fill in `CC_CLIENT_ID`, `CC_CLIENT_SECRET`, `CC_REDIRECT_URI`.
 3. **Authorize once.** `pip install -r requirements.txt && python authorize.py` — writes `CC_REFRESH_TOKEN` into `.env`.
 4. **Repository secrets** (Settings → Secrets and variables → Actions): `CC_CLIENT_ID`, `CC_CLIENT_SECRET`, `CC_REFRESH_TOKEN`. Optionally `ADMIN_TOKEN` (a fine-grained PAT with *Secrets: read and write* on this repo) so the workflow can store a rotated refresh token by itself.

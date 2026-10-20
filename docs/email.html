@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>Automation Email Preview</title>
+<meta name="description" content="Preview of an automated Constant Contact email, filled with a sample contact.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a78d6'/%3E%3Cpath d='M6 9h20v14H6z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cpath d='M6 10l10 7 10-7' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --border: rgba(11,11,11,.10); --s1: #2a78d6; --track: #e6eef9;
+  --good: #0ca30c; --warn: #fab219; --crit: #d03b3b; --hl: #fff4cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --border: rgba(255,255,255,.10); --s1: #3987e5; --track: #22314a; --hl: #3a3313;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --border: rgba(255,255,255,.10); --s1: #3987e5; --track: #22314a; --hl: #3a3313;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}
+.wrap{max-width:1380px;margin:0 auto;padding:20px 16px 48px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumbs a{color:var(--ink-2)}
+h1{font-size:22px;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
+.sub{color:var(--ink-2);margin:0 0 18px;font-size:14px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:20px;align-items:start}
+@media (max-width:1060px){.layout{grid-template-columns:1fr}}
+.frame-col{position:sticky;top:12px}
+@media (max-width:1060px){.frame-col{position:static}}
+.frame-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap}
+.toolbar button{font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--ink-2);cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.frame-shell{background:#474747;border-radius:12px;padding:14px;display:flex;justify-content:center;overflow:auto;border:1px solid var(--border)}
+.frame-shell iframe{display:block;width:720px;max-width:100%;height:calc(100vh - 170px);min-height:520px;border:0;background:#fff;border-radius:4px;transition:width .15s}
+.frame-shell.mobile iframe{width:390px}
+.inbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:grid;grid-template-columns:36px 1fr;gap:4px 12px;align-items:center}
+.inbox .av{width:36px;height:36px;border-radius:50%;background:var(--s1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;grid-row:span 2}
+.inbox .l1{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.inbox .l1 b{font-weight:650}
+.inbox .l1 span{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.inbox .l2{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+.inbox .l2 b{color:var(--ink);font-weight:600}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+h2{font-size:14px;font-weight:650;margin:0 0 10px;letter-spacing:.01em}
+.hint{color:var(--muted);font-size:12.5px;margin:-4px 0 10px}
+dl.kv{display:grid;grid-template-columns:118px 1fr;gap:7px 12px;margin:0;font-size:14px}
+dl.kv dt{color:var(--muted)}
+dl.kv dd{margin:0;word-break:break-word}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px}
+code.tag{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;background:var(--track);padding:1px 6px;border-radius:5px;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{color:var(--muted);font-weight:500;text-align:left;font-size:11.5px;letter-spacing:.02em;text-transform:uppercase;padding:0 8px 6px 0;border-bottom:1px solid var(--grid)}
+td{padding:7px 8px 7px 0;border-bottom:1px solid var(--grid);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td input{width:100%;font:inherit;font-size:13.5px;padding:4px 7px;border-radius:6px;border:1px solid var(--border);background:var(--page);color:var(--ink)}
+td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
+.src{font-size:11.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--ink-2);white-space:nowrap;vertical-align:middle}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.badge.ok::before{background:var(--good)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.stat .l{font-size:12px;color:var(--muted)}
+.stat .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12px;color:var(--ink-2)}
+.link-row{padding:8px 0;border-bottom:1px solid var(--grid)}
+.link-row:last-child{border-bottom:0}
+.link-row .t{font-weight:600;font-size:13.5px}
+.link-row .u{font-size:12.5px;color:var(--ink-2);word-break:break-all}
+.link-row table{margin-top:6px}
+.link-row td,.link-row th{font-size:12.5px;padding-top:4px;padding-bottom:4px}
+.filled{background:var(--hl);border-radius:4px;padding:0 3px}
+.reset{font:inherit;font-size:12.5px;border:0;background:none;color:var(--s1);cursor:pointer;padding:0}
+.pager{display:flex;gap:10px;font-size:13px;margin-top:4px}
+.pager a{color:var(--ink-2)}
+.err{color:var(--crit)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="index.html#automations">← All automations</a> <span id="crumb-flow"></span></div>
+  <h1 id="title">Loading…</h1>
+  <p class="sub" id="sub"></p>
+
+  <div class="layout">
+    <div class="frame-col">
+      <div class="frame-bar">
+        <div class="toolbar" role="group" aria-label="Preview width">
+          <button id="w-desk" aria-pressed="true">Desktop</button>
+          <button id="w-mob" aria-pressed="false">Mobile</button>
+        </div>
+        <div class="toolbar" role="group" aria-label="Personalization">
+          <button id="m-sample" aria-pressed="true">Jane Doe</button>
+          <button id="m-raw" aria-pressed="false">Show merge tags</button>
+        </div>
+      </div>
+      <div class="inbox" aria-label="How it looks in the inbox">
+        <div class="av" id="ib-av">T</div>
+        <div class="l1"><b id="ib-from"></b><span id="ib-date"></span></div>
+        <div class="l2"><b id="ib-subj"></b> — <span id="ib-pre"></span></div>
+      </div>
+      <div class="frame-shell" id="shell"><iframe id="frame" title="Email preview" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+    </div>
+
+    <div>
+      <section>
+        <h2>Message</h2>
+        <dl class="kv" id="msg"></dl>
+      </section>
+
+      <section>
+        <h2>Automation</h2>
+        <dl class="kv" id="auto"></dl>
+      </section>
+
+      <section id="stats-sec" hidden>
+        <h2>Performance to date</h2>
+        <div class="stats" id="stats"></div>
+      </section>
+
+      <section>
+        <h2>Contact fields used <button class="reset" id="reset" style="float:right">Reset to Jane Doe</button></h2>
+        <p class="hint">Constant Contact merge tags in this email and the sample values filling them. Edit a value to see it change in the preview.</p>
+        <div style="overflow-x:auto"><table id="fields"></table></div>
+      </section>
+
+      <section>
+        <h2>Links and query data</h2>
+        <p class="hint">Every link in the email, with the query-string and fragment parameters it passes along. Parameters filled from contact fields are highlighted.</p>
+        <div id="links"></div>
+      </section>
+
+      <div class="pager" id="pager"></div>
+    </div>
+  </div>
+</div>
+
+<script src="automations.js"></script>
+<script>
+(async () => {
+  const A = window.HFAuto, fmtN = n => (n == null ? "—" : n.toLocaleString());
+  const slug = new URLSearchParams(location.search).get("e");
+  let data;
+  try { data = await A.loadData(); } catch (e) { document.getElementById("title").innerHTML = '<span class="err">Could not load automation data.</span>'; return; }
+  const list = A.allEmails(data), idx = list.findIndex(x => x.email.slug === slug);
+  if (idx < 0) { document.getElementById("title").innerHTML = '<span class="err">Email not found.</span> <a href="index.html#automations">Back to automations</a>'; return; }
+  const { flow, path, email } = list[idx];
+  const BASE = Object.assign({}, data.sample_contact);
+  let sample = Object.assign({}, BASE), raw = false, html = await A.loadEmail(email.html);
+
+  document.title = `${email.task || path.name} · Email Preview`;
+  document.getElementById("title").textContent = path.name;
+  document.getElementById("crumb-flow").textContent = " / " + flow.label;
+  document.getElementById("sub").innerHTML = (path.status === "active" ? '<span class="badge ok">Active</span>' : `<span class="badge">${A.esc(path.status)}</span>`)
+    + ` &nbsp;${A.esc(path.trigger.label)}`;
+
+  // Trigger date maths for the example: Jane's visit date, and when this email lands.
+  const off = path.trigger.offset_days;
+  const today = new Date(); today.setHours(12, 0, 0, 0);
+  const iso = d => d.toISOString().slice(0, 10);
+  let visit = new Date(today); if (off != null && off < 0) visit.setDate(visit.getDate() - off); // sends today
+  const nice = d => d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  const sendDate = () => { const d = new Date(visit); if (off != null) d.setDate(d.getDate() + off); return d; };
+
+  const tags = A.findTags(html + " " + email.subject + " " + (email.preheader || ""));
+
+  function renderFrame() {
+    const out = raw ? html : A.fill(html, sample);
+    document.getElementById("frame").srcdoc = out.replace(/<head>/i, '<head><base target="_blank">');
+    const f = t => raw ? t : A.fillText(t, sample);
+    document.getElementById("ib-from").textContent = email.from_name;
+    document.getElementById("ib-av").textContent = (email.from_name || "?").trim()[0];
+    document.getElementById("ib-subj").textContent = f(email.subject);
+    document.getElementById("ib-pre").textContent = f(email.preheader || "");
+    document.getElementById("ib-date").textContent = off != null ? nice(sendDate()) : "";
+    renderMsg(); renderLinks();
+  }
+
+  function renderMsg() {
+    const f = t => A.esc(A.fillText(t, sample));
+    const rawTag = t => /\[\[/.test(t) ? `<div class="src">Template: <code class="tag">${A.esc(t)}</code></div>` : "";
+    document.getElementById("msg").innerHTML = `
+      <dt>Subject</dt><dd><b>${f(email.subject)}</b>${rawTag(email.subject)}</dd>
+      <dt>Preheader</dt><dd>${f(email.preheader || "—")}${rawTag(email.preheader || "")}</dd>
+      <dt>From name</dt><dd>${A.esc(email.from_name)}</dd>
+      <dt>From email</dt><dd class="mono">${A.esc(email.from_email)}</dd>
+      <dt>Reply-to</dt><dd class="mono">${A.esc(email.reply_to || email.from_email)}</dd>
+      <dt>To</dt><dd>${A.esc(A.fillText("[[FIRSTNAME]] [[LASTNAME]]", sample))} <span class="mono">&lt;${A.esc(A.fillText("[[EMAILADDRESS]]", sample))}&gt;</span><div class="src">Sample contact</div></dd>
+      <dt>Task name</dt><dd>${A.esc(email.task || "—")}</dd>`;
+  }
+
+  function renderAuto() {
+    const t = path.trigger;
+    const rows = [
+      ["Flow", A.esc(flow.label)],
+      ["Path", A.esc(path.name)],
+      ["Status", path.status === "active" ? `Active${path.activated ? " since " + new Date(path.activated + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "medium" }) : ""}` : A.esc(path.status)],
+      ["Trigger", A.esc(t.label)],
+    ];
+    if (t.field) rows.push(["Trigger field", `<code class="tag">${A.esc(t.field)}</code><div class="src">Constant Contact custom date field, written by the ACME sync</div>`]);
+    rows.push(["Timing", `${A.esc(A.dayLabel(off))}${off != null ? ` (${off > 0 ? "+" : ""}${off} days)` : ""}`]);
+    if (off != null) rows.push(["Example", `If Jane's visit is <b>${nice(visit)}</b>, this email sends <b>${nice(sendDate())}</b>.`]);
+    rows.push(["Filters", path.filters && path.filters.length ? path.filters.map(A.esc).join("; ") : "None (everyone who meets the trigger)"]);
+    rows.push(["Action", A.esc(path.action || "Send email")]);
+    document.getElementById("auto").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+  }
+
+  function renderFields() {
+    const rows = tags.map(t => {
+      const v = A.lookup(sample, t.key);
+      return `<tr>
+        <td><div>${A.esc(A.fieldLabel(t.key))}</div><code class="tag">${A.esc(t.raw)}</code><div class="src">${A.fieldSource(t.key)} · used ${t.count}×${t.fallback != null ? ` · fallback “${A.esc(t.fallback)}”` : ""}</div></td>
+        <td style="width:46%"><input data-key="${A.esc(t.key)}" value="${A.esc(v == null ? "" : v)}" aria-label="${A.esc(A.fieldLabel(t.key))} sample value" placeholder="${t.fallback != null ? A.esc(t.fallback) : "(blank)"}"></td>
+      </tr>`;
+    });
+    if (path.trigger.field) rows.push(`<tr>
+        <td><div>${A.esc(path.trigger.field)}</div><div class="src">Custom field · trigger date</div></td>
+        <td><input type="date" id="visit-in" value="${iso(visit)}" aria-label="Visit date"></td></tr>`);
+    document.getElementById("fields").innerHTML = rows.length
+      ? `<thead><tr><th>Field</th><th>Sample value</th></tr></thead><tbody>${rows.join("")}</tbody>`
+      : `<tbody><tr><td class="src">This email has no personalization tags.</td></tr></tbody>`;
+    document.querySelectorAll("#fields input[data-key]").forEach(inp => inp.addEventListener("input", () => {
+      sample[inp.dataset.key] = inp.value; renderFrame();
+    }));
+    const vi = document.getElementById("visit-in");
+    if (vi) vi.addEventListener("change", () => { if (vi.value) { visit = new Date(vi.value + "T12:00:00"); renderAuto(); renderFrame(); } });
+  }
+
+  function renderLinks() {
+    const links = A.findLinks(html);
+    document.getElementById("links").innerHTML = links.length ? links.map(l => {
+      const filled = A.fillText(l.href, sample);
+      const params = l.params.length ? `<table><thead><tr><th>Parameter</th><th>Template</th><th>Jane Doe</th></tr></thead><tbody>${
+        l.params.map(p => {
+          const hasTag = /\[\[/.test(p.value);
+          return `<tr><td class="mono">${p.kind === "fragment" ? "#" : "?"}${A.esc(p.name)}</td><td>${hasTag ? `<code class="tag">${A.esc(p.value)}</code>` : `<span class="mono">${A.esc(p.value || "—")}</span>`}</td><td class="mono">${hasTag ? `<span class="filled">${A.esc(A.fillText(p.value, sample) || "(blank)")}</span>` : A.esc(p.value || "—")}</td></tr>`;
+        }).join("")}</tbody></table>` : "";
+      return `<div class="link-row"><div class="t">${A.esc(l.text || "(no text)")}${l.count > 1 ? ` <span class="src">· ${l.count}×</span>` : ""}</div>
+        <div class="u">${A.esc(l.params.length ? l.base : l.href)}</div>${params}
+        ${l.params.length ? `<div class="u src" style="margin-top:4px">Resolves to: ${A.esc(filled)}</div>` : ""}</div>`;
+    }).join("") : '<p class="src">No links.</p>';
+  }
+
+  function renderStats() {
+    const s = email.stats || {};
+    if (s.sends == null) return;
+    document.getElementById("stats-sec").hidden = false;
+    const pct = v => s.sends ? (100 * v / s.sends).toFixed(1) + "%" : "—";
+    document.getElementById("stats").innerHTML = [
+      ["Sent", fmtN(s.sends), s.started ? `${fmtN(s.started)} entered path` : ""],
+      ["Opened", fmtN(s.opens), pct(s.opens)],
+      ["Clicked", fmtN(s.clicks), pct(s.clicks)],
+    ].map(([l, v, sub]) => `<div class="stat"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`).join("");
+  }
+
+  function pager() {
+    const prev = list[idx - 1], next = list[idx + 1];
+    document.getElementById("pager").innerHTML =
+      (prev ? `<a href="email.html?e=${encodeURIComponent(prev.email.slug)}">← ${A.esc(prev.path.name)}</a>` : "") +
+      (next ? `<a style="margin-left:auto" href="email.html?e=${encodeURIComponent(next.email.slug)}">${A.esc(next.path.name)} →</a>` : "");
+  }
+
+  const press = (on, off) => { on.setAttribute("aria-pressed", "true"); off.setAttribute("aria-pressed", "false"); };
+  const wd = document.getElementById("w-desk"), wm = document.getElementById("w-mob"), shell = document.getElementById("shell");
+  wd.onclick = () => { shell.classList.remove("mobile"); press(wd, wm); };
+  wm.onclick = () => { shell.classList.add("mobile"); press(wm, wd); };
+  const ms = document.getElementById("m-sample"), mr = document.getElementById("m-raw");
+  ms.onclick = () => { raw = false; press(ms, mr); renderFrame(); };
+  mr.onclick = () => { raw = true; press(mr, ms); renderFrame(); };
+  document.getElementById("reset").onclick = () => { sample = Object.assign({}, BASE); renderFields(); renderFrame(); };
+
+  renderAuto(); renderFields(); renderStats(); pager(); renderFrame();
+})();
+</script>
+</body>
+</html>
