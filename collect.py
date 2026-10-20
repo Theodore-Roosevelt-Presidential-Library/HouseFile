@@ -84,6 +84,12 @@ def get_access_token() -> str:
     cid, secret, refresh = (os.environ.get(k) for k in ("CC_CLIENT_ID", "CC_CLIENT_SECRET", "CC_REFRESH_TOKEN"))
     if not all([cid, secret, refresh]):
         sys.exit("Missing CC_CLIENT_ID / CC_CLIENT_SECRET / CC_REFRESH_TOKEN (set env vars or .env)")
+    # A step earlier in the same run may already have rotated the token. The old one is
+    # then revoked, and reusing it makes Constant Contact cancel the whole token chain,
+    # so always continue from the newest one.
+    rotated_file = os.environ.get("CC_ROTATED_TOKEN_FILE")
+    if rotated_file and Path(rotated_file).is_file() and Path(rotated_file).read_text().strip():
+        refresh = Path(rotated_file).read_text().strip()
     r = requests.post(TOKEN_URL, data={"grant_type": "refresh_token", "refresh_token": refresh},
                       auth=(cid, secret), timeout=30)
     if r.status_code != 200:

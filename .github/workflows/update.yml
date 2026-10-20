@@ -5,6 +5,14 @@ on:
     # Daily at 05:17 America/Denver (11:17 UTC; 12:17 UTC in winter). Cron is UTC-only.
     - cron: "17 11 * * *"
   workflow_dispatch:
+    inputs:
+      task:
+        description: "stats (daily refresh), timing, date-text-dry-run, date-text-create-fields or date-text-apply"
+        default: "stats"
+
+# Every job that talks to Constant Contact lives in this one workflow, in this one
+# concurrency group: refresh tokens rotate, and two runs using the same token at once
+# make Constant Contact revoke it.
 
 permissions:
   contents: write
@@ -28,12 +36,49 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Collect aggregate statistics
+        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
         env:
           CC_CLIENT_ID: ${{ secrets.CC_CLIENT_ID }}
           CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
           CC_REFRESH_TOKEN: ${{ secrets.CC_REFRESH_TOKEN }}
           CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
         run: python collect.py
+
+      # Diagnostics and the date-to-text sync. Output is counts only (public log) and
+      # is checked by the guard step below.
+      - name: ACME sync timing (counts only)
+        if: ${{ inputs.task == 'timing' }}
+        env:
+          CC_CLIENT_ID: ${{ secrets.CC_CLIENT_ID }}
+          CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
+          CC_REFRESH_TOKEN: ${{ secrets.CC_REFRESH_TOKEN }}
+          CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
+        run: |
+          set -o pipefail
+          python tools/acme_timing.py --days 14 | tee "${{ runner.temp }}/out.txt"
+
+      - name: Date fields to text
+        if: ${{ startsWith(inputs.task, 'date-text') }}
+        env:
+          CC_CLIENT_ID: ${{ secrets.CC_CLIENT_ID }}
+          CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
+          CC_REFRESH_TOKEN: ${{ secrets.CC_REFRESH_TOKEN }}
+          CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
+        run: |
+          set -o pipefail
+          case "${{ inputs.task }}" in
+            date-text-apply) args="--apply" ;;
+            date-text-create-fields) args="--create-fields" ;;
+            *) args="" ;;
+          esac
+          python sync_date_text.py $args | tee "${{ runner.temp }}/out.txt"
+
+      - name: Privacy guard for diagnostic output
+        if: ${{ always() && (inputs.task == 'timing' || startsWith(inputs.task, 'date-text')) }}
+        run: |
+          f="${{ runner.temp }}/out.txt"
+          [ -f "$f" ] || exit 0
+          if grep -Eq '@|[0-9a-f]{8}-[0-9a-f]{4}-' "$f"; then echo "::error::output contains an email or record ID"; exit 1; fi
 
       # Constant Contact can issue a replacement refresh token. If it does, and an
       # ADMIN_TOKEN (a PAT with "secrets" write access to this repo) is configured,
@@ -54,6 +99,7 @@ jobs:
           fi
 
       - name: Privacy guard — fail if anything that looks personal reached the output
+        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
         run: |
           set -e
           for f in docs/data/stats.json docs/data/history.json; do
@@ -67,6 +113,7 @@ jobs:
           echo "Privacy guard passed."
 
       - name: Commit updated data
+        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
         run: |
           git config user.name "housefile-bot"
           git config user.email "housefile-bot@users.noreply.github.com"
