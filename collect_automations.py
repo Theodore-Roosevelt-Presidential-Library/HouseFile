@@ -147,13 +147,15 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
     the last API data for live paths. Used after editing proposals or path timing."""
     acfg = cfg.get("automations") or {}
     previous, prev_meta = {}, {}
+    prev_file = out / "automations.json"
+    if prev_file.exists():
+        # Live runs read it too: when the API returns no email for a live path, the
+        # last good copy is kept instead of being wiped from the dashboard.
+        prev_meta = json.loads(prev_file.read_text())
+        for f in prev_meta.get("flows", []):
+            for pp in f.get("paths", []):
+                previous[pp["name"]] = pp
     if offline:
-        prev_file = out / "automations.json"
-        if prev_file.exists():
-            prev_meta = json.loads(prev_file.read_text())
-            for f in prev_meta.get("flows", []):
-                for pp in f.get("paths", []):
-                    previous[pp["name"]] = pp
         account = {}
     else:
         account = safe_get(cc, "/account/summary") or {}
@@ -200,6 +202,11 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             camp = safe_get(cc, f"/emails/{cid}")
             acts = [a for a in (camp or {}).get("campaign_activities", [])
                     if a.get("role") == "primary_email"]
+            if not acts:
+                # Shape only (keys and activity roles), never content, to diagnose.
+                shape = {"keys": sorted((camp or {}).keys()),
+                         "roles": [a.get("role") for a in (camp or {}).get("campaign_activities", [])]}
+                print(f"  ! {p['name']}: no primary email from /emails/{{id}} {shape}", file=sys.stderr)
             if camp and camp.get("current_status"):
                 path["cc_status"] = camp["current_status"]
             for i, a in enumerate(acts):
@@ -234,6 +241,19 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 path["emails"].append(email)
                 pages[f"{slug}.html"] = html
                 print(f"  {p['name']}: {email['subject']!r}")
+            if not path["emails"] or not any(pages.get(Path(e["html"]).name) for e in path["emails"]):
+                old = [e for e in previous.get(p["name"], {}).get("emails", []) if not e.get("proposed")]
+                kept = []
+                for e in old:
+                    f = emails_dir / Path(e["html"]).name
+                    if f.exists():
+                        pages[f.name] = f.read_text()
+                        kept.append(dict(e, stale=True))
+                if kept:
+                    for e in path["emails"]:
+                        pages.pop(Path(e["html"]).name, None)
+                    path["emails"] = kept
+                    print(f"  ! {p['name']}: API returned no email; kept the last good copy", file=sys.stderr)
         else:
             print(f"  {p['name']}: no campaign_id (draft or not built yet)")
         flow = by_flow.get(p.get("flow"))
