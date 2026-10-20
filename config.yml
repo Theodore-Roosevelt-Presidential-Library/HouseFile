@@ -205,27 +205,28 @@ automations:
     # ---- Proposed: pre-visit welcome series (not in Constant Contact) ----
     # Lead time from ACME (Dates & members tab, Oct 2026): median 6 days; 23% book the same or
     # next day, 57% within a week, 16% more than 30 days out. T-3 and T-24h miss most
-    # last-minute buyers, so the welcome goes out at purchase.
-    - name: "VISIT: T+0 Welcome"
+    # last-minute buyers, so the welcome goes out right after purchase: the day after, because
+    # ACME syncs to Constant Contact overnight and the purchase date only lands the next day.
+    - name: "VISIT: T+1 Welcome"
       flow: pre-visit
       status: proposed
-      trigger: {type: date_field, field: "Acme - Last Purchase Date", offset_days: 0}
-      filters: ["Acme - Visit Date (Next) is at least 4 days after the purchase (if Constant Contact can filter on it; otherwise everyone)"]
-      action: "Sent the day tickets are bought: the 3½-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept."
+      trigger: {type: date_field, field: "Acme - Last Purchase Date", offset_days: 1}
+      filters: ["Acme - Visit Date (Next) is at least 3 days away when it sends, so last-minute buyers go straight to T-3 and T-24h (if Constant Contact can filter on it)"]
+      action: "Sent the day after tickets are bought, once the overnight ACME sync has landed: the 3½-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept."
       proposal:
-        slug: visit-t0-welcome
-        html: proposals/visit-t0-welcome.html
+        slug: visit-t1-welcome
+        html: proposals/visit-t1-welcome.html
         subject: "You're going to Medora. Here's how to plan it."
         preheader: "Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]]."
         from_name: "Theodore Roosevelt Presidential Library"
         from_email: "hello@trlibrary.com"
         reply_to: "hello@trlibrary.com"
         notes:
-          - "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t0-welcome.buildsheet.txt."
+          - "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt."
           - "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building."
           - "Confirm with the membership team how a ticket refund is applied to a membership and that the reservation is kept; the email asks people to write to membership@trlibrary.com with their order number or ask at the Welcome Desk."
           - "Confirm the merge-tag spelling for Acme - Visit Date (Next) and how it prints (the preview assumes a long date)."
-          - "Check whether Constant Contact can trigger on Acme - Last Purchase Date the same day, and whether a path can skip visits in the next 3 days."
+          - "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Check that a 1-day-after trigger on Acme - Last Purchase Date fires for contacts whose date arrives that morning, and whether the path can skip visits in the next 3 days. Without that filter, someone visiting the day after buying would get the welcome after their visit."
     - name: "VISIT: T-30 Plan Ahead"
       flow: pre-visit
       status: proposed

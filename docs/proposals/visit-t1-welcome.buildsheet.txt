@@ -1,6 +1,6 @@
 CONSTANT CONTACT BUILD SHEET
 
-Email:      VISIT: T+0 Welcome
+Email:      VISIT: T+1 Welcome
 Subject:    You're going to Medora. Here's how to plan it.
 Preheader:  Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]].
 From name:  Theodore Roosevelt Presidential Library

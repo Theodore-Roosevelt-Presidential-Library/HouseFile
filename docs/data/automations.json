@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T15:13:00+00:00",
+ "rebuilt_at": "2026-10-20T15:25:36+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -155,36 +155,36 @@
      ]
     },
     {
-     "name": "VISIT: T+0 Welcome",
+     "name": "VISIT: T+1 Welcome",
      "status": "proposed",
      "activated": null,
      "trigger": {
       "type": "date_field",
       "field": "Acme - Last Purchase Date",
-      "offset_days": 0,
-      "label": "On the Acme - Last Purchase Date"
+      "offset_days": 1,
+      "label": "1 day after the Acme - Last Purchase Date"
      },
      "filters": [
-      "Acme - Visit Date (Next) is at least 4 days after the purchase (if Constant Contact can filter on it; otherwise everyone)"
+      "Acme - Visit Date (Next) is at least 3 days away when it sends, so last-minute buyers go straight to T-3 and T-24h (if Constant Contact can filter on it)"
      ],
-     "action": "Sent the day tickets are bought: the 3\u00bd-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept.",
+     "action": "Sent the day after tickets are bought, once the overnight ACME sync has landed: the 3\u00bd-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept.",
      "emails": [
       {
-       "slug": "visit-t0-welcome",
-       "task": "VISIT: T+0 Welcome",
+       "slug": "visit-t1-welcome",
+       "task": "VISIT: T+1 Welcome",
        "subject": "You're going to Medora. Here's how to plan it.",
        "preheader": "Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]].",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/visit-t0-welcome.html",
+       "html": "proposals/visit-t1-welcome.html",
        "proposed": true,
        "notes": [
-        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t0-welcome.buildsheet.txt.",
+        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt.",
         "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building.",
         "Confirm with the membership team how a ticket refund is applied to a membership and that the reservation is kept; the email asks people to write to membership@trlibrary.com with their order number or ask at the Welcome Desk.",
         "Confirm the merge-tag spelling for Acme - Visit Date (Next) and how it prints (the preview assumes a long date).",
-        "Check whether Constant Contact can trigger on Acme - Last Purchase Date the same day, and whether a path can skip visits in the next 3 days."
+        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Check that a 1-day-after trigger on Acme - Last Purchase Date fires for contacts whose date arrives that morning, and whether the path can skip visits in the next 3 days. Without that filter, someone visiting the day after buying would get the welcome after their visit."
        ],
        "stats": {}
       }

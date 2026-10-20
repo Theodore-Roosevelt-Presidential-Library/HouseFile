@@ -26,7 +26,7 @@ const NOTE = 'You are receiving this email because you have tickets to the Theod
 
 // Header Studio banners (approved pairings only; HDR v2 rejects anything else).
 const HEADERS = {
-  'visit-t0-welcome':          { photo: 'chaney-little-mo-river_016_articlecrop_1.jpg', opts: { pairing: 'dark-forest-white' } },  // the Little Missouri below the buttes
+  'visit-t1-welcome':          { photo: 'chaney-little-mo-river_016_articlecrop_1.jpg', opts: { pairing: 'dark-forest-white' } },  // the Little Missouri below the buttes
   'visit-t-30-plan-ahead':     { photo: 'medora-buggy-rides-in-dowtownmedora-from-ND-Tourism-scaled.jpg', opts: { pairing: 'deep-orange-black' } }, // downtown Medora
   'visit-t-3-know-before':     { photo: 'painted-canyon.jpg', opts: { pairing: 'night-sky-white', panY: 300 } },                   // Badlands sky
 };
@@ -76,14 +76,14 @@ const SELL_HOW = p(`To switch, write to ${MEMBERSHIP_MAIL} with your order numbe
 const SELL_BTN = btn('See Membership Levels', `${SITE}/membership`);
 
 const emails = [
-  // ------------------------------------------------------------------ T+0
+  // ------------------------------------------------------------------ T+1
   {
-    slug: 'visit-t0-welcome',
-    title: 'VISIT: T+0 Welcome',
+    slug: 'visit-t1-welcome',
+    title: 'VISIT: T+1 Welcome',
     subject: "You're going to Medora. Here's how to plan it.",
     preheader: `Where to stay, how to get here and what to see, for your visit on ${VISIT}.`,
     blocks: [
-      header('visit-t0-welcome'),
+      header('visit-t1-welcome'),
       h("You're Coming to the Badlands"),
       p(`${GREET}<br><br>Your tickets to the Theodore Roosevelt Presidential Library are set for <b>${VISIT}</b>, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.`),
       ...memberOnly(MEMBER_THANKS),

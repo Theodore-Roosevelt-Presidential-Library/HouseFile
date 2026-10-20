@@ -1,7 +1,7 @@
 {
   "app": "trpl-newsletter-builder",
   "version": "2.0.0",
-  "title": "VISIT: T+0 Welcome",
+  "title": "VISIT: T+1 Welcome",
   "subject": "You're going to Medora. Here's how to plan it.",
   "preheader": "Where to stay, how to get here and what to see, for your visit on [[custom.acme_-_visit_date_next]].",
   "fromName": "Theodore Roosevelt Presidential Library",
@@ -9,7 +9,7 @@
     {
       "type": "header",
       "props": {
-        "src": "proposals/img/visit-t0-welcome-header.jpg",
+        "src": "proposals/img/visit-t1-welcome-header.jpg",
         "alt": "Theodore Roosevelt Presidential Library",
         "href": "https://www.trlibrary.com"
       }
