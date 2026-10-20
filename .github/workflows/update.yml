@@ -55,7 +55,7 @@ jobs:
           CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
         run: |
           set -o pipefail
-          python tools/acme_timing.py --days 14 | tee "${{ runner.temp }}/out.txt"
+          python -u tools/acme_timing.py --days 14 | tee "${{ runner.temp }}/out.txt"
 
       - name: Date fields to text
         if: ${{ startsWith(inputs.task, 'date-text') }}
@@ -73,7 +73,7 @@ jobs:
             date-text-create-fields) args="--create-fields" ;;
             *) args="" ;;
           esac
-          python sync_date_text.py $args | tee "${{ runner.temp }}/out.txt"
+          python -u sync_date_text.py $args | tee "${{ runner.temp }}/out.txt"
 
       - name: Privacy guard for diagnostic output
         if: ${{ always() && (inputs.task == 'timing' || startsWith(inputs.task, 'date-text')) }}
