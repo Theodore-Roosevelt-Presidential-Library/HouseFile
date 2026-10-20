@@ -1,0 +1,127 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T+14 From the Shop",
+  "subject": "Bring a piece of the Badlands home",
+  "preheader": "The Library Shop is open online, with pieces you won't find in Medora.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-plus-14-shop-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "From the Library Shop",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-shop-backpack.jpg",
+            "alt": "Special Edition Filson Olive All-Weather Backpack",
+            "heading": "Filson All-Weather Backpack",
+            "text": "A special edition of Filson's all-weather pack, in olive or slate.",
+            "label": "Shop Bags",
+            "href": "https://shop.trlibrary.com/collections/luggage-bags"
+          },
+          {
+            "src": "proposals/img/pv-shop-bully-hat.jpg",
+            "alt": "Authentic Bully! hat in navy",
+            "heading": "The Bully! Hat",
+            "text": "T.R.'s famous exclamation, on a navy cap.",
+            "label": "Shop Hats",
+            "href": "https://shop.trlibrary.com/collections/hats"
+          }
+        ]
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-shop-arena-tee.jpg",
+            "alt": "Ice blue Arena quote T-shirt",
+            "heading": "Arena Quote T-shirt",
+            "text": "The man in the arena, on an ice blue tee.",
+            "label": "Shop Apparel",
+            "href": "https://shop.trlibrary.com/collections/apparel-accessories"
+          },
+          {
+            "src": "proposals/img/pv-shop-journal.jpg",
+            "alt": "TRPL Bella Luna journal and pen set",
+            "heading": "Journal and Pen Set",
+            "text": "A Bella Luna journal and pen for your own field notes.",
+            "label": "Shop Gifts",
+            "href": "https://shop.trlibrary.com/collections/all"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Shop Online",
+        "href": "https://shop.trlibrary.com"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Shopping in person?</b> Members take 10% off in the Library Shop in Medora.",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p4",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hear about new arrivals and seasonal sales first: add <a href=\"https://www.trlibrary.com/newsletter\">The Shop</a> to your newsletter topics.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you visited the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}

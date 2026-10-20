@@ -1,0 +1,49 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T+7 Keep Exploring
+Subject:    The rest of T.R.'s story, from home
+Preheader:  Six chapters of his life, quizzes for every level and a podcast recorded at the Library.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · The Story Keeps Going
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], The galleries cover a lot of ground in 
+      everyone
+  4. Two columns · The Badlands
+      everyone
+  5. Button · Explore T.R.'s Life
+      everyone
+  6. Divider
+      everyone
+  7. Heading · Test What You Learned
+      everyone
+  8. Two columns · Fact or Fiction
+      everyone
+  9. Text · Dozens more, from family editions to expert level, at trlibrary.com/quiz
+      everyone
+ 10. Divider
+      everyone
+ 11. Heading · Listen: Good Citizen
+      everyone
+ 12. Text · Ted Roosevelt V hosts conversations with people who step into the arena 
+      everyone
+ 13. Text · Apple Podcasts · Spotify · YouTube
+      everyone
+ 14. Button · Listen to Good Citizen
+      everyone
+ 15. Text · Know someone who would love it here? As a member you take 10% off gift m
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 16. Text · Coming back? A membership covers a full year of visits for you and your 
+      DEFAULT ROW (group p3): contacts who match none of the group's other rows
+ 17. Footer
+      everyone
+
+GROUPS
+  p3: Acme - Is Active Member — rows 15, 16; values active, new; has a default row

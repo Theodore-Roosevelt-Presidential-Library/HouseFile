@@ -1,0 +1,133 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T+30 Host an Event",
+  "subject": "Host your next gathering above the Badlands",
+  "preheader": "Weddings, retreats, private dinners and reunions at the Library.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-plus-30-host-an-event-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Host Your Event at the Library",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "image",
+      "props": {
+        "src": "proposals/img/pv-events-lobby-wide.jpg",
+        "alt": "The Library lobby, with glass walls framing the Badlands",
+        "href": "",
+        "caption": ""
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "",
+        "columns": [
+          "Event",
+          "At the Library"
+        ],
+        "rows": [
+          [
+            "Weddings and celebrations",
+            "Indoor and outdoor ceremonies, terraces above the Little Missouri, and receptions in spaces most guests see only once."
+          ],
+          [
+            "Corporate gatherings",
+            "Board retreats, offsites, client trips and launches, with private conference space."
+          ],
+          [
+            "Private dinners",
+            "Seated dinners for 12 to 60, or cocktails on a terrace as the light drops."
+          ],
+          [
+            "Nonprofit and association events",
+            "Conferences, galas and convenings in a nonpartisan setting."
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Every event includes the Library's events team and its list of regional caterers and partners. Add curator-led tours or after-hours access to the galleries.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-events-auditorium.jpg",
+            "alt": "The Library auditorium",
+            "heading": "The Spaces",
+            "text": "The auditorium, classroom, lobby, terraces and restaurant, in one look book.",
+            "label": "See the Spaces",
+            "href": "https://www.trlibrary.com/private-events/spaces"
+          },
+          {
+            "src": "proposals/img/pv-events-dining.jpg",
+            "alt": "Salt+Scoria, the Library restaurant",
+            "heading": "Catering",
+            "text": "Menus for receptions, seated dinners and everything in between.",
+            "label": "See Catering",
+            "href": "https://www.trlibrary.com/private-events/catering"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Start an Inquiry",
+        "href": "https://www.trlibrary.com/private-events/inquiry"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Planning something that doesn't fit a category? Ask anyway.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you visited the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}

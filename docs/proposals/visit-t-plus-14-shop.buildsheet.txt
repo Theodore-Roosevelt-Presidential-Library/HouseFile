@@ -1,0 +1,33 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T+14 From the Shop
+Subject:    Bring a piece of the Badlands home
+Preheader:  The Library Shop is open online, with pieces you won't find in Medora.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · From the Library Shop
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], The Library Shop is open online, and so
+      everyone
+  4. Two columns · Filson All-Weather Backpack
+      everyone
+  5. Two columns · Arena Quote T-shirt
+      everyone
+  6. Button · Shop Online
+      everyone
+  7. Text · Shopping in person? Members take 10% off in the Library Shop in Medora.
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p4]
+  8. Text · Hear about new arrivals and seasonal sales first: add The Shop to your n
+      everyone
+  9. Footer
+      everyone
+
+GROUPS
+  p4: Acme - Is Active Member — rows 7; values active, new; no default row (contacts matching nothing see none of these rows)

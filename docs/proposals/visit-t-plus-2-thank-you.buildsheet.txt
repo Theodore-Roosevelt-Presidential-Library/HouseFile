@@ -1,0 +1,52 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T+2 Thank You
+Subject:    Thank you for coming to the Badlands
+Preheader:  Pick what you want to hear about next, from the archive to the prairie.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · Thank You for Coming
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Thank you for spending a day at the The
+      everyone
+  4. Text · Thank you for visiting as a member. Your membership covers every visit u
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p1]
+  5. Divider
+      everyone
+  6. Heading · Tell Us What to Send You
+      everyone
+  7. Text · The Library's newsletter, Mail from the Badlands, comes in topics. Pick 
+      everyone
+  8. Table · Topic / What arrives
+      everyone
+  9. Button · Choose Your Topics
+      everyone
+ 10. Text · Know someone who would love it here? As a member you take 10% off gift m
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
+ 11. Divider
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 12. Heading · Come Back as a Member
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 13. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 14. Table · Level / Free admission for / A year
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 15. Button · See Membership Levels
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 16. Divider
+      everyone
+ 17. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
+      everyone
+ 18. Footer
+      everyone
+
+GROUPS
+  p1: Acme - Is Active Member — rows 4; values active, new; no default row (contacts matching nothing see none of these rows)
+  p2: Acme - Is Active Member — rows 10, 11, 12, 13, 14, 15; values active, new; has a default row

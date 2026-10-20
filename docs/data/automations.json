@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T18:55:32+00:00",
+ "rebuilt_at": "2026-10-20T19:37:53+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -172,6 +172,40 @@
    "description": "Follow-up after the visit: shop, stay connected, private events, what's next.",
    "paths": [
     {
+     "name": "VISIT: T+2 Thank You",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 2,
+      "label": "2 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Thanks for coming, a reminder that the Trailblazer journal and photos stay online for 30 days, and the newsletter topics (From the Archive, The Badlands, Events & Programs and five more) so they choose what arrives. Members are thanked; everyone else sees the membership levels.",
+     "split": "Active Members (ACME field: active or new) segment",
+     "emails": [
+      {
+       "slug": "visit-t-plus-2-thank-you",
+       "task": "VISIT: T+2 Thank You",
+       "subject": "Thank you for coming to the Badlands",
+       "preheader": "Pick what you want to hear about next, from the archive to the prairie.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-plus-2-thank-you.html",
+       "proposed": true,
+       "notes": [
+        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
+        "The Trailblazer Takeaway email (SendGrid) arrives separately right after the visit; this one only points to it.",
+        "Choose Your Topics goes to trlibrary.com/newsletter; the form updates the existing contact, so topics land on the same record.",
+        "Topic descriptions are from the newsletter form, checked 2026-10-20."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
      "name": "VISIT: T+3 Retail",
      "status": "draft",
      "activated": null,
@@ -187,6 +221,38 @@
      "emails": []
     },
     {
+     "name": "VISIT: T+7 Keep Exploring",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 7,
+      "label": "7 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "T.R.'s life online (the Badlands chapter and Conservation), two quizzes (Fact or Fiction and the Animals of the Badlands family edition) and the Good Citizen podcast with its Live from the TRPL series.",
+     "split": "Active Members (ACME field: active or new) segment",
+     "emails": [
+      {
+       "slug": "visit-t-plus-7-keep-exploring",
+       "task": "VISIT: T+7 Keep Exploring",
+       "subject": "The rest of T.R.'s story, from home",
+       "preheader": "Six chapters of his life, quizzes for every level and a podcast recorded at the Library.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-plus-7-keep-exploring.html",
+       "proposed": true,
+       "notes": [
+        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
+        "Facts from trlibrary.com/tr, /quiz and /podcast/good-citizen, checked 2026-10-20. No single episode is featured, so the email does not date."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
      "name": "VISIT: T+12 Stay Connected",
      "status": "draft",
      "activated": null,
@@ -200,6 +266,71 @@
      "action": "No email built yet.",
      "split": null,
      "emails": []
+    },
+    {
+     "name": "VISIT: T+14 From the Shop",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 14,
+      "label": "14 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "The online Library Shop: the special-edition Filson backpack, the Bully! hat, the Arena quote tee and the journal set, with a member reminder about 10% off in the shop in Medora.",
+     "split": "Active Members (ACME field: active or new) segment",
+     "emails": [
+      {
+       "slug": "visit-t-plus-14-shop",
+       "task": "VISIT: T+14 From the Shop",
+       "subject": "Bring a piece of the Badlands home",
+       "preheader": "The Library Shop is open online, with pieces you won't find in Medora.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-plus-14-shop.html",
+       "proposed": true,
+       "notes": [
+        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
+        "Confirm before going live: which pieces are online-only (the copy says some are), and whether the 10% member discount applies online (the copy only claims it in Medora).",
+        "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "VISIT: T+30 Host an Event",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 30,
+      "label": "30 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Private events: weddings, corporate gatherings, private dinners for 12 to 60 and nonprofit convenings, with the spaces and catering look books and the inquiry form.",
+     "split": "Active Members (ACME field: active or new) segment",
+     "emails": [
+      {
+       "slug": "visit-t-plus-30-host-an-event",
+       "task": "VISIT: T+30 Host an Event",
+       "subject": "Host your next gathering above the Badlands",
+       "preheader": "Weddings, retreats, private dinners and reunions at the Library.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-plus-30-host-an-event.html",
+       "proposed": true,
+       "notes": [
+        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
+        "Every claim is from trlibrary.com/private-events, checked 2026-10-20."
+       ],
+       "stats": {}
+      }
+     ]
     },
     {
      "name": "VISIT: T+30 Stay Engaged",
@@ -230,6 +361,39 @@
      "action": "No email built yet.",
      "split": null,
      "emails": []
+    },
+    {
+     "name": "VISIT: T+60 Reasons to Come Back",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Visit Date (Next)",
+      "offset_days": 60,
+      "label": "60 days after the Acme - Visit Date (Next)"
+     },
+     "filters": [],
+     "action": "Special events and specialty tours without naming any one event, a nudge to the Events & Programs topic, member perks for members and the membership levels for everyone else.",
+     "split": "Active Members (ACME field: active or new) segment",
+     "emails": [
+      {
+       "slug": "visit-t-plus-60-come-back",
+       "task": "VISIT: T+60 Reasons to Come Back",
+       "subject": "What's next at the Library",
+       "preheader": "Talks, screenings, family days and evening programs on the butte.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-plus-60-come-back.html",
+       "proposed": true,
+       "notes": [
+        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
+        "No specific events are named, so the email never goes out of date (per Matt).",
+        "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
+       ],
+       "stats": {}
+      }
+     ]
     },
     {
      "name": "VISIT: T+60 What's Next",

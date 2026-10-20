@@ -1,0 +1,43 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T+60 Reasons to Come Back
+Subject:    What's next at the Library
+Preheader:  Talks, screenings, family days and evening programs on the butte.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · Come Back to the Badlands
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], No two visits to the Library have to lo
+      everyone
+  4. Two columns · Special Events
+      everyone
+  5. Text · Hear about events while seats are still open: add Events & Programs to y
+      everyone
+  6. Text · As a member, you get early ticket access and invitations to member event
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p5]
+  7. Divider
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+  8. Heading · Make It a Membership
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+  9. Text · A membership covers a full year of visits, and Individual and Dual pay f
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 10. Table · Level / Free admission for / A year
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 11. Button · See Membership Levels
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 12. Divider
+      everyone
+ 13. Button · Plan Your Next Visit
+      everyone
+ 14. Footer
+      everyone
+
+GROUPS
+  p5: Acme - Is Active Member — rows 6, 7, 8, 9, 10, 11; values active, new; has a default row

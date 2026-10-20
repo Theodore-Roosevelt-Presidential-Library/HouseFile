@@ -1,0 +1,32 @@
+CONSTANT CONTACT BUILD SHEET
+
+Email:      VISIT: T+30 Host an Event
+Subject:    Host your next gathering above the Badlands
+Preheader:  Weddings, retreats, private dinners and reunions at the Library.
+From name:  Theodore Roosevelt Presidential Library
+
+Build this email in Constant Contact's drag-and-drop editor (dynamic content
+does not work in custom-code emails). Add the rows in this order. For each
+conditional row, open the row's display settings and add the rule shown.
+Test sends won't show rows that depend on custom fields; use the preview toggles.
+
+  1. Header · Theodore Roosevelt Presidential Library
+      everyone
+  2. Heading · Host Your Event at the Library
+      everyone
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], You have seen the galleries by day. Aft
+      everyone
+  4. Image · The Library lobby, with glass walls framing the Badlands
+      everyone
+  5. Table · Event / At the Library
+      everyone
+  6. Text · Every event includes the Library's events team and its list of regional 
+      everyone
+  7. Two columns · The Spaces
+      everyone
+  8. Button · Start an Inquiry
+      everyone
+  9. Text · Planning something that doesn't fit a category? Ask anyway.
+      everyone
+ 10. Footer
+      everyone

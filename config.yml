@@ -264,6 +264,105 @@ automations:
         reply_to: "hello@trlibrary.com"
         notes:
           - "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
+    # ---- Proposed: post-visit series (repo only, 2026-10-20) ----
+    # Replaces the six empty Constant Contact drafts below (T+3, T+5, T+12, T+30, T+45, T+60).
+    # Order: thank you + newsletter topics, keep exploring (TR story, quizzes, podcast), shop,
+    # private events, reasons to come back. Members are thanked; everyone else sees membership.
+    - name: "VISIT: T+2 Thank You"
+      flow: post-visit
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 2}
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
+      action: "Thanks for coming, a reminder that the Trailblazer journal and photos stay online for 30 days, and the newsletter topics (From the Archive, The Badlands, Events & Programs and five more) so they choose what arrives. Members are thanked; everyone else sees the membership levels."
+      proposal:
+        slug: visit-t-plus-2-thank-you
+        html: proposals/visit-t-plus-2-thank-you.html
+        subject: "Thank you for coming to the Badlands"
+        preheader: "Pick what you want to hear about next, from the archive to the prairie."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
+          - "The Trailblazer Takeaway email (SendGrid) arrives separately right after the visit; this one only points to it."
+          - "Choose Your Topics goes to trlibrary.com/newsletter; the form updates the existing contact, so topics land on the same record."
+          - "Topic descriptions are from the newsletter form, checked 2026-10-20."
+    - name: "VISIT: T+7 Keep Exploring"
+      flow: post-visit
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 7}
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
+      action: "T.R.'s life online (the Badlands chapter and Conservation), two quizzes (Fact or Fiction and the Animals of the Badlands family edition) and the Good Citizen podcast with its Live from the TRPL series."
+      proposal:
+        slug: visit-t-plus-7-keep-exploring
+        html: proposals/visit-t-plus-7-keep-exploring.html
+        subject: "The rest of T.R.'s story, from home"
+        preheader: "Six chapters of his life, quizzes for every level and a podcast recorded at the Library."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
+          - "Facts from trlibrary.com/tr, /quiz and /podcast/good-citizen, checked 2026-10-20. No single episode is featured, so the email does not date."
+    - name: "VISIT: T+14 From the Shop"
+      flow: post-visit
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 14}
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
+      action: "The online Library Shop: the special-edition Filson backpack, the Bully! hat, the Arena quote tee and the journal set, with a member reminder about 10% off in the shop in Medora."
+      proposal:
+        slug: visit-t-plus-14-shop
+        html: proposals/visit-t-plus-14-shop.html
+        subject: "Bring a piece of the Badlands home"
+        preheader: "The Library Shop is open online, with pieces you won't find in Medora."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
+          - "Confirm before going live: which pieces are online-only (the copy says some are), and whether the 10% member discount applies online (the copy only claims it in Medora)."
+          - "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
+    - name: "VISIT: T+30 Host an Event"
+      flow: post-visit
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 30}
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
+      action: "Private events: weddings, corporate gatherings, private dinners for 12 to 60 and nonprofit convenings, with the spaces and catering look books and the inquiry form."
+      proposal:
+        slug: visit-t-plus-30-host-an-event
+        html: proposals/visit-t-plus-30-host-an-event.html
+        subject: "Host your next gathering above the Badlands"
+        preheader: "Weddings, retreats, private dinners and reunions at the Library."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
+          - "Every claim is from trlibrary.com/private-events, checked 2026-10-20."
+    - name: "VISIT: T+60 Reasons to Come Back"
+      flow: post-visit
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 60}
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
+      action: "Special events and specialty tours without naming any one event, a nudge to the Events & Programs topic, member perks for members and the membership levels for everyone else."
+      proposal:
+        slug: visit-t-plus-60-come-back
+        html: proposals/visit-t-plus-60-come-back.html
+        subject: "What's next at the Library"
+        preheader: "Talks, screenings, family days and evening programs on the butte."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
+          - "No specific events are named, so the email never goes out of date (per Matt)."
+          - "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
+
     - name: "VISIT: T+3 Retail"
       flow: post-visit
       status: draft

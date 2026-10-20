@@ -1,0 +1,185 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T+7 Keep Exploring",
+  "subject": "The rest of T.R.'s story, from home",
+  "preheader": "Six chapters of his life, quizzes for every level and a podcast recorded at the Library.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-plus-7-keep-exploring-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "The Story Keeps Going",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>The galleries cover a lot of ground in one visit. The rest of Theodore Roosevelt's life is online, told in six chapters, from a Manhattan childhood to an unmapped river in the Amazon.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-tr-badlands.jpg",
+            "alt": "Theodore Roosevelt in buckskin standing guard with his rifle",
+            "heading": "The Badlands",
+            "text": "He came to Dakota to hunt a bison and stayed to run cattle on the Little Missouri. Read how the Badlands gave him a new life.",
+            "label": "Read the Chapter",
+            "href": "https://www.trlibrary.com/tr/badlands"
+          },
+          {
+            "src": "proposals/img/pv-tr-conservation.jpg",
+            "alt": "Yosemite Valley with El Capitan and Half Dome",
+            "heading": "Conservation",
+            "text": "Parks, forests, monuments and bird reserves: roughly 230 million acres protected, and how he did it.",
+            "label": "Explore",
+            "href": "https://www.trlibrary.com/tr/presidency/conservation"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Explore T.R.'s Life",
+        "href": "https://www.trlibrary.com/tr"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Test What You Learned",
+        "align": "center"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-quiz-myths.jpg",
+            "alt": "Clifford Berryman 1902 cartoon Drawing the Line in Mississippi",
+            "heading": "Fact or Fiction",
+            "text": "Fifteen questions separating the famous stories from the record.",
+            "label": "Take the Quiz",
+            "href": "https://www.trlibrary.com/quiz/myths"
+          },
+          {
+            "src": "proposals/img/pv-quiz-family.jpg",
+            "alt": "A grassy coulee opening onto badlands country",
+            "heading": "Animals of the Badlands",
+            "text": "A family edition: nine short questions on what T.R. watched from the saddle, and what is still out there.",
+            "label": "Play Together",
+            "href": "https://www.trlibrary.com/quiz/badlands-wildlife-family"
+          }
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Dozens more, from family editions to expert level, at <a href=\"https://www.trlibrary.com/quiz\">trlibrary.com/quiz</a>.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Listen: Good Citizen",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Ted Roosevelt V hosts conversations with people who step into the arena to build up the country and protect the planet. The <i>Live from the TRPL</i> series is recorded at the Library, beginning with presidential historian Doris Kearns Goodwin. Good Citizen was a 2024 Webby Award Honoree.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<a href=\"https://podcasts.apple.com/us/podcast/good-citizen/id1713230937\">Apple Podcasts</a> &nbsp;·&nbsp; <a href=\"https://open.spotify.com/show/7ywQA9wJGztUPmedmG6BSe\">Spotify</a> &nbsp;·&nbsp; <a href=\"https://www.youtube.com/playlist?list=PL-sck-PjBiFcxu6QSF_0u7aDB9EJ5mLe_\">YouTube</a>",
+        "align": "center"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Listen to Good Citizen",
+        "href": "https://www.trlibrary.com/podcast/good-citizen"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href=\"https://www.trlibrary.com/membership\">See the levels</a>.",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you visited the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}

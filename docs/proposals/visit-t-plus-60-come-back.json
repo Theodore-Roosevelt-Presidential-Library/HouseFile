@@ -1,0 +1,210 @@
+{
+  "app": "trpl-newsletter-builder",
+  "version": "2.0.0",
+  "title": "VISIT: T+60 Reasons to Come Back",
+  "subject": "What's next at the Library",
+  "preheader": "Talks, screenings, family days and evening programs on the butte.",
+  "fromName": "Theodore Roosevelt Presidential Library",
+  "blocks": [
+    {
+      "type": "header",
+      "props": {
+        "src": "proposals/img/visit-t-plus-60-come-back-header.jpg",
+        "alt": "Theodore Roosevelt Presidential Library",
+        "href": "https://www.trlibrary.com"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Come Back to the Badlands",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "columns",
+      "props": {
+        "cols": [
+          {
+            "src": "proposals/img/pv-events-auditorium.jpg",
+            "alt": "The Library auditorium",
+            "heading": "Special Events",
+            "text": "Talks, screenings, festivals and evening programs, each with its own date and ticket.",
+            "label": "See Special Events",
+            "href": "https://www.trlibrary.com/calendar/special-event"
+          },
+          {
+            "src": "proposals/img/pv-events-lobby.jpg",
+            "alt": "The Library lobby",
+            "heading": "Specialty Tours",
+            "text": "Tours built around a single subject, offered on select days.",
+            "label": "See Tours",
+            "href": "https://www.trlibrary.com/calendar/specialty-tour"
+          }
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Hear about events while seats are still open: add <a href=\"https://www.trlibrary.com/newsletter\">Events &amp; Programs</a> to your newsletter topics.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>As a member</b>, you get early ticket access and invitations to member events, and your free admission covers every visit until your membership renews.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "divider",
+      "props": {},
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Make It a Membership",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "Every level adds the member line, early ticket access, invitations to member events, and 10% off in the Library Shop and at Salt+Scoria. Save 10% more with auto-renew or two years.",
+        "columns": [
+          "Level",
+          "Free admission for",
+          "A year"
+        ],
+        "rows": [
+          [
+            "Individual",
+            "You",
+            "$50"
+          ],
+          [
+            "Dual",
+            "You and a guest",
+            "$95"
+          ],
+          [
+            "Family",
+            "You and three guests, plus family programming",
+            "$175"
+          ],
+          [
+            "Contributing",
+            "You and five guests, plus a commemorative gift",
+            "$250"
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      },
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "See Membership Levels",
+        "href": "https://www.trlibrary.com/membership"
+      },
+      "cond": {
+        "group": "p5",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "else"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Plan Your Next Visit",
+        "href": "https://www.trlibrary.com/visit"
+      }
+    },
+    {
+      "type": "footer",
+      "props": {
+        "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",
+        "logoAlt": "Theodore Roosevelt Presidential Library",
+        "siteUrl": "https://www.trlibrary.com",
+        "contactLabel": "Questions",
+        "contactUrl": "mailto:hello@trlibrary.com",
+        "org": "[[account.OrganizationName]]",
+        "address": "[[account.AddressLine1]], [[account.City]], [[account.usState]] [[account.PostalCode]]",
+        "note": "You are receiving this email because you visited the Theodore Roosevelt Presidential Library.",
+        "unsubLabel": "Unsubscribe",
+        "updateLabel": "Update Preferences",
+        "webLabel": "View as Webpage"
+      }
+    }
+  ]
+}
