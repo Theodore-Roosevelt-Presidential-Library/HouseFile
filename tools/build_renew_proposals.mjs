@@ -16,7 +16,7 @@ const RENEW_URL = 'https://buy.acmeticketing.com/auth/613/members?ref=%2Fmembers
 const LEVELS_URL = 'https://www.trlibrary.com/membership';
 const MAIL = '<a href="mailto:membership@trlibrary.com">membership@trlibrary.com</a>';
 const GREET = 'Dear [[FIRSTNAME OR "Friend of the Library"]],';
-const CARD = '<b>Membership number:</b> [[custom.acme_-_membership_number]]<br><b>Level:</b> [[custom.acme_-_membership_level]]<br><b>Expires:</b> [[custom.acme_-_membership_expiration_date]]';
+const CARD = '<b>Membership number:</b> [[custom.acme_-_membership_number]]<br><b>Level:</b> [[custom.acme_-_membership_level]]<br><b>Expires:</b> [[custom.acme_-_membership_expiration_text OR "see your member card"]]';
 const NOTE = 'You are receiving this email because you are a member of the Theodore Roosevelt Presidential Library.';
 
 // One Header Studio banner per email. Brand rules (TRPL Brand Guidelines):
@@ -83,7 +83,7 @@ function byField(F, variants, fallback) {
 const byLevel = (fn, fallback) => byField(LEVEL_F, [FOUNDING, ...STANDARD].map(l => [l, fn(l)]).filter(([, b]) => b), fallback);
 const MEMBER_TICKETS = ['Member Adult', 'Member Youth'];
 
-const EXP = '[[custom.acme_-_membership_expiration_date]]';
+const EXP = '[[custom.acme_-_membership_expiration_text OR "your renewal date"]]';  // text copy written daily by sync_date_text.py
 const VISIT_URL = 'https://www.trlibrary.com/visit';
 
 // The builder's text block strips <table>/<div>, so raw HTML rides through as a token and is
@@ -312,7 +312,7 @@ for (const e of emails) {
   });
   let html = await pg.evaluate(({ title, preheader, blocks }) => {
     NB.setState({ title, preheader, blocks });
-    return NB.exportHTML();
+    return NB.exportHTML({ strict: false });  // proposal images are repo-relative until uploaded
   }, { title: e.title, preheader: e.preheader, blocks });
   conds.forEach((c, i) => {
     const id = `ZQC${i}QZ`, pos = html.indexOf(id);
