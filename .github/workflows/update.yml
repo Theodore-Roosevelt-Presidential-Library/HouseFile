@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       task:
-        description: "stats (daily refresh), timing, date-text-dry-run, date-text-create-fields, date-text-test (25 contacts) or date-text-apply"
+        description: "stats (daily refresh), timing, date-text-dry-run, date-text-create-fields, date-text-test (25 contacts), date-text-apply (all contacts) or date-text-daily (changed in last 2 days)"
         default: "stats"
 
 # Every job that talks to Constant Contact lives in this one workflow, in this one
@@ -68,7 +68,8 @@ jobs:
           set -o pipefail
           case "${{ inputs.task }}" in
             date-text-apply) args="--apply" ;;
-            date-text-test) args="--apply --limit 25" ;;
+            date-text-test) args="--apply --limit 25 --wait" ;;
+            date-text-daily) args="--apply --since-days 2" ;;
             date-text-create-fields) args="--create-fields" ;;
             *) args="" ;;
           esac

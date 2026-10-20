@@ -25,7 +25,7 @@ import argparse
 import sys
 import time
 from collections import Counter, defaultdict
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 
 from collect import CC, ROOT, get_access_token, load_env
 
@@ -34,7 +34,7 @@ FIELDS = [  # (date field label, text field label, strftime pattern)
     ("Acme - Last Purchase Date", "Acme - Last Purchase Date (Text)", "%B {d}, %Y"),
     ("Acme - Membership Expiration Date", "Acme - Membership Expiration (Text)", "%B {d}, %Y"),
 ]
-IMPORT_BATCH = 5000  # well under the 40,000-per-request import limit
+IMPORT_BATCH = 40000  # Constant Contact's per-request import limit
 
 
 def parse_date(v) -> date | None:
@@ -58,6 +58,10 @@ def main():
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
     ap.add_argument("--create-fields", action="store_true", help="create missing text fields")
     ap.add_argument("--limit", type=int, default=0, help="update at most this many contacts (test runs)")
+    ap.add_argument("--since-days", type=int, default=0,
+                    help="only scan contacts updated in the last N days (0 = every contact; daily runs use 2)")
+    ap.add_argument("--wait", action="store_true",
+                    help="wait for the imports to finish and report their results (slow on big runs)")
     a = ap.parse_args()
     load_env(ROOT / ".env")
     cc = CC(get_access_token())
@@ -82,7 +86,12 @@ def main():
 
     stats = Counter()
     rows_by_list = defaultdict(list)
-    for page in cc.paged("/contacts", "contacts", include="custom_fields,list_memberships", limit=500):
+    params = {"include": "custom_fields,list_memberships", "limit": 500}
+    if a.since_days:
+        since = datetime.now(timezone.utc) - timedelta(days=a.since_days)
+        params["updated_after"] = since.strftime("%Y-%m-%dT%H:%M:%SZ")
+        print(f"Scanning contacts updated in the last {a.since_days} day(s)")
+    for page in cc.paged("/contacts", "contacts", **params):
         for c in page.get("contacts", []):
             stats["contacts scanned"] += 1
             cf = {f.get("custom_field_id"): f.get("value") for f in c.get("custom_fields") or []}
@@ -124,7 +133,11 @@ def main():
                           json={"import_data": rows[i:i + IMPORT_BATCH], "list_ids": [list_id]}, timeout=120)
             r.raise_for_status()
             jobs.append(r.json()["activity_id"])
-    print(f"Started {len(jobs)} import(s).")
+    print(f"Started {len(jobs)} import(s) for {sum(len(r) for r in rows_by_list.values())} contacts.")
+    if not a.wait:
+        # Constant Contact finishes them in the background; the next run's counts show
+        # anything that didn't land (it is picked up again then).
+        return
     done = Counter()
     for job in jobs:
         for _ in range(60):
