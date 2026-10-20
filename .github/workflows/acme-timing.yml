@@ -34,7 +34,9 @@ jobs:
           CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
           CC_REFRESH_TOKEN: ${{ secrets.CC_REFRESH_TOKEN }}
           CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
-        run: python tools/acme_timing.py --days "${{ inputs.days }}" | tee "${{ runner.temp }}/out.txt"
+        run: |
+          set -o pipefail
+          python tools/acme_timing.py --days "${{ inputs.days }}" | tee "${{ runner.temp }}/out.txt"
       - name: Privacy guard
         run: |
           f="${{ runner.temp }}/out.txt"
