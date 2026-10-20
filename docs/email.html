@@ -191,7 +191,9 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   if (email.proposed) {
     const pb = document.getElementById("proposal");
     pb.hidden = false;
-    pb.innerHTML = `<b>Proposal for team review.</b> This email is not in Constant Contact and has not been sent to anyone. Comments and edits go to the membership and communications teams before it is built.`
+    pb.innerHTML = (path.status === "active"
+        ? `<b>Live in Constant Contact.</b> This is the built copy from the repo, with the member and non-member versions in one preview. The next refresh from Constant Contact replaces it with the emails as they are sent.`
+        : `<b>Proposal for team review.</b> This email is not in Constant Contact and has not been sent to anyone. Comments and edits go to the membership and communications teams before it is built.`)
       + (email.notes && email.notes.length ? `<ul>${email.notes.map(n => `<li>${A.esc(n)}</li>`).join("")}</ul>` : "");
   }
 

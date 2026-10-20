@@ -179,10 +179,11 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             "trigger": trig,
             "filters": p.get("filters") or [],
             "action": p.get("action", ""),
+            "split": p.get("split"),
             "emails": [],
         }
         cid = p.get("campaign_id")
-        if p.get("proposal"):
+        if p.get("proposal") and not (cid and p.get("status") == "active"):
             email = proposal_email(p)
             path["emails"].append(email)
             if not (out.parent / email["html"]).exists():
@@ -190,18 +191,35 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             print(f"  {p['name']}: proposed, {email['subject']!r}")
         elif cid and offline:
             old = previous.get(p["name"], {})
-            path["emails"] = [e for e in old.get("emails", []) if not e.get("proposed")]
+            path["emails"] = [e for e in old.get("emails", []) if not e.get("proposed")
+                              and (not p.get("emails") or e.get("task") in p["emails"])]
             if old.get("cc_status"):
                 path["cc_status"] = old["cc_status"]
             for e in path["emails"]:
                 f = out / "emails" / Path(e["html"]).name
                 if f.exists():
                     pages[f.name] = f.read_text()
+            if not path["emails"] and p.get("proposal"):
+                # Just went live and not refreshed from the API yet: show the built copy.
+                path["emails"].append(proposal_email(p))
             print(f"  {p['name']}: kept last refresh ({len(path['emails'])} email)")
         elif cid:
             camp = safe_get(cc, f"/emails/{cid}")
+            # Single-email paths use a primary_email; split paths hold one multistep_email per
+            # branch. A path's campaign can also keep unattached drafts, so when config lists
+            # `emails` (exact email names, in branch order) only those are shown.
             acts = [a for a in (camp or {}).get("campaign_activities", [])
-                    if a.get("role") == "primary_email"]
+                    if a.get("role") in ("primary_email", "multistep_email")]
+            wanted = p.get("emails") or []
+            if wanted:
+                named = {}
+                for a in acts:
+                    meta = safe_get(cc, f"/emails/activities/{a['campaign_activity_id']}") or {}
+                    named.setdefault(meta.get("name") or "", a)
+                acts = [named[n] for n in wanted if n in named]
+                missing = [n for n in wanted if n not in named]
+                if missing:
+                    print(f"  ! {p['name']}: emails not found in campaign: {missing}", file=sys.stderr)
             if not acts:
                 # Shape only (keys and activity roles), never content, to diagnose.
                 shape = {"keys": sorted((camp or {}).keys()),

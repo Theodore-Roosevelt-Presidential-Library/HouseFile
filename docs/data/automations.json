@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T16:09:49+00:00",
+ "rebuilt_at": "2026-10-20T16:31:52+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -33,8 +33,8 @@
    "paths": [
     {
      "name": "VISIT: T-30 Plan Ahead",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-20",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",
@@ -43,6 +43,7 @@
      },
      "filters": [],
      "action": "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), their visit day with a link to that day's hours, winter road advice, the premiere preview and two short gallery and boardwalk videos, and the membership offer or a member thank-you.",
+     "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
        "slug": "visit-t-30-plan-ahead",
@@ -62,37 +63,6 @@
      ]
     },
     {
-     "name": "VISIT: T-3 Know Before You Go",
-     "status": "proposed",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": -3,
-      "label": "3 days before the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "Proposed replacement for the live T-3 email: the entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk.",
-     "emails": [
-      {
-       "slug": "visit-t-3-know-before",
-       "task": "VISIT: T-3 Know Before You Go",
-       "subject": "Three days to the Badlands: what to know before you go",
-       "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
-       "from_name": "Theodore Roosevelt Presidential Library",
-       "from_email": "hello@trlibrary.com",
-       "reply_to": "hello@trlibrary.com",
-       "html": "proposals/visit-t-3-know-before.html",
-       "proposed": true,
-       "notes": [
-        "Would replace VISIT: T-3 Pre-Visit Excitement. Keep that one running until this is approved and built.",
-        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
-       ],
-       "stats": {}
-      }
-     ]
-    },
-    {
      "name": "VISIT: T-3 Pre-Visit Excitement",
      "status": "active",
      "activated": "2026-07-18",
@@ -103,23 +73,24 @@
       "label": "3 days before the Acme - Visit Date (Next)"
      },
      "filters": [],
-     "action": "Send one email: what to expect, how long to plan, what to wear, parking and accessibility.",
+     "action": "The entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk.",
+     "split": "Active Members (ACME field: active or new) segment: members get the member email, everyone else the non-member email",
      "emails": [
       {
-       "slug": "visit-t-3-pre-visit-excitement",
+       "slug": "visit-t-3-know-before",
        "task": "VISIT: T-3 Pre-Visit Excitement",
-       "subject": "Your Badlands adventure is almost here",
-       "preheader": "A few things to know before you step into the country that made a president.",
+       "subject": "Three days to the Badlands: what to know before you go",
+       "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "data/emails/visit-t-3-pre-visit-excitement.html",
-       "stats": {
-        "started": 19848,
-        "sends": 19823,
-        "opens": 11930,
-        "clicks": 3840
-       }
+       "html": "proposals/visit-t-3-know-before.html",
+       "proposed": true,
+       "notes": [
+        "Live 2026-10-20: replaced the original drag-and-drop T-3 email in place (same path, split on the Active Members segment, one custom-code email per branch).",
+        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
+       ],
+       "stats": {}
       }
      ]
     },
@@ -135,6 +106,7 @@
      },
      "filters": [],
      "action": "Send one email asking the visitor to pre-register their Trailblazer wristband (link carries their ACME order ID).",
+     "split": null,
      "emails": [
       {
        "slug": "visit-t-24h-trailblazer",
@@ -156,18 +128,17 @@
     },
     {
      "name": "VISIT: T+1 Welcome",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-20",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Last Purchase Date",
       "offset_days": 1,
       "label": "1 day after the Acme - Last Purchase Date"
      },
-     "filters": [
-      "Acme - Visit Date (Next) is at least 3 days away when it sends, so last-minute buyers go straight to T-3 and T-24h (if Constant Contact can filter on it)"
-     ],
+     "filters": [],
      "action": "Sent the day after tickets are bought, once the overnight ACME sync has landed: the 3\u00bd-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept.",
+     "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
        "slug": "visit-t1-welcome",
@@ -184,7 +155,7 @@
         "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building.",
         "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20).",
         "Constant Contact can't print date custom fields in an email (only text fields are merge tags), so the copy points to the ticket confirmation for the date and entry time.",
-        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Check that a 1-day-after trigger on Acme - Last Purchase Date fires for contacts whose date arrives that morning, and whether the path can skip visits in the next 3 days. Without that filter, someone visiting the day after buying would get the welcome after their visit."
+        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Constant Contact's trigger filters have no relative-date rule, so the path can't skip visits in the next few days: someone who visits the day after buying gets the welcome after their visit."
        ],
        "stats": {}
       }
@@ -209,6 +180,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     },
     {
@@ -223,6 +195,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     },
     {
@@ -237,6 +210,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     },
     {
@@ -251,6 +225,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     },
     {
@@ -265,6 +240,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     }
    ]
@@ -289,6 +265,7 @@
       "Not on auto-renew"
      ],
      "action": "First renewal notice, one email with conditional rows: Founding Members get a thank-you, permanent recognition on the Digital Donor Wall and an invitation to continue at Contributing; every other level sees its own renewal prices (1 year, auto-renew, 2 years), a nudge to the next level up, and a thank-you or visit invitation depending on their last ticket.",
+     "split": null,
      "emails": [
       {
        "slug": "renew-t-60-renewal-notice",
@@ -329,6 +306,7 @@
       "Not yet renewed"
      ],
      "action": "Full reminder, matching the first notice: the member's own price table, a visit thank-you or invitation, the next-level nudge and what renewing keeps; Founding Members are invited to continue at Contributing, with their permanent recognition.",
+     "split": null,
      "emails": [
       {
        "slug": "renew-t-30-reminder",
@@ -363,6 +341,7 @@
       "Not yet renewed"
      ],
      "action": "Short last-week note with the member's own renewal price, signed by the membership team; Founding Members get Contributing first, with Dual or Family as the smaller option.",
+     "split": null,
      "emails": [
       {
        "slug": "renew-t-7-last-week",
@@ -391,6 +370,7 @@
      },
      "filters": [],
      "action": "No email built yet.",
+     "split": null,
      "emails": []
     },
     {
@@ -407,6 +387,7 @@
       "Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"
      ],
      "action": "Lapsed notice with the full sell: the member's own rejoin price table, a thank-you if they visited, the next-level nudge, what membership brings back and how to rejoin; Founding Members hear that their status and Digital Donor Wall name are permanent.",
+     "split": null,
      "emails": [
       {
        "slug": "renew-t-plus-7-membership-ended",
@@ -439,6 +420,7 @@
       "Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"
      ],
      "action": "Final invitation: the member's own price table, what members get, and a one-question reply survey on why not; Founding Members are reminded their recognition is permanent.",
+     "split": null,
      "emails": [
       {
        "slug": "renew-t-plus-45-last-note",

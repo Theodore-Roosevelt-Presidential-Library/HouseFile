@@ -183,12 +183,22 @@ automations:
       campaign_id: "a3df1186-26da-4b40-8602-c50cf797b9be"
       status: active
       activated: "2026-07-18"
-      trigger:
-        type: date_field
-        field: "Acme - Visit Date (Next)"
-        offset_days: -3
+      emails: ["VISIT: T-3 Know Before You Go · Member", "VISIT: T-3 Know Before You Go · Not a member"]
+      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: -3}
       filters: []
-      action: "Send one email: what to expect, how long to plan, what to wear, parking and accessibility."
+      split: "Active Members (ACME field: active or new) segment: members get the member email, everyone else the non-member email"
+      action: "The entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk."
+      proposal:
+        slug: visit-t-3-know-before
+        html: proposals/visit-t-3-know-before.html
+        subject: "Three days to the Badlands: what to know before you go"
+        preheader: "Your entry window, parking, what to bring and how to make a day of it."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "hello@trlibrary.com"
+        reply_to: "hello@trlibrary.com"
+        notes:
+          - "Live 2026-10-20: replaced the original drag-and-drop T-3 email in place (same path, split on the Active Members segment, one custom-code email per branch)."
+          - "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
 
     - name: "VISIT: T-24h Trailblazer"
       flow: pre-visit
@@ -202,16 +212,20 @@ automations:
       filters: []
       action: "Send one email asking the visitor to pre-register their Trailblazer wristband (link carries their ACME order ID)."
 
-    # ---- Proposed: pre-visit welcome series (not in Constant Contact) ----
+    # ---- Pre-visit welcome series (live 2026-10-20; split paths, one custom-code email per branch) ----
     # Lead time from ACME (Dates & members tab, Oct 2026): median 6 days; 23% book the same or
     # next day, 57% within a week, 16% more than 30 days out. T-3 and T-24h miss most
     # last-minute buyers, so the welcome goes out right after purchase: the day after, because
     # ACME syncs to Constant Contact overnight and the purchase date only lands the next day.
     - name: "VISIT: T+1 Welcome"
       flow: pre-visit
-      status: proposed
+      campaign_id: "9692d233-25a8-4e2b-a00f-df75ceec0b41"
+      status: active
+      activated: "2026-10-20"
+      emails: ["VISIT: T+1 Welcome · Member", "VISIT: T+1 Welcome · Not a member"]
       trigger: {type: date_field, field: "Acme - Last Purchase Date", offset_days: 1}
-      filters: ["Acme - Visit Date (Next) is at least 3 days away when it sends, so last-minute buyers go straight to T-3 and T-24h (if Constant Contact can filter on it)"]
+      filters: []
+      split: "Active Members (ACME field: active or new) segment"
       action: "Sent the day after tickets are bought, once the overnight ACME sync has landed: the 3½-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept."
       proposal:
         slug: visit-t1-welcome
@@ -226,10 +240,14 @@ automations:
           - "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building."
           - "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20)."
           - "Constant Contact can't print date custom fields in an email (only text fields are merge tags), so the copy points to the ticket confirmation for the date and entry time."
-          - "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Check that a 1-day-after trigger on Acme - Last Purchase Date fires for contacts whose date arrives that morning, and whether the path can skip visits in the next 3 days. Without that filter, someone visiting the day after buying would get the welcome after their visit."
+          - "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Constant Contact's trigger filters have no relative-date rule, so the path can't skip visits in the next few days: someone who visits the day after buying gets the welcome after their visit."
     - name: "VISIT: T-30 Plan Ahead"
       flow: pre-visit
-      status: proposed
+      campaign_id: "3c31edd2-f62c-4e40-9bbf-01653be958ca"
+      status: active
+      activated: "2026-10-20"
+      emails: ["VISIT: T-30 Plan Ahead · Member", "VISIT: T-30 Plan Ahead · Not a member"]
+      split: "Active Members (ACME field: active or new) segment"
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: -30}
       filters: []
       action: "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), their visit day with a link to that day's hours, winter road advice, the premiere preview and two short gallery and boardwalk videos, and the membership offer or a member thank-you."
@@ -243,24 +261,6 @@ automations:
         reply_to: "hello@trlibrary.com"
         notes:
           - "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
-    - name: "VISIT: T-3 Know Before You Go"
-      flow: pre-visit
-      status: proposed
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: -3}
-      filters: []
-      action: "Proposed replacement for the live T-3 email: the entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk."
-      proposal:
-        slug: visit-t-3-know-before
-        html: proposals/visit-t-3-know-before.html
-        subject: "Three days to the Badlands: what to know before you go"
-        preheader: "Your entry window, parking, what to bring and how to make a day of it."
-        from_name: "Theodore Roosevelt Presidential Library"
-        from_email: "hello@trlibrary.com"
-        reply_to: "hello@trlibrary.com"
-        notes:
-          - "Would replace VISIT: T-3 Pre-Visit Excitement. Keep that one running until this is approved and built."
-          - "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
-
     - name: "VISIT: T+3 Retail"
       flow: post-visit
       status: draft
