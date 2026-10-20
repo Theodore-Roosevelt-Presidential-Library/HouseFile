@@ -109,8 +109,8 @@ const foundingRow = l => `<tr><td style="${TL}"><b>${l}</b><br><span style="font
 const FOUNDING_OPTIONS = 'Founding Membership covered you, one more adult and children under 13. Two standard levels keep that going:' + raw(TABLE
   + `<tr><td style="${TH}text-align:left;">Level</td><td style="${TH}">1 year</td><td style="${TH}">Auto-renew<br>save 10%</td><td style="${TH}">2 years<br>save 10%</td></tr>`
   + foundingRow('Dual') + foundingRow('Family') + '</table>')
-  + '<br>Higher levels add more admissions, a commemorative gift and, at Donor Patron, a name on the Digital Donor Wall.';
-const FOUNDING_KEEPS = 'Two things do not expire. <b>You are a Founding Member for good</b>, and <b>your name stays on the Library\'s Digital Donor Wall permanently</b>, in recognition of your early commitment.';
+  + '<br>Higher levels add more admissions and a commemorative gift.';
+const FOUNDING_KEEPS = 'Two things do not expire, whether or not you renew. <b>You are a Founding Member for good</b>, and <b>your name stays on the Library\'s Digital Donor Wall permanently</b>, in recognition of your early commitment.';
 
 const CORE = '<ul><li><b>Free general admission</b> for the people your level covers, and <b>25% off</b> extra admission tickets</li>'
   + '<li><b>The member line</b> at the entrance and dedicated member support</li>'
