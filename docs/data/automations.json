@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T13:16:46+00:00",
- "source": "seed",
+ "generated_at": "2026-10-20T13:39:02+00:00",
+ "rebuilt_at": "2026-10-20T13:39:02+00:00",
+ "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
   "LASTNAME": "Doe",
@@ -40,24 +40,8 @@
      },
      "filters": [],
      "action": "Send one email: what to expect, how long to plan, what to wear, parking and accessibility.",
-     "emails": [
-      {
-       "slug": "visit-t-3-pre-visit-excitement",
-       "task": "VISIT: T-3 Pre-Visit Excitement",
-       "subject": "Your Badlands adventure is almost here",
-       "preheader": "A few things to know before you step into the country that made a president.",
-       "from_name": "Theodore Roosevelt Presidential Library",
-       "from_email": "hello@trlibrary.com",
-       "reply_to": "hello@trlibrary.com",
-       "html": "data/emails/visit-t-3-pre-visit-excitement.html",
-       "stats": {
-        "started": 19848,
-        "sends": 19823,
-        "opens": 11930,
-        "clicks": 3840
-       }
-      }
-     ]
+     "emails": [],
+     "cc_status": "ACTIVE"
     },
     {
      "name": "VISIT: T-24h Trailblazer",
@@ -71,24 +55,8 @@
      },
      "filters": [],
      "action": "Send one email asking the visitor to pre-register their Trailblazer wristband (link carries their ACME order ID).",
-     "emails": [
-      {
-       "slug": "visit-t-24h-trailblazer",
-       "task": "VISIT: T-24h Trailblazer Activation",
-       "subject": "Do this tonight to speed up your arrival experience",
-       "preheader": "Set up your Trailblazer wristband before you arrive at the Library.",
-       "from_name": "Theodore Roosevelt Presidential Library Foundation",
-       "from_email": "hello@trlibrary.com",
-       "reply_to": "hello@trlibrary.com",
-       "html": "data/emails/visit-t-24h-trailblazer.html",
-       "stats": {
-        "started": 25650,
-        "sends": 25600,
-        "opens": 17336,
-        "clicks": 12343
-       }
-      }
-     ]
+     "emails": [],
+     "cc_status": "ACTIVE"
     }
    ]
   },
