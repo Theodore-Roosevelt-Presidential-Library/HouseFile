@@ -1,6 +1,8 @@
 // Builds the RENEW proposal emails with TRPL's own Newsletter Builder and Header Studio,
 // so the HTML is exactly what the builder exports.
-// Usage (from the repo root): node tools/build_renew_proposals.mjs docs/proposals <header-photo.jpg>
+// Usage (from the repo root): node tools/build_renew_proposals.mjs docs/proposals <photo-dir>
+// <photo-dir> holds the header photos named in HEADERS below (downloaded from trlibrary.com,
+// resized to ~2400 px wide). Each email gets its own photo and plaque colour.
 // then: python collect_automations.py --offline
 import { chromium } from 'playwright';
 import fs from 'fs';
@@ -16,7 +18,22 @@ const GREET = 'Dear [[FIRSTNAME OR "Friend of the Library"]],';
 const CARD = '<b>Membership number:</b> [[custom.acme_-_membership_number]]<br><b>Level:</b> [[custom.acme_-_membership_level]]<br><b>Expires:</b> [[custom.acme_-_membership_expiration_date]]';
 const NOTE = 'You are receiving this email because you are a member of the Theodore Roosevelt Presidential Library.';
 
-const header = { type: 'header', props: { src: IMG + 'renew-header.jpg', alt: 'Theodore Roosevelt Presidential Library', href: 'https://www.trlibrary.com' } };
+// One Header Studio banner per email. Brand rules (TRPL Brand Guidelines):
+//  - Wordmark only in the approved background/wordmark pairings (p.13; black on Sand, p.6):
+//    Dark Gray/White, Night Sky/White, Dark Forest/White, Bright Forest/Black, Deep Orange/Black,
+//    Sand/Black. Not Deep Orange/White, not Dark Gray/Sand.
+//  - Clear space of 2x the "T" stem on every side (p.37). The Header Studio plaque gives
+//    >= 2x on all four sides, so the wordmark always sits on its plaque, never bare on a photo.
+//  - Minimum height 0.75" (p.37): keep plaque scale >= 0.6.
+//  - Framing keeps faces and people out from under the plaque.
+const HEADERS = {
+  'renew-t-60-renewal-notice':       { photo: 'TRPL-Boardwalk_Threefold-016.jpg', opts: { plaque: '#1B4532', mark: '#FFFFFF' } },            // Dark Forest / White · cyclists above the badlands
+  'renew-t-30-reminder':             { photo: 'Theodore_Roosevelt_Presidential_Library-088_half-size.jpg', opts: { plaque: '#E7805D', mark: '#000000' } }, // Deep Orange / Black · the Library Shop
+  'renew-t-7-last-week':             { photo: 'TRPL-MainGuest_Threefold-003.jpg', opts: { plaque: '#092A4D', mark: '#FFFFFF', panY: 400 } },            // Night Sky / White · lobby timber
+  'renew-t-plus-7-membership-ended': { photo: 'TRPL-ElkhornCampfire_Threefold-008.jpg', opts: { plaque: '#25282A', mark: '#FFFFFF', yoff: -6 } }, // Dark Gray / White · Elkhorn campfire
+  'renew-t-plus-45-last-note':       { photo: 'building-clean-june.jpg', opts: { plaque: '#D1CCBD', mark: '#000000', scale: 0.6, yoff: -18, panY: 160 } }, // Sand / Black · the Library on the prairie
+};
+const headerFor = slug => ({ type: 'header', props: { src: IMG + slug + '-header.jpg', alt: 'Theodore Roosevelt Presidential Library', href: 'https://www.trlibrary.com' } });
 const footer = { type: 'footer', props: { note: NOTE, contactLabel: 'Membership Questions', contactUrl: 'mailto:membership@trlibrary.com' } };
 const h = t => ({ type: 'heading', props: { text: t, align: 'center' } });
 const p = (html, align = 'left') => ({ type: 'text', props: { html, align } });
@@ -33,7 +50,7 @@ const emails = [
     title: 'RENEW: T-60 Renewal Notice',
     preheader: 'Renew now and your benefits continue without a gap.',
     blocks: [
-      header,
+      'HEADER',
       h('Another Year in the Arena'),
       p(CARD, 'center'),
       p(`${GREET}<br><br>Thank you for your year as a member of the Theodore Roosevelt Presidential Library. Your membership expires on [[custom.acme_-_membership_expiration_date]]. Renew now and every benefit carries straight on.`),
@@ -56,7 +73,7 @@ const emails = [
     title: 'RENEW: T-30 Reminder',
     preheader: 'Renew by [[custom.acme_-_membership_expiration_date]] to keep your free admission and member benefits.',
     blocks: [
-      header,
+      'HEADER',
       h('One Month to Go'),
       p(CARD, 'center'),
       p(`${GREET}<br><br>Your membership expires on [[custom.acme_-_membership_expiration_date]]. Renewing takes your membership number and the primary cardholder's last name.`),
@@ -75,7 +92,7 @@ const emails = [
     title: 'RENEW: T-7 Last Week',
     preheader: 'Your member benefits end on [[custom.acme_-_membership_expiration_date]].',
     blocks: [
-      header,
+      'HEADER',
       h('One Week Left'),
       p(CARD, 'center'),
       p(`${GREET}<br><br>Your membership ends on [[custom.acme_-_membership_expiration_date]]. Renew this week and nothing changes: same membership number, same benefits, no gap.`),
@@ -90,7 +107,7 @@ const emails = [
     title: 'RENEW: T+7 Membership Ended',
     preheader: 'Renew online with your membership number.',
     blocks: [
-      header,
+      'HEADER',
       h('Your Membership Has Ended'),
       p(CARD, 'center'),
       p(`${GREET}<br><br>Your membership expired on [[custom.acme_-_membership_expiration_date]]. The Library would be glad to have you back. Renew online with your membership number and the primary cardholder's last name.`),
@@ -108,7 +125,7 @@ const emails = [
     title: 'RENEW: T+45 Last Note',
     preheader: 'A final invitation to renew, and one question.',
     blocks: [
-      header,
+      'HEADER',
       h('One Last Note'),
       p(`${GREET}<br><br>This is the last renewal note you will receive. If you would like to return, your membership can be renewed online at any time.`),
       btn('Renew My Membership'),
@@ -123,17 +140,19 @@ const emails = [
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }).catch(() => chromium.launch());
 
-// 1. Header from Header Studio: family in the lobby, Dark Forest plaque, white wordmark.
+// 1. Headers from Header Studio (PNG, 1800 x 600; convert to JPG at 1320 x 440 afterwards).
 {
   const pg = await browser.newPage();
   await pg.goto('https://newsletter.labs.trlibrary.com/header.html');
-  const b64 = fs.readFileSync(process.argv[3]).toString('base64');
-  const data = await pg.evaluate(async (b64) => {
-    await HDR.setImage('data:image/jpeg;base64,' + b64);
-    await HDR.setOptions({ plaque: '#1B4532', mark: '#FFFFFF', scale: 0.78, dim: 0 });
-    return await HDR.exportDataURL();
-  }, b64);
-  fs.writeFileSync(OUT + '/img/renew-header.png', Buffer.from(data.split(',')[1], 'base64'));
+  for (const [slug, h] of Object.entries(HEADERS)) {
+    const b64 = fs.readFileSync(process.argv[3] + '/' + h.photo).toString('base64');
+    const data = await pg.evaluate(async ({ b64, opts }) => {
+      await HDR.setImage('data:image/jpeg;base64,' + b64);
+      await HDR.setOptions(Object.assign({ zoom: 1, panX: 0, panY: 0, dim: 0, scale: 0.78, yoff: 0 }, opts));
+      return await HDR.exportDataURL();
+    }, { b64, opts: h.opts });
+    fs.writeFileSync(`${OUT}/img/${slug}-header.png`, Buffer.from(data.split(',')[1], 'base64'));
+  }
   await pg.close();
 }
 
@@ -142,6 +161,7 @@ const pg = await browser.newPage();
 await pg.goto('https://newsletter.labs.trlibrary.com/');
 await pg.waitForFunction(() => window.NB);
 for (const e of emails) {
+  e.blocks = e.blocks.map(b => b === 'HEADER' ? headerFor(e.slug) : b);
   const html = await pg.evaluate(({ title, preheader, blocks }) => {
     NB.setState({ title, preheader, blocks });
     return NB.exportHTML();
