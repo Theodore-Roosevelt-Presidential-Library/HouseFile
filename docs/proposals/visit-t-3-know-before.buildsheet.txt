@@ -30,17 +30,21 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  10. Text · Parking is free. Take the first roundabout into the main lot under the s
       everyone
- 11. Heading · Make a Day of It
+ 11. Heading · Badlands Weather
       everyone
- 12. Text · Plan about three and a half hours for the galleries, then walk the one-m
+ 12. Image · Current weather and three-day forecast for Medora, North Dakota
       everyone
- 13. Image · Your Journey Starts Here: The Trailblazer
+ 13. Heading · Make a Day of It
       everyone
- 14. Text · Check the hours, the Medora weather and, in winter, North Dakota road co
+ 14. Text · Plan about three and a half hours for the galleries, then walk the one-m
       everyone
- 15. Button · Everything to Know
+ 15. Image · Your Journey Starts Here: The Trailblazer
       everyone
- 16. Footer
+ 16. Text · Check the hours and, in winter, North Dakota road conditions before you 
+      everyone
+ 17. Button · Everything to Know
+      everyone
+ 18. Footer
       everyone
 
 GROUPS

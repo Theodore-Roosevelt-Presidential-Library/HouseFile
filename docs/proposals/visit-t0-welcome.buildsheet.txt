@@ -18,7 +18,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   4. Text · Thank you for coming as a member. Head for the member line when you arri
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m1]
-  5. Image · Watch: Discover the Theodore Roosevelt Presidential Library
+  5. Image · Watch the preview: Discover the Theodore Roosevelt Presidential Libra…
       everyone
   6. Divider
       everyone

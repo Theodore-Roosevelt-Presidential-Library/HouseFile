@@ -121,6 +121,22 @@
     {
       "type": "heading",
       "props": {
+        "text": "Badlands Weather",
+        "align": "center"
+      }
+    },
+    {
+      "type": "image",
+      "props": {
+        "src": "https://weather.labs.trlibrary.com/images/social.png",
+        "alt": "Current weather and three-day forecast for Medora, North Dakota",
+        "href": "https://trlibrary.com/weather/",
+        "caption": "Live from the National Weather Service. Tap for the full forecast."
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
         "text": "Make a Day of It",
         "align": "center"
       }
@@ -135,7 +151,7 @@
     {
       "type": "image",
       "props": {
-        "src": "https://i.ytimg.com/vi/qrwdZmqFO5A/maxresdefault.jpg",
+        "src": "proposals/img/video-qrwdZmqFO5A.jpg",
         "alt": "Your Journey Starts Here: The Trailblazer",
         "href": "https://www.trlibrary.com/video/view/qrwdZmqFO5A?pid=PLafKMriNZlgo",
         "caption": "Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit."
@@ -144,7 +160,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Check the <a href=\"https://www.trlibrary.com/visit/hours\">hours</a>, the <a href=\"https://trlibrary.com/weather/\">Medora weather</a> and, in winter, <a href=\"https://travel.dot.nd.gov/\">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>.",
+        "html": "Check the <a href=\"https://www.trlibrary.com/visit/hours\">hours</a> and, in winter, <a href=\"https://travel.dot.nd.gov/\">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>.",
         "align": "left"
       }
     },

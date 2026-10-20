@@ -222,6 +222,7 @@ automations:
         reply_to: "hello@trlibrary.com"
         notes:
           - "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t0-welcome.buildsheet.txt."
+          - "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building."
           - "Confirm with the membership team how a ticket refund is applied to a membership and that the reservation is kept; the email asks people to write to membership@trlibrary.com with their order number or ask at the Welcome Desk."
           - "Confirm the merge-tag spelling for Acme - Visit Date (Next) and how it prints (the preview assumes a long date)."
           - "Check whether Constant Contact can trigger on Acme - Last Purchase Date the same day, and whether a path can skip visits in the next 3 days."
@@ -230,7 +231,7 @@ automations:
       status: proposed
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: -30}
       filters: []
-      action: "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), Library hours by season, winter road advice, two short gallery and boardwalk videos, and the membership offer or a member thank-you."
+      action: "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), their visit day with a link to that day's hours, winter road advice, the premiere preview and two short gallery and boardwalk videos, and the membership offer or a member thank-you."
       proposal:
         slug: visit-t-30-plan-ahead
         html: proposals/visit-t-30-plan-ahead.html
@@ -240,13 +241,13 @@ automations:
         from_email: "hello@trlibrary.com"
         reply_to: "hello@trlibrary.com"
         notes:
-          - "Hours by season are copied from trlibrary.com/visit (Oct 2026). Update this email whenever the hours change."
+          - "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
     - name: "VISIT: T-3 Know Before You Go"
       flow: pre-visit
       status: proposed
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: -3}
       filters: []
-      action: "Proposed replacement for the live T-3 email: the entry window, a bring / leave-in-the-car table, parking, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk."
+      action: "Proposed replacement for the live T-3 email: the entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk."
       proposal:
         slug: visit-t-3-know-before
         html: proposals/visit-t-3-know-before.html

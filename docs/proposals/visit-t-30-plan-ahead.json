@@ -94,45 +94,22 @@
     {
       "type": "heading",
       "props": {
-        "text": "Library Hours by Season",
+        "text": "Your Visit Day",
         "align": "center"
       }
     },
     {
-      "type": "table",
+      "type": "text",
       "props": {
-        "intro": "",
-        "note": "Closed Thanksgiving, Christmas Day and New Year's Day. Salt+Scoria is open whenever the Library is, and no admission ticket is needed to dine.",
-        "columns": [
-          "Season",
-          "Dates",
-          "Hours"
-        ],
-        "rows": [
-          [
-            "Spring",
-            "March 2 – May 31",
-            "Tue–Fri 10am–4pm<br>Sat–Sun 10am–5pm"
-          ],
-          [
-            "Summer",
-            "June 1 – Sept. 13",
-            "Daily 9am–6pm"
-          ],
-          [
-            "Fall",
-            "Sept. 14 – Nov. 30",
-            "Tue–Fri 9am–4pm<br>Sat–Sun 9am–6pm"
-          ],
-          [
-            "Winter",
-            "Dec. 1 – March 1",
-            "Wed–Sun 10am–4pm"
-          ]
-        ],
-        "rowLabels": true,
-        "highlight": null,
-        "style": "standard"
+        "html": "<b>[[custom.acme_-_visit_date_next]]</b> is on your ticket, with your entry time. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Hours for Your Visit",
+        "href": "https://www.trlibrary.com/visit/hours"
       }
     },
     {
@@ -154,11 +131,20 @@
       }
     },
     {
+      "type": "image",
+      "props": {
+        "src": "proposals/img/video-W9sq8PuGQVo-teaser.gif",
+        "alt": "Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)",
+        "href": "https://www.trlibrary.com/video/view/W9sq8PuGQVo?pid=PLafKMriNZlgo",
+        "caption": "Not seen it yet? A 3½-minute look at the Library, Medora and the national park"
+      }
+    },
+    {
       "type": "columns",
       "props": {
         "cols": [
           {
-            "src": "https://i.ytimg.com/vi/yEEsRy7sdng/maxresdefault.jpg",
+            "src": "proposals/img/video-yEEsRy7sdng.jpg",
             "alt": "Step into the Amazon: Theodore Roosevelt's River of Doubt",
             "heading": "The River of Doubt",
             "text": "Step into Roosevelt's Amazon expedition, one of the galleries you will walk through.",
@@ -166,7 +152,7 @@
             "href": "https://www.trlibrary.com/video/view/yEEsRy7sdng?pid=PLafKMriNZlgo"
           },
           {
-            "src": "https://i.ytimg.com/vi/zRPJAdE-IBI/maxresdefault.jpg",
+            "src": "proposals/img/video-zRPJAdE-IBI.jpg",
             "alt": "The TR Library Boardwalk through the Badlands",
             "heading": "The Boardwalk",
             "text": "A one-mile loop through restored prairie, with Badlands views the whole way.",

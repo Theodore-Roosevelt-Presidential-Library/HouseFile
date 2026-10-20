@@ -50,10 +50,10 @@
     {
       "type": "image",
       "props": {
-        "src": "https://i.ytimg.com/vi/W9sq8PuGQVo/maxresdefault.jpg",
-        "alt": "Watch: Discover the Theodore Roosevelt Presidential Library",
+        "src": "proposals/img/video-W9sq8PuGQVo-teaser.gif",
+        "alt": "Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)",
         "href": "https://www.trlibrary.com/video/view/W9sq8PuGQVo?pid=PLafKMriNZlgo",
-        "caption": "Watch: a 3½-minute look at the Library, Medora and the national park"
+        "caption": "A 3½-minute look at the galleries, the building, Medora and the national park"
       }
     },
     {

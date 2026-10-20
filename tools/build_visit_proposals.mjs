@@ -14,7 +14,9 @@ const IMG = 'proposals/img/';
 const SITE = 'https://www.trlibrary.com';
 const F = `${SITE}/sites/default/files`;
 const VID = id => `${SITE}/video/view/${id}?pid=PLafKMriNZlgo`;
-const THUMB = id => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+// Play-button thumbnails and the premiere teaser GIF come from tools/make_video_thumbs.py.
+const THUMB = id => `${IMG}video-${id}.jpg`;
+const TEASER = `${IMG}video-W9sq8PuGQVo-teaser.gif`;
 const HELLO = '<a href="mailto:hello@trlibrary.com">hello@trlibrary.com</a>';
 const MEMBERSHIP_MAIL = '<a href="mailto:membership@trlibrary.com">membership@trlibrary.com</a>';
 const GREET = 'Hello [[FIRSTNAME OR "Friend"]],';
@@ -85,7 +87,7 @@ const emails = [
       h("You're Coming to the Badlands"),
       p(`${GREET}<br><br>Your tickets to the Theodore Roosevelt Presidential Library are set for <b>${VISIT}</b>, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.`),
       ...memberOnly(MEMBER_THANKS),
-      img(THUMB('W9sq8PuGQVo'), 'Watch: Discover the Theodore Roosevelt Presidential Library', VID('W9sq8PuGQVo'), 'Watch: a 3½-minute look at the Library, Medora and the national park'),
+      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'A 3½-minute look at the galleries, the building, Medora and the national park'),
       div,
       h('Four Things to Plan Now'),
       cols(
@@ -139,21 +141,13 @@ const emails = [
           ['Plan a park day', 'The South Unit is minutes from the Library; the quieter North Unit is about 70 minutes north.', `<a href="${SITE}/visit/national-park">The park</a>`],
         ],
       }),
-      h('Library Hours by Season'),
-      table({
-        columns: ['Season', 'Dates', 'Hours'],
-        rowLabels: true,
-        rows: [
-          ['Spring', 'March 2 – May 31', 'Tue–Fri 10am–4pm<br>Sat–Sun 10am–5pm'],
-          ['Summer', 'June 1 – Sept. 13', 'Daily 9am–6pm'],
-          ['Fall', 'Sept. 14 – Nov. 30', 'Tue–Fri 9am–4pm<br>Sat–Sun 9am–6pm'],
-          ['Winter', 'Dec. 1 – March 1', 'Wed–Sun 10am–4pm'],
-        ],
-        note: 'Closed Thanksgiving, Christmas Day and New Year\'s Day. Salt+Scoria is open whenever the Library is, and no admission ticket is needed to dine.',
-      }),
+      h('Your Visit Day'),
+      p(`<b>${VISIT}</b> is on your ticket, with your entry time. The Library's hours change with the season, so check what time the doors open and close that day before you plan the rest of it. Salt+Scoria is open when the Library is, and no admission ticket is needed to eat there.`),
+      btn('Hours for Your Visit', `${SITE}/visit/hours`),
       p('<b>Coming between late fall and spring?</b> Snow and high winds can close I-94 in western North Dakota. Check road conditions before you set out and give yourself extra time.'),
       div,
       h('A Preview of What Is Waiting'),
+      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'Not seen it yet? A 3½-minute look at the Library, Medora and the national park'),
       cols(
         { src: THUMB('yEEsRy7sdng'), alt: "Step into the Amazon: Theodore Roosevelt's River of Doubt", heading: 'The River of Doubt',
           text: "Step into Roosevelt's Amazon expedition, one of the galleries you will walk through.", label: 'Watch (0:53)', href: VID('yEEsRy7sdng') },
@@ -192,10 +186,12 @@ const emails = [
       }),
       h('Parking'),
       p('Parking is free. Take the first roundabout into the main lot under the solar canopies. Driving an RV or towing? Use the Medora Musical lot instead. Accessible spaces and a drop-off sit right by the entrance, and EV chargers are first come, first served.'),
+      h('Badlands Weather'),
+      img('https://weather.labs.trlibrary.com/images/social.png', 'Current weather and three-day forecast for Medora, North Dakota', 'https://trlibrary.com/weather/', 'Live from the National Weather Service. Tap for the full forecast.'),
       h('Make a Day of It'),
       p(`Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many visitors pair the Library with the national park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.`),
       img(THUMB('qrwdZmqFO5A'), 'Your Journey Starts Here: The Trailblazer', VID('qrwdZmqFO5A'), 'Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit.'),
-      p(`Check the <a href="${SITE}/visit/hours">hours</a>, the <a href="https://trlibrary.com/weather/">Medora weather</a> and, in winter, <a href="https://travel.dot.nd.gov/">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to ${HELLO}.`),
+      p(`Check the <a href="${SITE}/visit/hours">hours</a> and, in winter, <a href="https://travel.dot.nd.gov/">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to ${HELLO}.`),
       btn('Everything to Know', `${SITE}/visit/faq`),
       footer,
     ],
