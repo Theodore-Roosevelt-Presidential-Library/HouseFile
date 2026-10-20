@@ -265,7 +265,7 @@ automations:
         notes:
           - "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
     # ---- Proposed: post-visit series (repo only, 2026-10-20) ----
-    # Replaces the six empty Constant Contact drafts below (T+3, T+5, T+12, T+30, T+45, T+60).
+    # Replaces the six empty Constant Contact drafts (T+3, T+5, T+12, T+30, T+45, T+60), deleted 2026-10-20.
     # Order: thank you + newsletter topics, keep exploring (TR story, quizzes, podcast), shop,
     # private events, reasons to come back. Members are thanked; everyone else sees membership.
     - name: "VISIT: T+2 Thank You"
@@ -363,42 +363,6 @@ automations:
           - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
           - "No specific events are named, so the email never goes out of date (per Matt)."
           - "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
-
-    - name: "VISIT: T+3 Retail"
-      flow: post-visit
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 3}
-      action: "No email built yet."
-
-    - name: "VISIT: T+5 Ticket to Member"
-      flow: membership
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 5}
-      action: "No email built yet."
-
-    - name: "VISIT: T+12 Stay Connected"
-      flow: post-visit
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 12}
-      action: "No email built yet."
-
-    - name: "VISIT: T+30 Stay Engaged"
-      flow: post-visit
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 30}
-      action: "No email built yet."
-
-    - name: "VISIT: T+45 Private Events"
-      flow: post-visit
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 45}
-      action: "No email built yet."
-
-    - name: "VISIT: T+60 What's Next"
-      flow: post-visit
-      status: draft
-      trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 60}
-      action: "No email built yet."
 
     # ---- Proposed: membership renewal series (not in Constant Contact) ----
     - name: "RENEW: T-60 Renewal Notice"

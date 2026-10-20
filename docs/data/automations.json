@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T19:47:33+00:00",
+ "rebuilt_at": "2026-10-20T19:56:59+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -206,21 +206,6 @@
      ]
     },
     {
-     "name": "VISIT: T+3 Retail",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 3,
-      "label": "3 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
-    },
-    {
      "name": "VISIT: T+7 Keep Exploring",
      "status": "proposed",
      "activated": null,
@@ -251,21 +236,6 @@
        "stats": {}
       }
      ]
-    },
-    {
-     "name": "VISIT: T+12 Stay Connected",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 12,
-      "label": "12 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
     },
     {
      "name": "VISIT: T+14 From the Shop",
@@ -334,36 +304,6 @@
      ]
     },
     {
-     "name": "VISIT: T+30 Stay Engaged",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 30,
-      "label": "30 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
-    },
-    {
-     "name": "VISIT: T+45 Private Events",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 45,
-      "label": "45 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
-    },
-    {
      "name": "VISIT: T+60 Reasons to Come Back",
      "status": "proposed",
      "activated": null,
@@ -395,21 +335,6 @@
        "stats": {}
       }
      ]
-    },
-    {
-     "name": "VISIT: T+60 What's Next",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 60,
-      "label": "60 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
     }
    ]
   },
@@ -525,21 +450,6 @@
        "stats": {}
       }
      ]
-    },
-    {
-     "name": "VISIT: T+5 Ticket to Member",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "date_field",
-      "field": "Acme - Visit Date (Next)",
-      "offset_days": 5,
-      "label": "5 days after the Acme - Visit Date (Next)"
-     },
-     "filters": [],
-     "action": "No email built yet.",
-     "split": null,
-     "emails": []
     },
     {
      "name": "RENEW: T+7 Membership Ended",
