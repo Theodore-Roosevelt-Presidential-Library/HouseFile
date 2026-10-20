@@ -63,9 +63,11 @@ def main():
     defs = cc.get("/contact_custom_fields", limit=100).get("custom_fields", [])
     by_label = {f["label"]: f for f in defs}
     missing = [t for _, t, _ in FIELDS if t not in by_label]
-    if missing:
-        if not a.create_fields:
-            sys.exit(f"Missing text fields {missing}. Run once with --create-fields.")
+    if missing and a.apply and not a.create_fields:
+        sys.exit(f"Missing text fields {missing}. Run once with --create-fields first.")
+    if missing and not a.create_fields:
+        print(f"Text fields not created yet: {missing} (counting as empty)")
+    if missing and a.create_fields:
         for label in missing:
             r = cc.s.post("https://api.cc.email/v3/contact_custom_fields",
                           json={"label": label, "type": "string"}, timeout=60)
@@ -73,8 +75,8 @@ def main():
             by_label[label] = r.json()
             print(f"Created text field: {label}")
     src_ids = {by_label[s]["custom_field_id"]: (s, t, p) for s, t, p in FIELDS if s in by_label}
-    tgt_ids = {by_label[t]["custom_field_id"]: t for _, t, _ in FIELDS}
-    tgt_name = {t: by_label[t]["name"] for _, t, _ in FIELDS}
+    tgt_ids = {by_label[t]["custom_field_id"]: t for _, t, _ in FIELDS if t in by_label}
+    tgt_name = {t: by_label[t].get("name", t) for _, t, _ in FIELDS if t in by_label}
 
     stats = Counter()
     rows_by_list = defaultdict(list)
@@ -101,7 +103,7 @@ def main():
                 continue
             stats["contacts to update"] += 1
             row = {"email": addr}
-            row.update({f"cf:{tgt_name[t]}": v for t, v in want.items()})
+            row.update({f"cf:{tgt_name.get(t, t)}": v for t, v in want.items()})
             rows_by_list[sorted(lists)[0]].append(row)
 
     print(("APPLY" if a.apply else "DRY RUN") + " — counts only")
