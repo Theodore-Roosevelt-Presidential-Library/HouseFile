@@ -81,12 +81,18 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
 .link-row .t{font-weight:600;font-size:13.5px}
 .link-row .u{font-size:12.5px;color:var(--ink-2);word-break:break-all}
 .link-row table{margin-top:6px}
-.link-row td,.link-row th{font-size:12.5px;padding-top:4px;padding-bottom:4px}
+.link-row td,.link-row th{font-size:12.5px;padding-top:4px;padding-bottom:4px;word-break:break-all}
 .filled{background:var(--hl);border-radius:4px;padding:0 3px}
 .reset{font:inherit;font-size:12.5px;border:0;background:none;color:var(--s1);cursor:pointer;padding:0}
 .pager{display:flex;gap:10px;font-size:13px;margin-top:4px}
 .pager a{color:var(--ink-2)}
 .err{color:var(--crit)}
+.proposal{border:1px dashed #eb6834;background:color-mix(in srgb,#eb6834 8%,var(--surface));border-radius:12px;padding:12px 16px;margin:0 0 16px;font-size:14px}
+.proposal b{font-weight:650}
+.proposal ul{margin:6px 0 0 18px;padding:0}
+.proposal li{margin:2px 0}
+.badge.proposed{border-style:dashed;border-color:#eb6834;color:var(--ink)}
+.badge.proposed::before{background:#eb6834}
 </style>
 </head>
 <body>
@@ -94,6 +100,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   <div class="crumbs"><a href="index.html#automations">← All automations</a> <span id="crumb-flow"></span></div>
   <h1 id="title">Loading…</h1>
   <p class="sub" id="sub"></p>
+  <div class="proposal" id="proposal" hidden></div>
 
   <div class="layout">
     <div class="frame-col">
@@ -164,8 +171,16 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   document.title = `${email.task || path.name} · Email Preview`;
   document.getElementById("title").textContent = path.name;
   document.getElementById("crumb-flow").textContent = " / " + flow.label;
-  document.getElementById("sub").innerHTML = (path.status === "active" ? '<span class="badge ok">Active</span>' : `<span class="badge">${A.esc(path.status)}</span>`)
+  document.getElementById("sub").innerHTML = (path.status === "active" ? '<span class="badge ok">Active</span>'
+      : path.status === "proposed" ? '<span class="badge proposed">Proposed</span>'
+      : `<span class="badge">${A.esc(path.status)} in Constant Contact</span>`)
     + ` &nbsp;${A.esc(path.trigger.label)}`;
+  if (email.proposed) {
+    const pb = document.getElementById("proposal");
+    pb.hidden = false;
+    pb.innerHTML = `<b>Proposal for team review.</b> This email is not in Constant Contact and has not been sent to anyone. Comments and edits go to the membership and communications teams before it is built.`
+      + (email.notes && email.notes.length ? `<ul>${email.notes.map(n => `<li>${A.esc(n)}</li>`).join("")}</ul>` : "");
+  }
 
   // Trigger date maths for the example: Jane's visit date, and when this email lands.
   const off = path.trigger.offset_days;
@@ -175,7 +190,16 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const nice = d => d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
   const sendDate = () => { const d = new Date(visit); if (off != null) d.setDate(d.getDate() + off); return d; };
 
-  const tags = A.findTags(html + " " + email.subject + " " + (email.preheader || ""));
+  const allTags = A.findTags(html + " " + email.subject + " " + (email.preheader || ""));
+  // The trigger date field, when the email also prints it, is driven by the date picker.
+  const trigKey = path.trigger.field ? "custom." + path.trigger.field.toLowerCase().replace(/\s+/g, "_") : null;
+  const norm = k => String(k).toLowerCase().replace(/[^a-z0-9]/g, "");
+  const trigTag = trigKey ? allTags.find(t => norm(t.key) === norm(trigKey)) : null;
+  const tags = allTags.filter(t => t !== trigTag);
+  const longDate = d => d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+  const syncTrigger = () => { if (trigTag) sample[trigTag.key] = longDate(visit); };
+  const whenWord = /expir/i.test(path.trigger.field || "") ? "membership expires" : /visit/i.test(path.trigger.field || "") ? "visit is" : (path.trigger.field || "trigger date") + " is";
+  syncTrigger();
 
   function renderFrame() {
     const out = raw ? html : A.fill(html, sample);
@@ -207,12 +231,12 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
     const rows = [
       ["Flow", A.esc(flow.label)],
       ["Path", A.esc(path.name)],
-      ["Status", path.status === "active" ? `Active${path.activated ? " since " + new Date(path.activated + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "medium" }) : ""}` : A.esc(path.status)],
+      ["Status", path.status === "active" ? `Active${path.activated ? " since " + new Date(path.activated + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "medium" }) : ""}` : path.status === "proposed" ? "Proposed (not in Constant Contact)" : `${A.esc(path.status)} in Constant Contact`],
       ["Trigger", A.esc(t.label)],
     ];
     if (t.field) rows.push(["Trigger field", `<code class="tag">${A.esc(t.field)}</code><div class="src">Constant Contact custom date field, written by the ACME sync</div>`]);
     rows.push(["Timing", `${A.esc(A.dayLabel(off))}${off != null ? ` (${off > 0 ? "+" : ""}${off} days)` : ""}`]);
-    if (off != null) rows.push(["Example", `If Jane's visit is <b>${nice(visit)}</b>, this email sends <b>${nice(sendDate())}</b>.`]);
+    if (off != null) rows.push(["Example", `If Jane's ${whenWord} <b>${nice(visit)}</b>, this email sends <b>${nice(sendDate())}</b>.`]);
     rows.push(["Filters", path.filters && path.filters.length ? path.filters.map(A.esc).join("; ") : "None (everyone who meets the trigger)"]);
     rows.push(["Action", A.esc(path.action || "Send email")]);
     document.getElementById("auto").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
@@ -227,8 +251,8 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
       </tr>`;
     });
     if (path.trigger.field) rows.push(`<tr>
-        <td><div>${A.esc(path.trigger.field)}</div><div class="src">Custom field · trigger date</div></td>
-        <td><input type="date" id="visit-in" value="${iso(visit)}" aria-label="Visit date"></td></tr>`);
+        <td><div>${A.esc(path.trigger.field)}</div>${trigTag ? `<code class="tag">${A.esc(trigTag.raw)}</code>` : ""}<div class="src">Custom field · trigger date${trigTag ? ` · used ${trigTag.count}×` : ""}</div></td>
+        <td><input type="date" id="visit-in" value="${iso(visit)}" aria-label="${A.esc(path.trigger.field)}"></td></tr>`);
     document.getElementById("fields").innerHTML = rows.length
       ? `<thead><tr><th>Field</th><th>Sample value</th></tr></thead><tbody>${rows.join("")}</tbody>`
       : `<tbody><tr><td class="src">This email has no personalization tags.</td></tr></tbody>`;
@@ -236,7 +260,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
       sample[inp.dataset.key] = inp.value; renderFrame();
     }));
     const vi = document.getElementById("visit-in");
-    if (vi) vi.addEventListener("change", () => { if (vi.value) { visit = new Date(vi.value + "T12:00:00"); renderAuto(); renderFrame(); } });
+    if (vi) vi.addEventListener("change", () => { if (vi.value) { visit = new Date(vi.value + "T12:00:00"); syncTrigger(); renderAuto(); renderFrame(); } });
   }
 
   function renderLinks() {
@@ -249,7 +273,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
           return `<tr><td class="mono">${p.kind === "fragment" ? "#" : "?"}${A.esc(p.name)}</td><td>${hasTag ? `<code class="tag">${A.esc(p.value)}</code>` : `<span class="mono">${A.esc(p.value || "—")}</span>`}</td><td class="mono">${hasTag ? `<span class="filled">${A.esc(A.fillText(p.value, sample) || "(blank)")}</span>` : A.esc(p.value || "—")}</td></tr>`;
         }).join("")}</tbody></table>` : "";
       return `<div class="link-row"><div class="t">${A.esc(l.text || "(no text)")}${l.count > 1 ? ` <span class="src">· ${l.count}×</span>` : ""}</div>
-        <div class="u">${A.esc(l.params.length ? l.base : l.href)}</div>${params}
+        <div class="u">${/^\[\[[^\]]+\]\]$/.test(l.href) && A.isSystem(l.href.slice(2, -2)) ? "Link added by Constant Contact at send time <code class=\"tag\">" + A.esc(l.href) + "</code>" : A.esc(l.params.length ? l.base : l.href)}</div>${params}
         ${l.params.length ? `<div class="u src" style="margin-top:4px">Resolves to: ${A.esc(filled)}</div>` : ""}</div>`;
     }).join("") : '<p class="src">No links.</p>';
   }
@@ -280,7 +304,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const ms = document.getElementById("m-sample"), mr = document.getElementById("m-raw");
   ms.onclick = () => { raw = false; press(ms, mr); renderFrame(); };
   mr.onclick = () => { raw = true; press(mr, ms); renderFrame(); };
-  document.getElementById("reset").onclick = () => { sample = Object.assign({}, BASE); renderFields(); renderFrame(); };
+  document.getElementById("reset").onclick = () => { sample = Object.assign({}, BASE); syncTrigger(); renderFields(); renderFrame(); };
 
   renderAuto(); renderFields(); renderStats(); pager(); renderFrame();
 })();

@@ -31,6 +31,7 @@ Usage:
     python collect_automations.py            # write docs/data/automations.json + emails/
     python collect_automations.py --dry-run  # print what would be written
     python collect_automations.py --check    # privacy-check docs/data (no API calls)
+    python collect_automations.py --offline  # rebuild from config.yml after editing proposals
 """
 
 import argparse
@@ -106,6 +107,7 @@ def check_output(cfg: dict, out: Path) -> int:
         return 0
     data = json.loads(f.read_text())
     htmls = [h.read_text() for h in (out / "emails").glob("*.html")]
+    htmls += [h.read_text() for h in (out.parent / "proposals").glob("*.html")]
     bad = find_disallowed(acfg, data, htmls)
     if bad:
         print(f"::error::{len(bad)} unexpected email address(es) in automation data")
@@ -122,13 +124,43 @@ def safe_get(cc: CC, url: str, **params):
         return None
 
 
-def collect(cfg: dict, cc: CC, out: Path, dry: bool):
+def proposal_email(p: dict) -> dict:
+    """A proposed email: everything comes from config.yml, nothing from the API."""
+    pr = p["proposal"]
+    return {
+        "slug": pr.get("slug") or slugify(p["name"]),
+        "task": pr.get("task") or p["name"],
+        "subject": pr.get("subject", ""),
+        "preheader": pr.get("preheader", ""),
+        "from_name": pr.get("from_name", ""),
+        "from_email": pr.get("from_email", ""),
+        "reply_to": pr.get("reply_to", "") or pr.get("from_email", ""),
+        "html": pr["html"],
+        "proposed": True,
+        "notes": pr.get("notes") or [],
+        "stats": {},
+    }
+
+
+def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
+    """cc=None with offline=True rebuilds automations.json from config.yml, keeping
+    the last API data for live paths. Used after editing proposals or path timing."""
     acfg = cfg.get("automations") or {}
-    account = safe_get(cc, "/account/summary") or {}
-    if not account:
-        # Without it, account details CC fills into previews can't be removed.
-        sys.exit("/account/summary unavailable (token needs the account_read scope); "
-                 "not publishing automation previews")
+    previous, prev_meta = {}, {}
+    if offline:
+        prev_file = out / "automations.json"
+        if prev_file.exists():
+            prev_meta = json.loads(prev_file.read_text())
+            for f in prev_meta.get("flows", []):
+                for pp in f.get("paths", []):
+                    previous[pp["name"]] = pp
+        account = {}
+    else:
+        account = safe_get(cc, "/account/summary") or {}
+        if not account:
+            # Without it, account details CC fills into previews can't be removed.
+            sys.exit("/account/summary unavailable (token needs the account_read scope); "
+                     "not publishing automation previews")
 
     emails_dir = out / "emails"
     pages = {}  # filename -> html, written only after the privacy check
@@ -148,7 +180,23 @@ def collect(cfg: dict, cc: CC, out: Path, dry: bool):
             "emails": [],
         }
         cid = p.get("campaign_id")
-        if cid:
+        if p.get("proposal"):
+            email = proposal_email(p)
+            path["emails"].append(email)
+            if not (out.parent / email["html"]).exists():
+                print(f"  ! {p['name']}: proposal file {email['html']} not found", file=sys.stderr)
+            print(f"  {p['name']}: proposed, {email['subject']!r}")
+        elif cid and offline:
+            old = previous.get(p["name"], {})
+            path["emails"] = [e for e in old.get("emails", []) if not e.get("proposed")]
+            if old.get("cc_status"):
+                path["cc_status"] = old["cc_status"]
+            for e in path["emails"]:
+                f = out / "emails" / Path(e["html"]).name
+                if f.exists():
+                    pages[f.name] = f.read_text()
+            print(f"  {p['name']}: kept last refresh ({len(path['emails'])} email)")
+        elif cid:
             camp = safe_get(cc, f"/emails/{cid}")
             acts = [a for a in (camp or {}).get("campaign_activities", [])
                     if a.get("role") == "primary_email"]
@@ -199,15 +247,22 @@ def collect(cfg: dict, cc: CC, out: Path, dry: bool):
     for f in flows:
         f["paths"].sort(key=lambda x: (x["trigger"].get("offset_days", 9999), x["name"]))
 
+    now = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     data = {
-        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "source": "api",
+        # Offline rebuilds keep the time of the last real refresh: that is what the
+        # subjects, HTML and stats of live emails reflect.
+        "generated_at": prev_meta.get("generated_at", now) if offline else now,
+        "rebuilt_at": now,
+        "source": prev_meta.get("source", "seed") if offline else "api",
         "sample_contact": acfg.get("sample_contact", {}),
         "flows": flows,
     }
 
     # Privacy check before anything is written.
-    bad = find_disallowed(acfg, data, pages.values())
+    proposal_html = [(out.parent / e["html"]).read_text()
+                     for f in flows for pp in f["paths"] for e in pp["emails"]
+                     if e.get("proposed") and (out.parent / e["html"]).exists()]
+    bad = find_disallowed(acfg, data, list(pages.values()) + proposal_html)
     if bad:
         sys.exit(f"Privacy check failed: {len(bad)} unexpected email address(es) in automation output")
 
@@ -230,10 +285,15 @@ def main():
     ap.add_argument("--out", default=str(ROOT / "docs" / "data"))
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--check", action="store_true", help="privacy-check the files on disk and exit")
+    ap.add_argument("--offline", action="store_true",
+                    help="rebuild automations.json from config.yml without the API (after editing proposals)")
     args = ap.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     if args.check:
         return check_output(cfg, Path(args.out))
+    if args.offline:
+        collect(cfg, None, Path(args.out), args.dry_run, offline=True)
+        return 0
     load_env(ROOT / ".env")
     if not cfg.get("automations"):
         print("No automations configured; nothing to do.")

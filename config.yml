@@ -110,6 +110,13 @@ stale_days: 365
 #   app.constantcontact.com/pages/cjb/workflow-reporting/<campaign_id>
 # It identifies an email campaign, not a person. Draft paths that don't have
 # an email yet can leave it out; they show on the page as "No email yet".
+#
+# PROPOSED paths are ideas for team review that are NOT in Constant Contact.
+# Give them `status: proposed` and a `proposal:` block: the email's subject,
+# preheader and sender, plus `html`, a file under docs/proposals/. The nightly
+# refresh never touches docs/proposals/. When a proposal is built in Constant
+# Contact, change its status, add the real campaign_id and drop the proposal
+# block; from then on it refreshes from the API like any live path.
 automations:
   # Fake contact used to fill personalization tags in previews. Never real data.
   sample_contact:
@@ -123,11 +130,20 @@ automations:
     POSTALCODE: "58501"
     PHONE: "(701) 555-0100"
     custom.acme_-_recent_order_id: "100482731"
+    custom.acme_-_membership_number: "100245"
+    custom.acme_-_membership_level: "Family"
+    custom.acme_-_membership_expiration_date: "December 31"   # the preview page sets this from the trigger date
+    # Account tags (the Library's own details, filled by Constant Contact at send time)
+    account.OrganizationName: "Theodore Roosevelt Presidential Library Foundation"
+    account.AddressLine1: "401 East Main Avenue, Suite 201"
+    account.City: "Bismarck"
+    account.usState: "ND"
+    account.PostalCode: "58501"
 
   # Email addresses allowed in the published automation data, besides each
   # email's own From and Reply-to. Anything else (e.g. a staff address that
   # Constant Contact filled into a preview) fails the privacy check.
-  allowed_emails: ["hello@trlibrary.com"]
+  allowed_emails: ["hello@trlibrary.com", "membership@trlibrary.com"]
   allowed_email_domains: ["example.com"]   # the sample contact
 
   flows:
@@ -139,7 +155,7 @@ automations:
       description: "Follow-up after the visit: shop, stay connected, private events, what's next."
     - key: membership
       label: "Membership"
-      description: "Turning a one-time ticket buyer into a member."
+      description: "Turning ticket buyers into members, and keeping members renewing."
     - key: other
       label: "Other"
       description: "Paths not yet assigned to a flow."
@@ -205,3 +221,83 @@ automations:
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 60}
       action: "No email built yet."
 
+    # ---- Proposed: membership renewal series (not in Constant Contact) ----
+    - name: "RENEW: T-60 Renewal Notice"
+      flow: membership
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -60}
+      filters: ["Acme - Is Active Member is Yes"]
+      action: "First renewal notice: the member's number, level and expiration date, the 10% auto-renew or two-year offer, what membership keeps, and how to renew."
+      proposal:
+        slug: renew-t-60-renewal-notice
+        html: proposals/renew-t-60-renewal-notice.html
+        subject: "Your membership renews in two months"
+        preheader: "Renew now and your benefits continue without a gap."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "membership@trlibrary.com"
+        reply_to: "membership@trlibrary.com"
+        notes:
+          - "Confirm the Constant Contact tag spelling for the membership fields with a test send."
+          - "Confirm ACME renews from the same link for every level."
+    - name: "RENEW: T-30 Reminder"
+      flow: membership
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -30}
+      filters: ["Acme - Is Active Member is Yes", "Not yet renewed"]
+      action: "Reminder with the expiration date, the 10% offer and a short guide to the levels."
+      proposal:
+        slug: renew-t-30-reminder
+        html: proposals/renew-t-30-reminder.html
+        subject: "One month left on your membership"
+        preheader: "Renew by [[custom.acme_-_membership_expiration_date]] to keep your free admission and member benefits."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "membership@trlibrary.com"
+        reply_to: "membership@trlibrary.com"
+        notes:
+          - "\"Not yet renewed\" needs a Constant Contact filter: renewing moves the expiration date, which may end the path on its own. Test with one renewal."
+    - name: "RENEW: T-7 Last Week"
+      flow: membership
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -7}
+      filters: ["Acme - Is Active Member is Yes", "Not yet renewed"]
+      action: "Short last-week note signed by the membership team."
+      proposal:
+        slug: renew-t-7-last-week
+        html: proposals/renew-t-7-last-week.html
+        subject: "Your membership ends next week"
+        preheader: "Your member benefits end on [[custom.acme_-_membership_expiration_date]]."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "membership@trlibrary.com"
+        reply_to: "membership@trlibrary.com"
+    - name: "RENEW: T+7 Membership Ended"
+      flow: membership
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: 7}
+      filters: ["Acme - Is Active Member is No"]
+      action: "Lapsed notice: the membership has ended, how to renew, and what membership supports."
+      proposal:
+        slug: renew-t-plus-7-membership-ended
+        html: proposals/renew-t-plus-7-membership-ended.html
+        subject: "Your membership has ended"
+        preheader: "Renew online with your membership number."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "membership@trlibrary.com"
+        reply_to: "membership@trlibrary.com"
+        notes:
+          - "Confirm with ACME that a lapsed member renews with the same membership number."
+    - name: "RENEW: T+45 Last Note"
+      flow: membership
+      status: proposed
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: 45}
+      filters: ["Acme - Is Active Member is No"]
+      action: "Final invitation to renew, with a one-question reply survey on why not."
+      proposal:
+        slug: renew-t-plus-45-last-note
+        html: proposals/renew-t-plus-45-last-note.html
+        subject: "One last note about your membership"
+        preheader: "A final invitation to renew, and one question."
+        from_name: "Theodore Roosevelt Presidential Library"
+        from_email: "membership@trlibrary.com"
+        reply_to: "membership@trlibrary.com"
+        notes:
+          - "Someone on the membership team should own the replies to membership@trlibrary.com."

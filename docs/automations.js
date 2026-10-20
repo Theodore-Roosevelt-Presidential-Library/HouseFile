@@ -13,12 +13,17 @@
     COUNTRY: "Country", BIRTHDAY: "Birthday", ANNIVERSARY: "Anniversary",
   };
 
+  // Constant Contact system tags: links and pixels CC fills at send time.
+  const SYSTEM = new Set(["trackingimage", "unsubscribe", "updatelink", "viewaswebpage", "forwardtoafriend"]);
+  const isSystem = k => SYSTEM.has(String(k).toLowerCase());
+
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
   // "FIRSTNAME OR \"Friend\"" -> {key:"FIRSTNAME", fallback:"Friend"}
   function parseTag(inner) {
+    inner = String(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'");
     const m = inner.match(/^\s*(.+?)\s+OR\s+"([^"]*)"\s*$/i);
     return m ? { key: m[1].trim(), fallback: m[2] } : { key: inner.trim(), fallback: null };
   }
@@ -32,10 +37,14 @@
     return undefined;
   }
 
-  // custom.acme_-_recent_order_id -> "Acme - Recent Order Id"
+  const ACCOUNT_LABELS = { organizationname: "Organization name", addressline1: "Street address", city: "City", usstate: "State", postalcode: "ZIP code" };
+
+  // custom.acme_-_recent_order_id -> "Acme - Recent Order ID"
   function fieldLabel(key) {
     const up = key.toUpperCase();
     if (FIELD_LABELS[up]) return FIELD_LABELS[up];
+    const acct = key.match(/^account\.(.+)$/i);
+    if (acct) return "Account " + (ACCOUNT_LABELS[acct[1].toLowerCase()] || acct[1]).toLowerCase();
     const c = key.replace(/^custom\./i, "");
     const pretty = c.replace(/_-_/g, " - ").replace(/_/g, " ").replace(/\b\w/g, ch => ch.toUpperCase())
       .replace(/\bId\b/g, "ID");
@@ -43,7 +52,7 @@
   }
   function fieldSource(key) {
     if (/^custom\./i.test(key)) return "Custom field";
-    if (/^(account|org)\./i.test(key)) return "Account";
+    if (/^(account|org)\./i.test(key)) return "Account (filled by Constant Contact)";
     return "Contact field";
   }
 
@@ -52,7 +61,7 @@
     const seen = new Map();
     for (const m of String(html).matchAll(TAG_RE)) {
       const t = parseTag(m[1]);
-      if (/^trackingimage$/i.test(t.key)) continue;
+      if (isSystem(t.key)) continue;
       if (!seen.has(t.key)) seen.set(t.key, { key: t.key, fallback: t.fallback, raw: m[0], count: 0 });
       seen.get(t.key).count++;
     }
@@ -64,14 +73,16 @@
   function fill(html, sample) {
     return String(html).replace(/(href|src)="([^"]*)"/g, (all, attr, val) => {
       const v = val.replace(TAG_RE, (_, inner) => {
-        const t = parseTag(inner), s = lookup(sample, t.key);
+        const t = parseTag(inner);
+        if (isSystem(t.key)) return "#";
+        const s = lookup(sample, t.key);
         const out = s != null && s !== "" ? String(s) : (t.fallback || "");
         return /@/.test(out) ? out : encodeURIComponent(out);
       });
       return `${attr}="${v.replace(/"/g, "&quot;")}"`;
     }).replace(TAG_RE, (_, inner) => {
       const t = parseTag(inner);
-      if (/^trackingimage$/i.test(t.key)) return "";
+      if (isSystem(t.key)) return "";
       const s = lookup(sample, t.key);
       return esc(s != null && s !== "" ? s : (t.fallback || ""));
     });
@@ -130,9 +141,28 @@
   }
   function allEmails(data) {
     const out = [];
-    data.flows.forEach(f => f.paths.forEach(p => p.emails.forEach(e => out.push({ flow: f, path: p, email: e }))));
+    data.flows.forEach(f => groupByTrigger(f.paths).forEach(g => g.paths.forEach(p => p.emails.forEach(e => out.push({ flow: f, path: p, email: e })))));
     return out;
   }
 
-  global.HFAuto = { esc, parseTag, lookup, fieldLabel, fieldSource, findTags, fill, fillText, findLinks, dayLabel, loadData, loadEmail, allEmails };
+  // Paths in a flow, grouped by the date field that triggers them (a visit date and a
+  // membership expiration date can't share one timeline), each group in send order.
+  function groupByTrigger(paths) {
+    const groups = [];
+    paths.forEach(p => {
+      const field = p.trigger.field || p.trigger.label || "Other";
+      let g = groups.find(x => x.field === field);
+      if (!g) groups.push(g = { field, paths: [] });
+      g.paths.push(p);
+    });
+    groups.forEach(g => g.paths.sort((a, b) => (a.trigger.offset_days ?? 9999) - (b.trigger.offset_days ?? 9999)));
+    return groups;
+  }
+  function anchorWord(field) {
+    if (/visit/i.test(field || "")) return "Visit";
+    if (/expir/i.test(field || "")) return "Expires";
+    return "T";
+  }
+
+  global.HFAuto = { groupByTrigger, anchorWord, isSystem, esc, parseTag, lookup, fieldLabel, fieldSource, findTags, fill, fillText, findLinks, dayLabel, loadData, loadEmail, allEmails };
 })(window);

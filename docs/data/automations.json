@@ -1,5 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
+ "rebuilt_at": "2026-10-20T13:16:46+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -11,7 +12,15 @@
   "STATE": "ND",
   "POSTALCODE": "58501",
   "PHONE": "(701) 555-0100",
-  "custom.acme_-_recent_order_id": "100482731"
+  "custom.acme_-_recent_order_id": "100482731",
+  "custom.acme_-_membership_number": "100245",
+  "custom.acme_-_membership_level": "Family",
+  "custom.acme_-_membership_expiration_date": "December 31",
+  "account.OrganizationName": "Theodore Roosevelt Presidential Library Foundation",
+  "account.AddressLine1": "401 East Main Avenue, Suite 201",
+  "account.City": "Bismarck",
+  "account.usState": "ND",
+  "account.PostalCode": "58501"
  },
  "flows": [
   {
@@ -163,8 +172,105 @@
   {
    "key": "membership",
    "label": "Membership",
-   "description": "Turning a one-time ticket buyer into a member.",
+   "description": "Turning ticket buyers into members, and keeping members renewing.",
    "paths": [
+    {
+     "name": "RENEW: T-60 Renewal Notice",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -60,
+      "label": "60 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Is Active Member is Yes"
+     ],
+     "action": "First renewal notice: the member's number, level and expiration date, the 10% auto-renew or two-year offer, what membership keeps, and how to renew.",
+     "emails": [
+      {
+       "slug": "renew-t-60-renewal-notice",
+       "task": "RENEW: T-60 Renewal Notice",
+       "subject": "Your membership renews in two months",
+       "preheader": "Renew now and your benefits continue without a gap.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/renew-t-60-renewal-notice.html",
+       "proposed": true,
+       "notes": [
+        "Confirm the Constant Contact tag spelling for the membership fields with a test send.",
+        "Confirm ACME renews from the same link for every level."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "RENEW: T-30 Reminder",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -30,
+      "label": "30 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Is Active Member is Yes",
+      "Not yet renewed"
+     ],
+     "action": "Reminder with the expiration date, the 10% offer and a short guide to the levels.",
+     "emails": [
+      {
+       "slug": "renew-t-30-reminder",
+       "task": "RENEW: T-30 Reminder",
+       "subject": "One month left on your membership",
+       "preheader": "Renew by [[custom.acme_-_membership_expiration_date]] to keep your free admission and member benefits.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/renew-t-30-reminder.html",
+       "proposed": true,
+       "notes": [
+        "\"Not yet renewed\" needs a Constant Contact filter: renewing moves the expiration date, which may end the path on its own. Test with one renewal."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "RENEW: T-7 Last Week",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -7,
+      "label": "7 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Is Active Member is Yes",
+      "Not yet renewed"
+     ],
+     "action": "Short last-week note signed by the membership team.",
+     "emails": [
+      {
+       "slug": "renew-t-7-last-week",
+       "task": "RENEW: T-7 Last Week",
+       "subject": "Your membership ends next week",
+       "preheader": "Your member benefits end on [[custom.acme_-_membership_expiration_date]].",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/renew-t-7-last-week.html",
+       "proposed": true,
+       "notes": [],
+       "stats": {}
+      }
+     ]
+    },
     {
      "name": "VISIT: T+5 Ticket to Member",
      "status": "draft",
@@ -178,6 +284,70 @@
      "filters": [],
      "action": "No email built yet.",
      "emails": []
+    },
+    {
+     "name": "RENEW: T+7 Membership Ended",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 7,
+      "label": "7 days after the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Is Active Member is No"
+     ],
+     "action": "Lapsed notice: the membership has ended, how to renew, and what membership supports.",
+     "emails": [
+      {
+       "slug": "renew-t-plus-7-membership-ended",
+       "task": "RENEW: T+7 Membership Ended",
+       "subject": "Your membership has ended",
+       "preheader": "Renew online with your membership number.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/renew-t-plus-7-membership-ended.html",
+       "proposed": true,
+       "notes": [
+        "Confirm with ACME that a lapsed member renews with the same membership number."
+       ],
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "RENEW: T+45 Last Note",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 45,
+      "label": "45 days after the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Is Active Member is No"
+     ],
+     "action": "Final invitation to renew, with a one-question reply survey on why not.",
+     "emails": [
+      {
+       "slug": "renew-t-plus-45-last-note",
+       "task": "RENEW: T+45 Last Note",
+       "subject": "One last note about your membership",
+       "preheader": "A final invitation to renew, and one question.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/renew-t-plus-45-last-note.html",
+       "proposed": true,
+       "notes": [
+        "Someone on the membership team should own the replies to membership@trlibrary.com."
+       ],
+       "stats": {}
+      }
+     ]
     }
    ]
   },

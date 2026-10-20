@@ -138,6 +138,12 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .chip{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--track);color:var(--ink-2);font-variant-numeric:tabular-nums}
 .badge.draft::before{background:var(--muted)}
+.badge.proposed{border-style:dashed;border-color:var(--s2);color:var(--ink)}
+.badge.proposed::before{background:var(--s2)}
+.step.proposed{border-style:dashed;border-color:color-mix(in srgb,var(--s2) 55%,transparent)}
+.timeline .tick.proposed i{background:var(--surface);border:2px solid var(--s2)}
+.trig-label{font-size:12px;color:var(--muted);margin:14px 0 -4px}
+.legend-row{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin:-6px 0 14px}
 .auto-note{font-size:13px;color:var(--muted);margin:0 0 16px}
 .auto-note b{color:var(--ink-2)}
 @media (max-width:720px){
@@ -252,10 +258,11 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
     <div class="grid kpis" id="auto-kpis"></div>
     <div class="toolbar" role="group" aria-label="Filter automations" style="margin-bottom:14px">
       <button id="f-all" aria-pressed="true">All paths</button>
-      <button id="f-active" aria-pressed="false">Active only</button>
+      <button id="f-active" aria-pressed="false">Active in Constant Contact</button>
+      <button id="f-proposed" aria-pressed="false">Proposed</button>
     </div>
     <div id="auto-flows"></div>
-    <p class="auto-note">Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender, email content and send stats are pulled from the Constant Contact API. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
+    <p class="auto-note"><b>Proposed</b> paths are drafts for team review. They are not in Constant Contact and send nothing; they live in the HouseFile repo until approved and built. Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender, email content and send stats are pulled from the Constant Contact API. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
   </div>
 
   <footer>
@@ -577,17 +584,17 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
   const pct = (a, b) => (a != null && b) ? Math.round(100 * a / b) + "%" : "—";
   const fmtDay = d => d ? new Date(d + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "";
 
-  function timeline(paths) {
+  function timeline(paths, anchor) {
     const pts = paths.filter(p => p.trigger.offset_days != null);
     if (pts.length < 1) return "";
     const days = pts.map(p => p.trigger.offset_days).concat([0]);
     const lo = Math.min(...days), hi = Math.max(...days), span = Math.max(1, hi - lo);
     const x = d => 4 + 92 * (d - lo) / span;
-    const ticks = [`<div class="tick visit" style="left:${x(0)}%"><span>Visit</span><i></i></div>`];
+    const ticks = [`<div class="tick visit" style="left:${x(0)}%"><span>${A.esc(anchor || "Visit")}</span><i></i></div>`];
     pts.forEach(p => {
       const d = p.trigger.offset_days;
       if (d === 0) return;
-      ticks.push(`<div class="tick${p.status !== "active" ? " draft" : ""}" style="left:${x(d)}%" title="${A.esc(p.name)}"><span>${d < 0 ? "−" : "+"}${Math.abs(d)}</span><i></i></div>`);
+      ticks.push(`<div class="tick${p.status === "proposed" ? " proposed" : p.status !== "active" ? " draft" : ""}" style="left:${x(d)}%" title="${A.esc(p.name)}"><span>${d < 0 ? "−" : "+"}${Math.abs(d)}</span><i></i></div>`);
     });
     return `<div class="timeline" aria-hidden="true"><div class="rail"></div>${ticks.join("")}</div>`;
   }
@@ -595,11 +602,13 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
   function card(p) {
     const e = p.emails[0], d = p.trigger.offset_days;
     const when = d == null ? `<b>—</b><small>date</small>`
-      : d === 0 ? `<b>0</b><small>visit day</small>`
+      : d === 0 ? `<b>0</b><small>on the day</small>`
       : `<b>${d < 0 ? "−" : "+"}${Math.abs(d)}</b><small>${Math.abs(d) === 1 ? "day" : "days"} ${d < 0 ? "before" : "after"}</small>`;
     const status = p.status === "active"
       ? `<span class="badge ok">Active${p.activated ? " since " + fmtDay(p.activated) : ""}</span>`
-      : `<span class="badge draft">${A.esc(p.status[0].toUpperCase() + p.status.slice(1))}</span>`;
+      : p.status === "proposed"
+      ? `<span class="badge proposed" title="Not in Constant Contact. For team review only.">Proposed</span>`
+      : `<span class="badge draft">${A.esc(p.status[0].toUpperCase() + p.status.slice(1))} in Constant Contact</span>`;
     const link = e ? `email.html?e=${encodeURIComponent(e.slug)}` : null;
     const thumb = e
       ? `<a class="thumb" href="${link}" aria-label="Open preview of ${A.esc(e.subject)}"><iframe data-src="${A.esc(e.html)}" title="" tabindex="-1" sandbox="" loading="lazy"></iframe></a>`
@@ -610,7 +619,8 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
         <span class="chip">${pct(st.opens, st.sends)} opened</span>
         <span class="chip">${pct(st.clicks, st.sends)} clicked</span></div>` : "";
     const more = p.emails.length > 1 ? `<dt>Emails</dt><dd>${p.emails.length} in this path</dd>` : "";
-    return `<li class="step${p.status !== "active" ? " draft" : ""}">
+    const notes = e && e.notes && e.notes.length ? `<dt>Open items</dt><dd>${e.notes.map(A.esc).join("<br>")}</dd>` : "";
+    return `<li class="step${p.status === "proposed" ? " proposed" : p.status !== "active" ? " draft" : ""}">
       <div class="when">${when}</div>
       ${thumb}
       <div>
@@ -623,6 +633,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
           ${p.filters && p.filters.length ? `<dt>Filters</dt><dd>${p.filters.map(A.esc).join("; ")}</dd>` : ""}
           ${e ? `<dt>From</dt><dd>${A.esc(e.from_name)} &lt;${A.esc(e.from_email)}&gt;</dd>` : ""}
           ${more}
+          ${notes}
         </dl>
         ${chips}
       </div>
@@ -632,15 +643,18 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
   function render() {
     const host = document.getElementById("auto-flows");
     host.innerHTML = DATA.flows.map(f => {
-      const paths = f.paths.filter(p => filter === "all" || p.status === "active");
+      const paths = f.paths.filter(p => filter === "all" || p.status === filter);
       if (!f.paths.length) return "";
-      if (!paths.length) return filter === "all" ? "" : `<section><div class="flow-head"><h2>${A.esc(f.label)}</h2></div><p class="empty">No active paths in this flow.</p></section>`;
-      const nA = f.paths.filter(p => p.status === "active").length;
+      if (!paths.length) return filter !== "active" ? "" : `<section><div class="flow-head"><h2>${A.esc(f.label)}</h2></div><p class="empty">No ${filter === "active" ? "active" : "proposed"} paths in this flow.</p></section>`;
+      const n = st => f.paths.filter(p => p.status === st).length;
+      const meta = [[n("active"), "active"], [n("draft"), "draft"], [n("proposed"), "proposed"]].filter(([c]) => c).map(([c, w]) => `${c} ${w}`).join(" · ");
+      const groups = A.groupByTrigger(paths);
       return `<section>
-        <div class="flow-head"><h2>${A.esc(f.label)}</h2><span class="meta">${nA} active · ${f.paths.length - nA} draft</span></div>
+        <div class="flow-head"><h2>${A.esc(f.label)}</h2><span class="meta">${meta}</span></div>
         ${f.description ? `<p class="hint">${A.esc(f.description)}</p>` : ""}
-        ${timeline(paths)}
-        <ol class="steps">${paths.map(card).join("")}</ol>
+        ${groups.map(g => `${groups.length > 1 ? `<p class="trig-label">Timed from <b>${A.esc(g.field)}</b></p>` : ""}
+        ${timeline(g.paths, A.anchorWord(g.field))}
+        <ol class="steps">${g.paths.map(card).join("")}</ol>`).join("")}
       </section>`;
     }).join("");
     host.querySelectorAll("iframe[data-src]").forEach(async fr => {
@@ -653,18 +667,20 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     try { DATA = await A.loadData(); }
     catch (e) { document.getElementById("auto-stamp").innerHTML = `<span style="color:var(--crit)">Could not load data/automations.json</span>`; return; }
     const paths = DATA.flows.flatMap(f => f.paths), active = paths.filter(p => p.status === "active");
+    const proposed = paths.filter(p => p.status === "proposed");
     const emails = A.allEmails(DATA), sends = emails.reduce((a, x) => a + (x.email.stats?.sends || 0), 0);
     const clicks = emails.reduce((a, x) => a + (x.email.stats?.clicks || 0), 0);
     document.getElementById("auto-kpis").innerHTML = [
-      ["Active paths", active.length], ["Draft paths", paths.length - active.length],
+      ["Active paths", active.length], ["Drafts in Constant Contact", paths.length - active.length - proposed.length],
+      ["Proposed for review", proposed.length],
       ["Live emails", active.reduce((a, p) => a + p.emails.length, 0)],
       ["Emails sent", fmtN(sends)], ["Click rate", pct(clicks, sends)],
     ].map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join("");
     const when = new Date(DATA.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
-    document.getElementById("auto-stamp").innerHTML = `Automation paths in Constant Contact, grouped by flow and ordered by when they send relative to the visit date. Data as of <b>${when}</b>${DATA.source === "seed" ? " (initial snapshot; daily refresh starts once the API token has email access)" : ""}.`;
-    const fa = document.getElementById("f-all"), fo = document.getElementById("f-active");
-    const set = v => { filter = v; fa.setAttribute("aria-pressed", String(v === "all")); fo.setAttribute("aria-pressed", String(v === "active")); render(); };
-    fa.onclick = () => set("all"); fo.onclick = () => set("active");
+    document.getElementById("auto-stamp").innerHTML = `Automation paths in Constant Contact, grouped by flow and ordered by when they send relative to their trigger date. Data as of <b>${when}</b>${DATA.source === "seed" ? " (initial snapshot; daily refresh starts once the API token has email access)" : ""}.`;
+    const btns = { all: document.getElementById("f-all"), active: document.getElementById("f-active"), proposed: document.getElementById("f-proposed") };
+    const set = v => { filter = v; Object.entries(btns).forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === v))); render(); };
+    Object.entries(btns).forEach(([k, b]) => b.onclick = () => set(k));
     render();
   }
 
