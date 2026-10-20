@@ -18,6 +18,7 @@ never an email address, name or contact ID.
 
     python sync_date_text.py                  # dry run: counts of what would change
     python sync_date_text.py --create-fields  # create any missing text fields (once)
+    python sync_date_text.py --apply --limit 25  # test on 25 contacts
     python sync_date_text.py --apply          # write the changes
 """
 import argparse
@@ -56,6 +57,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
     ap.add_argument("--create-fields", action="store_true", help="create missing text fields")
+    ap.add_argument("--limit", type=int, default=0, help="update at most this many contacts (test runs)")
     a = ap.parse_args()
     load_env(ROOT / ".env")
     cc = CC(get_access_token())
@@ -102,6 +104,9 @@ def main():
                 stats["skipped: on no list (unsubscribed) or no email"] += 1
                 continue
             stats["contacts to update"] += 1
+            if a.limit and sum(len(r) for r in rows_by_list.values()) >= a.limit:
+                stats["held back by --limit"] += 1
+                continue
             row = {"email": addr}
             row.update({f"cf:{tgt_name.get(t, t)}": v for t, v in want.items()})
             rows_by_list[sorted(lists)[0]].append(row)
