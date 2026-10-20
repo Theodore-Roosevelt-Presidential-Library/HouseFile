@@ -205,8 +205,3 @@ automations:
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 60}
       action: "No email built yet."
 
-    - name: "Date-based Created 2026/07/18 03:12:15PM"
-      flow: other
-      status: draft
-      trigger: {type: on_date, label: "On a date (not set)"}
-      action: "Untitled draft with no email. Safe to delete in Constant Contact if unused."

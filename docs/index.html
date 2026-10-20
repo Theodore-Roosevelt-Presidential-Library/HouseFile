@@ -633,6 +633,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     const host = document.getElementById("auto-flows");
     host.innerHTML = DATA.flows.map(f => {
       const paths = f.paths.filter(p => filter === "all" || p.status === "active");
+      if (!f.paths.length) return "";
       if (!paths.length) return filter === "all" ? "" : `<section><div class="flow-head"><h2>${A.esc(f.label)}</h2></div><p class="empty">No active paths in this flow.</p></section>`;
       const nA = f.paths.filter(p => p.status === "active").length;
       return `<section>

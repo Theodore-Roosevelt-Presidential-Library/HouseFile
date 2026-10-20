@@ -185,20 +185,7 @@
    "key": "other",
    "label": "Other",
    "description": "Paths not yet assigned to a flow.",
-   "paths": [
-    {
-     "name": "Date-based Created 2026/07/18 03:12:15PM",
-     "status": "draft",
-     "activated": null,
-     "trigger": {
-      "type": "on_date",
-      "label": "On a date (not set)"
-     },
-     "filters": [],
-     "action": "Untitled draft with no email. Safe to delete in Constant Contact if unused.",
-     "emails": []
-    }
-   ]
+   "paths": []
   }
  ]
 }
