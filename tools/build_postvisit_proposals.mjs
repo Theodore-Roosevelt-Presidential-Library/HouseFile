@@ -155,6 +155,9 @@ const emails = [
       header('visit-t-plus-14-shop'),
       h('From the Library Shop'),
       p(`${GREET}<br><br>The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.`),
+      ...memberRows(
+        [p('<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR "Library"]] member, you take 10% off every order, online and in the Library Shop in Medora.')],
+        [p('<b>Members take 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.')]),
       cols(
         { src: IMG + 'pv-shop-backpack.jpg', alt: 'Special Edition Filson Olive All-Weather Backpack', heading: 'Filson All-Weather Backpack',
           text: "A special edition of Filson's all-weather pack, in olive or slate.", label: 'Shop Bags', href: `${SHOP}/collections/luggage-bags` },
@@ -166,8 +169,14 @@ const emails = [
         { src: IMG + 'pv-shop-journal.jpg', alt: 'TRPL Bella Luna journal and pen set', heading: 'Journal and Pen Set',
           text: 'A Bella Luna journal and pen for your own field notes.', label: 'Shop Gifts', href: `${SHOP}/collections/all` }),
       btn('Shop Online', SHOP),
-      ...memberOnly(p('<b>Shopping in person?</b> Members take 10% off in the Library Shop in Medora.', 'center')),
       p(`Hear about new arrivals and seasonal sales first: add <a href="${NEWSLETTER}">The Shop</a> to your newsletter topics.`, 'center'),
+      ...memberRows([GIFT], [
+        div,
+        h('Save 10% as a Member'),
+        p('A membership pays you back twice: 10% off in the shop, online and in Medora, and free admission for a full year. Individual and Dual pay for themselves on your second visit.'),
+        MEMBERSHIP_TABLE,
+        MEMBERSHIP_BTN,
+      ]),
       footer,
     ],
   },

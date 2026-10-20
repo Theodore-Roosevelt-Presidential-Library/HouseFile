@@ -312,7 +312,7 @@ automations:
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 14}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
-      action: "The online Library Shop: the special-edition Filson backpack, the Bully! hat, the Arena quote tee and the journal set, with a member reminder about 10% off in the shop in Medora."
+      action: "The online Library Shop: the special-edition Filson backpack, the Bully! hat, the Arena quote tee and the journal set. Members are reminded their 10% discount works online, with their level named; everyone else is shown membership as a way to save 10%."
       proposal:
         slug: visit-t-plus-14-shop
         html: proposals/visit-t-plus-14-shop.html
@@ -323,7 +323,8 @@ automations:
         reply_to: "hello@trlibrary.com"
         notes:
           - "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior."
-          - "Confirm before going live: which pieces are online-only (the copy says some are), and whether the 10% member discount applies online (the copy only claims it in Medora)."
+          - "Confirm before going live: which pieces are online-only (the copy says some are). The 10% member discount applies online and in Medora (confirmed by Matt, 2026-10-20)."
+          - "Members see their level merged in ([[custom.acme_-_membership_level]]); everyone else gets the membership levels and the 10% shop savings."
           - "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
     - name: "VISIT: T+30 Host an Event"
       flow: post-visit

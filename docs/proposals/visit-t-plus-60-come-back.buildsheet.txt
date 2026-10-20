@@ -21,17 +21,17 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
   5. Text · Hear about events while seats are still open: add Events & Programs to y
       everyone
   6. Text · As a member, you get early ticket access and invitations to member event
-      SHOW WHEN Acme - Is Active Member is any of active, new   [group p5]
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
   7. Divider
-      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
   8. Heading · Make It a Membership
-      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
   9. Text · A membership covers a full year of visits, and Individual and Dual pay f
-      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
  10. Table · Level / Free admission for / A year
-      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
  11. Button · See Membership Levels
-      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
  12. Divider
       everyone
  13. Button · Plan Your Next Visit
@@ -40,4 +40,4 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
 
 GROUPS
-  p5: Acme - Is Active Member — rows 6, 7, 8, 9, 10, 11; values active, new; has a default row
+  p6: Acme - Is Active Member — rows 6, 7, 8, 9, 10, 11; values active, new; has a default row

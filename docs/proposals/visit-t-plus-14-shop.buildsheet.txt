@@ -16,18 +16,33 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   3. Text · Hello [[FIRSTNAME OR "Friend"]], The Library Shop is open online, and so
       everyone
-  4. Two columns · Filson All-Weather Backpack
-      everyone
-  5. Two columns · Arena Quote T-shirt
-      everyone
-  6. Button · Shop Online
-      everyone
-  7. Text · Shopping in person? Members take 10% off in the Library Shop in Medora.
+  4. Text · Your member discount works here too. As a [[custom.acme_-_membership_lev
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p4]
-  8. Text · Hear about new arrivals and seasonal sales first: add The Shop to your n
+  5. Text · Members take 10% off every order, online and in the Library Shop in Medo
+      DEFAULT ROW (group p4): contacts who match none of the group's other rows
+  6. Two columns · Filson All-Weather Backpack
       everyone
-  9. Footer
+  7. Two columns · Arena Quote T-shirt
+      everyone
+  8. Button · Shop Online
+      everyone
+  9. Text · Hear about new arrivals and seasonal sales first: add The Shop to your n
+      everyone
+ 10. Text · Know someone who would love it here? As a member you take 10% off gift m
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p5]
+ 11. Divider
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 12. Heading · Save 10% as a Member
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 13. Text · A membership pays you back twice: 10% off in the shop, online and in Med
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 14. Table · Level / Free admission for / A year
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 15. Button · See Membership Levels
+      DEFAULT ROW (group p5): contacts who match none of the group's other rows
+ 16. Footer
       everyone
 
 GROUPS
-  p4: Acme - Is Active Member — rows 7; values active, new; no default row (contacts matching nothing see none of these rows)
+  p4: Acme - Is Active Member — rows 4, 5; values active, new; has a default row
+  p5: Acme - Is Active Member — rows 10, 11, 12, 13, 14, 15; values active, new; has a default row
