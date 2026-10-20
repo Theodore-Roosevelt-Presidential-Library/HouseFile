@@ -31,8 +31,8 @@
     {
       "type": "image",
       "props": {
-        "src": "proposals/img/pv-events-lobby-wide.jpg",
-        "alt": "The Library lobby, with glass walls framing the Badlands",
+        "src": "proposals/img/pv-events-overlook-wide.jpg",
+        "alt": "Two people on the Library boardwalk looking out over the Badlands",
         "href": "",
         "caption": ""
       }
@@ -81,18 +81,18 @@
       "props": {
         "cols": [
           {
-            "src": "proposals/img/pv-events-auditorium.jpg",
-            "alt": "The Library auditorium",
+            "src": "proposals/img/pv-events-galleries.jpg",
+            "alt": "The Library galleries",
             "heading": "The Spaces",
             "text": "The auditorium, classroom, lobby, terraces and restaurant, in one look book.",
             "label": "See the Spaces",
             "href": "https://www.trlibrary.com/private-events/spaces"
           },
           {
-            "src": "proposals/img/pv-events-dining.jpg",
-            "alt": "Salt+Scoria, the Library restaurant",
-            "heading": "Catering",
-            "text": "Menus for receptions, seated dinners and everything in between.",
+            "src": "proposals/img/pv-events-terrace.jpg",
+            "alt": "A family on the Library terrace",
+            "heading": "Terraces and Catering",
+            "text": "Terraces above the Badlands, and menus for receptions, seated dinners and everything in between.",
             "label": "See Catering",
             "href": "https://www.trlibrary.com/private-events/catering"
           }

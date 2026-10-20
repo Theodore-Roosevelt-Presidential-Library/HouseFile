@@ -33,16 +33,16 @@
       "props": {
         "cols": [
           {
-            "src": "proposals/img/pv-events-auditorium.jpg",
-            "alt": "The Library auditorium",
+            "src": "proposals/img/pv-come-back-audience.jpg",
+            "alt": "An audience watching a program at the Library",
             "heading": "Special Events",
             "text": "Talks, screenings, festivals and evening programs, each with its own date and ticket.",
             "label": "See Special Events",
             "href": "https://www.trlibrary.com/calendar/special-event"
           },
           {
-            "src": "proposals/img/pv-events-lobby.jpg",
-            "alt": "The Library lobby",
+            "src": "proposals/img/pv-come-back-exhibit.jpg",
+            "alt": "A participant pointing out an exhibit in the galleries",
             "heading": "Specialty Tours",
             "text": "Tours built around a single subject, offered on select days.",
             "label": "See Tours",

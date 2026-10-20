@@ -23,11 +23,12 @@ const NOTE = 'You are receiving this email because you visited the Theodore Roos
 const HEADERS = {
   'visit-t-plus-2-thank-you':      { photo: 'painted-canyon.jpg', opts: { pairing: 'gray-sky-black', panY: 300 } },                  // Badlands sky over the canyon
   'visit-t-plus-7-keep-exploring': { photo: 'Roof.jpeg', opts: { pairing: 'bright-forest-black' } },                                 // the planted roof
-  'visit-t-plus-14-shop':          { photo: 'Snohetta-TRPL-2-Entry-CopyrightPlomp-optimized-v2.jpg', opts: { pairing: 'sand-black', panY: -500 } }, // the entrance at dusk
-  'visit-t-plus-30-host-an-event': { photo: 'Snohetta-TRPL-8-DawnDusk-Copyright-Plomp-FINAL-website.jpeg', opts: { pairing: 'night-sky-white' } }, // the Library at dusk
-  'visit-t-plus-60-come-back':     { photo: 'building-clean-june.jpg', opts: { pairing: 'dark-forest-white', zoom: 1.6, panX: -600 } }, // the Library on the prairie, clear of the wordmark
+  'visit-t-plus-14-shop':          { photo: 'Theodore_Roosevelt_Presidential_Library-088_half-size.jpg', opts: { pairing: 'sand-black' } }, // the Library Shop
+  'visit-t-plus-30-host-an-event': { photo: 'building-clean-june.jpg', opts: { pairing: 'night-sky-white', zoom: 1.6, panX: -600 } }, // the Library on the prairie
+  'visit-t-plus-60-come-back':     { photo: 'TRPL-Roof_Threefold-006.jpg', opts: { pairing: 'deep-orange-black' } },               // a couple on the planted roof
 };
 // Checked by eye: the wordmark covers no one's face and none of the building's main lines.
+// Real photos only: no architectural renderings (the Snohetta / Plomp images) in any email.
 
 // ---- blocks ----
 const header = slug => ({ type: 'header', props: { src: IMG + slug + '-header.jpg', alt: 'Theodore Roosevelt Presidential Library', href: SITE } });
@@ -190,7 +191,7 @@ const emails = [
       header('visit-t-plus-30-host-an-event'),
       h('Host Your Event at the Library'),
       p(`${GREET}<br><br>You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.`),
-      img(IMG + 'pv-events-lobby-wide.jpg', 'The Library lobby, with glass walls framing the Badlands'),
+      img(IMG + 'pv-events-overlook-wide.jpg', 'Two people on the Library boardwalk looking out over the Badlands'),
       table({
         columns: ['Event', 'At the Library'],
         rowLabels: true,
@@ -203,10 +204,10 @@ const emails = [
       }),
       p("Every event includes the Library's events team and its list of regional caterers and partners. Add curator-led tours or after-hours access to the galleries."),
       cols(
-        { src: IMG + 'pv-events-auditorium.jpg', alt: 'The Library auditorium', heading: 'The Spaces',
+        { src: IMG + 'pv-events-galleries.jpg', alt: 'The Library galleries', heading: 'The Spaces',
           text: 'The auditorium, classroom, lobby, terraces and restaurant, in one look book.', label: 'See the Spaces', href: `${SITE}/private-events/spaces` },
-        { src: IMG + 'pv-events-dining.jpg', alt: 'Salt+Scoria, the Library restaurant', heading: 'Catering',
-          text: 'Menus for receptions, seated dinners and everything in between.', label: 'See Catering', href: `${SITE}/private-events/catering` }),
+        { src: IMG + 'pv-events-terrace.jpg', alt: 'A family on the Library terrace', heading: 'Terraces and Catering',
+          text: 'Terraces above the Badlands, and menus for receptions, seated dinners and everything in between.', label: 'See Catering', href: `${SITE}/private-events/catering` }),
       btn('Start an Inquiry', `${SITE}/private-events/inquiry`),
       p("Planning something that doesn't fit a category? Ask anyway.", 'center'),
       footer,
@@ -223,9 +224,9 @@ const emails = [
       h('Come Back to the Badlands'),
       p(`${GREET}<br><br>No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.`),
       cols(
-        { src: IMG + 'pv-events-auditorium.jpg', alt: 'The Library auditorium', heading: 'Special Events',
+        { src: IMG + 'pv-come-back-audience.jpg', alt: 'An audience watching a program at the Library', heading: 'Special Events',
           text: 'Talks, screenings, festivals and evening programs, each with its own date and ticket.', label: 'See Special Events', href: `${SITE}/calendar/special-event` },
-        { src: IMG + 'pv-events-lobby.jpg', alt: 'The Library lobby', heading: 'Specialty Tours',
+        { src: IMG + 'pv-come-back-exhibit.jpg', alt: 'A participant pointing out an exhibit in the galleries', heading: 'Specialty Tours',
           text: 'Tours built around a single subject, offered on select days.', label: 'See Tours', href: `${SITE}/calendar/specialty-tour` }),
       p(`Hear about events while seats are still open: add <a href="${NEWSLETTER}">Events &amp; Programs</a> to your newsletter topics.`, 'center'),
       ...memberRows(

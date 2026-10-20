@@ -16,7 +16,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   3. Text · Hello [[FIRSTNAME OR "Friend"]], You have seen the galleries by day. Aft
       everyone
-  4. Image · The Library lobby, with glass walls framing the Badlands
+  4. Image · Two people on the Library boardwalk looking out over the Badlands
       everyone
   5. Table · Event / At the Library
       everyone
