@@ -18,7 +18,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   4. Text · Welcome back, member. Use the member line at the entrance, and remember 
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m5]
-  5. Text · Thinking about membership? Ask at the Welcome Desk on the day: the Libra
+  5. Text · Thinking about membership? Anyone at the front desk can refund these tic
       DEFAULT ROW (group m5): contacts who match none of the group's other rows
   6. Heading · Your Entry Window
       everyone

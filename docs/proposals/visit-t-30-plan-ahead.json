@@ -271,7 +271,7 @@
     {
       "type": "text",
       "props": {
-        "html": "To switch, write to <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> with your order number, <b>[[custom.acme_-_recent_order_id]]</b>, or ask at the Welcome Desk when you arrive.",
+        "html": "To switch, email <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> with your order number, <b>[[custom.acme_-_recent_order_id]]</b>, or ask anyone at the front desk when you visit. They can take care of the refund for you.",
         "align": "left"
       },
       "cond": {

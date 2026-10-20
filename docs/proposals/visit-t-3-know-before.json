@@ -50,7 +50,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Thinking about membership?</b> Ask at the Welcome Desk on the day: the Library can apply what you paid for these tickets toward a membership and keep your reservation as it is.",
+        "html": "<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> before you come.",
         "align": "left"
       },
       "cond": {

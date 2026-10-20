@@ -72,7 +72,7 @@ const MEMBERSHIP_TABLE = table({
 const MEMBER_THANKS = p('<b>Thank you for coming as a member.</b> Head for the member line when you arrive. Your membership also takes <b>25% off</b> any extra admission tickets for friends, and <b>10% off</b> in the Library Shop and at Salt+Scoria (excluding alcohol).');
 const SELL_HEAD = h('Make This Visit a Membership');
 const SELL_BODY = p(`Admission is $26 for adults and $16 for youth. A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip. <b>Already have tickets? You don't lose them.</b> The Library will refund your tickets and put what you paid toward a membership, and your reservation stays exactly as it is.`);
-const SELL_HOW = p(`To switch, write to ${MEMBERSHIP_MAIL} with your order number, <b>${ORDER}</b>, or ask at the Welcome Desk when you arrive.`);
+const SELL_HOW = p(`To switch, email ${MEMBERSHIP_MAIL} with your order number, <b>${ORDER}</b>, or ask anyone at the front desk when you visit. They can take care of the refund for you.`);
 const SELL_BTN = btn('See Membership Levels', `${SITE}/membership`);
 
 const emails = [
@@ -172,7 +172,7 @@ const emails = [
       p(`${GREET}<br><br>In three days, on <b>${VISIT}</b>, you will stand where a young Theodore Roosevelt rebuilt himself, on the buttes above the Little Missouri. Here is everything that makes the day go smoothly.`),
       ...memberRows(
         [p('<b>Welcome back, member.</b> Use the member line at the entrance, and remember 25% off extra admission tickets and 10% off in the Library Shop and at Salt+Scoria.')],
-        [p(`<b>Thinking about membership?</b> Ask at the Welcome Desk on the day: the Library can apply what you paid for these tickets toward a membership and keep your reservation as it is.`)]),
+        [p(`<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email ${MEMBERSHIP_MAIL} before you come.`)]),
       h('Your Entry Window'),
       p('Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Leave a few minutes for the walk from the lot and a quick security check.', 'left'),
       table({

@@ -224,7 +224,7 @@ automations:
         notes:
           - "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt."
           - "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building."
-          - "Confirm with the membership team how a ticket refund is applied to a membership and that the reservation is kept; the email asks people to write to membership@trlibrary.com with their order number or ask at the Welcome Desk."
+          - "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20)."
           - "Confirm the merge-tag spelling for Acme - Visit Date (Next) and how it prints (the preview assumes a long date)."
           - "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Check that a 1-day-after trigger on Acme - Last Purchase Date fires for contacts whose date arrives that morning, and whether the path can skip visits in the next 3 days. Without that filter, someone visiting the day after buying would get the welcome after their visit."
     - name: "VISIT: T-30 Plan Ahead"
