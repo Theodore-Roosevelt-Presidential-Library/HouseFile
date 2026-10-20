@@ -369,7 +369,7 @@ automations:
       flow: membership
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -60}
-      filters: ["Acme - Is Active Member is active or new", "Not on auto-renew"]
+      filters: ["Acme - Is Active Member is active", "Acme - Subscription is blank or cancelled (not on auto-renew)", "Acme - Membership Card Type is Primary"]
       action: "First renewal notice, one email with conditional rows: Founding Members get a thank-you, permanent recognition on the Digital Donor Wall and an invitation to continue at Contributing; every other level sees its own renewal prices (1 year, auto-renew, 2 years), a nudge to the next level up, and a thank-you or visit invitation depending on their last ticket."
       proposal:
         slug: renew-t-60-renewal-notice
@@ -384,14 +384,16 @@ automations:
           - "The expiration date prints from Acme - Membership Expiration (Text), written daily by sync_date_text.py (the date field itself can't print)."
           - "Founding Members: T-60 and T-30 ask them to continue at Contributing ($250). Dual or Family come in as the smaller, recovery option from T-7 on and in both lapsed emails."
           - "Constant Contact dynamic content works on rows in the drag-and-drop editor, not in custom-code emails, so this one goes into Constant Contact as a drag-and-drop email when it is approved."
-          - "Members on auto-renew should not get this series. Constant Contact has no auto-renew field yet: ask ACME to sync one, or exclude them another way."
+          - "Audience rules from Katie (membership), 2026-10-20. ACME is the membership system of record, so every field in these emails is an Acme field; never DonorPerfect, which syncs days late."
+          - "Before going live, two ACME fields must be mapped to Constant Contact: Subscription (active / cancelled; blank or cancelled = not on auto-renew) and Membership Card Type (send only to Primary, the head of household who bought the membership; secondary card holders get no ACME emails)."
+          - "Acme - Is Active Member: active = current member; new = a renewal (or downgrade) is already bought, so they are left out of the reminders; lapsed = expired (ACME switches the day after expiration); dropped = ended early at the member's request, never sent a renewal."
           - "Confirm the Founding Member wording on the Digital Donor Wall with Development."
-          - "Confirm ACME renews from the same link for every level, including Founding to a standard level."
+          - "The Renew My Membership button URL is correct (Katie, 2026-10-20)."
     - name: "RENEW: T-30 Reminder"
       flow: membership
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -30}
-      filters: ["Acme - Is Active Member is active or new", "Not on auto-renew", "Not yet renewed"]
+      filters: ["Acme - Is Active Member is active", "Acme - Subscription is blank or cancelled (not on auto-renew)", "Acme - Membership Card Type is Primary"]
       action: "Full reminder, matching the first notice: the member's own price table, a visit thank-you or invitation, the next-level nudge and what renewing keeps; Founding Members are invited to continue at Contributing, with their permanent recognition."
       proposal:
         slug: renew-t-30-reminder
@@ -402,12 +404,12 @@ automations:
         from_email: "membership@trlibrary.com"
         reply_to: "membership@trlibrary.com"
         notes:
-          - "\"Not yet renewed\" needs a Constant Contact filter: renewing moves the expiration date, which may end the path on its own. Test with one renewal."
+          - "Already renewed? ACME marks them new, so the active-only filter leaves them out (Katie, 2026-10-20)."
     - name: "RENEW: T-7 Last Week"
       flow: membership
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -7}
-      filters: ["Acme - Is Active Member is active or new", "Not on auto-renew", "Not yet renewed"]
+      filters: ["Acme - Is Active Member is active", "Acme - Subscription is blank or cancelled (not on auto-renew)", "Acme - Membership Card Type is Primary"]
       action: "Short last-week note with the member's own renewal price, signed by the membership team; Founding Members get Contributing first, with Dual or Family as the smaller option."
       proposal:
         slug: renew-t-7-last-week
@@ -421,7 +423,7 @@ automations:
       flow: membership
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: 7}
-      filters: ["Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"]
+      filters: ["Acme - Is Active Member is lapsed", "Acme - Subscription is blank or cancelled (not on auto-renew)", "Acme - Membership Card Type is Primary"]
       action: "Lapsed notice with the full sell: the member's own rejoin price table, a thank-you if they visited, the next-level nudge, what membership brings back and how to rejoin; Founding Members hear that their status and Digital Donor Wall name are permanent."
       proposal:
         slug: renew-t-plus-7-membership-ended
@@ -437,7 +439,7 @@ automations:
       flow: membership
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: 45}
-      filters: ["Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"]
+      filters: ["Acme - Is Active Member is lapsed", "Acme - Subscription is blank or cancelled (not on auto-renew)", "Acme - Membership Card Type is Primary"]
       action: "Final invitation: the member's own price table, what members get, and a one-question reply survey on why not; Founding Members are reminded their recognition is permanent."
       proposal:
         slug: renew-t-plus-45-last-note
