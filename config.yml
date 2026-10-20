@@ -242,7 +242,7 @@ automations:
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -60}
       filters: ["Acme - Is Active Member is active or new", "Not on auto-renew"]
-      action: "First renewal notice, one email with conditional rows: Founding Members get a thank-you, permanent recognition on the Digital Donor Wall and a guide to Dual or Family; every other level sees its own renewal prices (1 year, auto-renew, 2 years), a nudge to the next level up, and a thank-you or visit invitation depending on their last ticket."
+      action: "First renewal notice, one email with conditional rows: Founding Members get a thank-you, permanent recognition on the Digital Donor Wall and an invitation to continue at Contributing; every other level sees its own renewal prices (1 year, auto-renew, 2 years), a nudge to the next level up, and a thank-you or visit invitation depending on their last ticket."
       proposal:
         slug: renew-t-60-renewal-notice
         html: proposals/renew-t-60-renewal-notice.html
@@ -253,6 +253,7 @@ automations:
         reply_to: "membership@trlibrary.com"
         notes:
           - "Conditional rows switch on Acme - Membership Level (Founding Membership, Individual, Dual, Family, Contributing, Patron, Donor Patron) and Acme - Ticket Type (Last) (Member Adult or Member Youth = visited as a member). Use the switches above the preview."
+          - "Founding Members: T-60 and T-30 ask them to continue at Contributing ($250). Dual or Family come in as the smaller, recovery option from T-7 on and in both lapsed emails."
           - "Constant Contact dynamic content works on rows in the drag-and-drop editor, not in custom-code emails, so this one goes into Constant Contact as a drag-and-drop email when it is approved."
           - "Members on auto-renew should not get this series. Constant Contact has no auto-renew field yet: ask ACME to sync one, or exclude them another way."
           - "Confirm the Founding Member wording on the Digital Donor Wall with Development."
@@ -262,7 +263,7 @@ automations:
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -30}
       filters: ["Acme - Is Active Member is active or new", "Not on auto-renew", "Not yet renewed"]
-      action: "Full reminder, matching the first notice: the member's own price table, a visit thank-you or invitation, the next-level nudge and what renewing keeps; Founding Members get the Dual or Family table and their permanent recognition."
+      action: "Full reminder, matching the first notice: the member's own price table, a visit thank-you or invitation, the next-level nudge and what renewing keeps; Founding Members are invited to continue at Contributing, with their permanent recognition."
       proposal:
         slug: renew-t-30-reminder
         html: proposals/renew-t-30-reminder.html
@@ -278,7 +279,7 @@ automations:
       status: proposed
       trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -7}
       filters: ["Acme - Is Active Member is active or new", "Not on auto-renew", "Not yet renewed"]
-      action: "Short last-week note with the member's own renewal price, signed by the membership team; Founding Members are pointed to Dual or Family."
+      action: "Short last-week note with the member's own renewal price, signed by the membership team; Founding Members get Contributing first, with Dual or Family as the smaller option."
       proposal:
         slug: renew-t-7-last-week
         html: proposals/renew-t-7-last-week.html
