@@ -50,7 +50,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> before you come.",
+        "html": "<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a> before you come with your order number (<b>[[custom.acme_-_recent_order_id OR \"on your ticket confirmation\"]]</b>).",
         "align": "left"
       },
       "cond": {

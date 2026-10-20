@@ -42,7 +42,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
  16. Table · Level / Free admission for / A year
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 17. Text · To switch, email membership@trlibrary.com with the order number from you
+ 17. Text · To switch, email membership@trlibrary.com with your order number ([[cust
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
  18. Button · See Membership Levels
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
