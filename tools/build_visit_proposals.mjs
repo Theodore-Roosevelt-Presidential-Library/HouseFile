@@ -190,7 +190,7 @@ const emails = [
       img('https://weather.labs.trlibrary.com/images/social.png', 'Current weather and three-day forecast for Medora, North Dakota', 'https://trlibrary.com/weather/', 'Live from the National Weather Service. Tap for the full forecast.'),
       h('Make a Day of It'),
       p(`Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many visitors pair the Library with the national park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.`),
-      img(THUMB('qrwdZmqFO5A'), 'Your Journey Starts Here: The Trailblazer', VID('qrwdZmqFO5A'), 'Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit.'),
+      img(`${IMG}video-qrwdZmqFO5A-teaser.gif`, 'Watch how it works: Your Journey Starts Here, The Trailblazer (1:21)', VID('qrwdZmqFO5A'), 'Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit.'),
       p(`Check the <a href="${SITE}/visit/hours">hours</a> and, in winter, <a href="https://travel.dot.nd.gov/">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to ${HELLO}.`),
       btn('Everything to Know', `${SITE}/visit/faq`),
       footer,

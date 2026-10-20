@@ -77,23 +77,15 @@ def duration(im, text):
 
 
 # 1. Play button + running time on the YouTube thumbnails (16:9, 1280 x 720).
-for vid, length in [("yEEsRy7sdng", "0:53"), ("zRPJAdE-IBI", "1:34"), ("qrwdZmqFO5A", "1:21")]:
+for vid, length in [("yEEsRy7sdng", "0:53"), ("zRPJAdE-IBI", "1:34")]:
     im = cover(Image.open(PHOTOS / f"yt-{vid}.jpg"), 1280, 720)
     im = duration(play_button(im), length)
     im.save(OUT / f"video-{vid}.jpg", quality=85, optimize=True)
 
-# 2. Teaser for the premiere video: Library photos, title, play button, running time.
-SCENES = [  # photo, focus x, focus y
-    ("chaney-little-mo-river_016_articlecrop_1.jpg", 0.5, 0.55),
-    ("TRPL-MainGuest_Threefold-004.jpg", 0.55, 0.45),
-    ("TRPL-Boardwalk_Threefold-037.jpg", 0.35, 0.5),
-    ("building-clean-june.jpg", 0.5, 0.45),
-]
-
-
-def teaser_frame(scene, w, h, zoom):
+# 2. Animated teasers: photos or video frames, a title, a play button and the running time.
+def teaser_frame(scene, w, h, text):
     name, fx, fy = scene
-    im = cover(Image.open(PHOTOS / name), w, h, zoom=zoom, cx=fx, cy=fy)
+    im = cover(Image.open(PHOTOS / name), w, h, cx=fx, cy=fy)
     im = shade_bottom(im, 190, 0.35)
     d = ImageDraw.Draw(im)
     pad = round(w * 0.045)
@@ -101,33 +93,52 @@ def teaser_frame(scene, w, h, zoom):
     title = font("Oswald", round(h * 0.13), "Bold")
     sub = font("Alegreya", round(h * 0.055), "Regular")
     y = h - pad - title.size - kicker.size - sub.size - round(h * 0.04)
-    d.text((pad, y), "WATCH THE PREVIEW", font=kicker, fill=(252, 146, 78))  # Sunset Orange
+    d.text((pad, y), text["kicker"], font=kicker, fill=(252, 146, 78))  # Sunset Orange
     y += kicker.size + round(h * 0.01)
-    d.text((pad, y), "DISCOVER THE LIBRARY", font=title, fill=(255, 255, 255))
+    d.text((pad, y), text["title"], font=title, fill=(255, 255, 255))
     y += title.size + round(h * 0.02)
-    d.text((pad, y), "Medora, North Dakota · the galleries, the building and the Badlands", font=sub, fill=(235, 235, 230))
-    return duration(play_button(im, round(h * 0.12)), "3:35")
+    d.text((pad, y), text["sub"], font=sub, fill=(235, 235, 230))
+    return duration(play_button(im, round(h * 0.12)), text["length"])
 
 
-# Static version (first frame quality, 1320 x 743) for clients that don't animate.
-teaser_frame(SCENES[0], 1320, 743, 1.0).save(OUT / "video-W9sq8PuGQVo-teaser.jpg", quality=85, optimize=True)
+def teaser(vid, scenes, text, colors=80, dither=False):
+    """Static JPG (1320 x 743) plus an animated GIF (660 x 371, kept near 1 MB): each scene
+    holds, then cross-fades into the next."""
+    teaser_frame(scenes[0], 1320, 743, text).save(OUT / f"video-{vid}-teaser.jpg", quality=85, optimize=True)
+    W, H, FADE = 660, 371, 2
+    stills = [teaser_frame(sc, W, H, text) for sc in scenes]
+    frames, durations = [], []
+    for i, still in enumerate(stills):
+        frames.append(still)
+        durations.append(1800)
+        nxt = stills[(i + 1) % len(stills)]
+        for k in range(1, FADE + 1):
+            frames.append(Image.blend(still, nxt, k / (FADE + 1)))
+            durations.append(110)
+    dz = Image.Dither.FLOYDSTEINBERG if dither else Image.Dither.NONE
+    pal = [f.quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=dz) for f in frames]
+    pal[0].save(OUT / f"video-{vid}-teaser.gif", save_all=True, append_images=pal[1:],
+                duration=durations, loop=0, optimize=True, disposal=1)
 
-# Animated GIF at 660 x 371: each scene holds, then cross-fades (kept under ~1 MB for email).
-W, H, HOLD, FADE = 660, 371, 1, 2
-frames, durations = [], []
-stills = []
-for s in SCENES:
-    seq = [teaser_frame(s, W, H, 1.0) for i in range(HOLD)]
-    stills.append(seq)
-for i, seq in enumerate(stills):
-    frames += seq
-    durations += [1800] * HOLD
-    nxt = stills[(i + 1) % len(stills)][0]
-    for k in range(1, FADE + 1):
-        frames.append(Image.blend(seq[-1], nxt, k / (FADE + 1)))
-        durations.append(110)
-pal = [f.quantize(colors=80, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
-pal[0].save(OUT / "video-W9sq8PuGQVo-teaser.gif", save_all=True, append_images=pal[1:],
-            duration=durations, loop=0, optimize=True, disposal=1)
+
+# The premiere: "Discover the Theodore Roosevelt Presidential Library" (3:35), from Library photos.
+teaser("W9sq8PuGQVo", [  # photo, focus x, focus y
+    ("chaney-little-mo-river_016_articlecrop_1.jpg", 0.5, 0.55),
+    ("TRPL-MainGuest_Threefold-004.jpg", 0.55, 0.45),
+    ("TRPL-Boardwalk_Threefold-037.jpg", 0.35, 0.5),
+    ("building-clean-june.jpg", 0.5, 0.45),
+], {"kicker": "WATCH THE PREVIEW", "title": "DISCOVER THE LIBRARY",
+    "sub": "Medora, North Dakota · the galleries, the building and the Badlands", "length": "3:35"})
+
+# "Your Journey Starts Here: The Trailblazer" (1:21): two of the video's own frames (YouTube's
+# maxres1 / maxres3 auto-frames) and a gallery photo.
+teaser("qrwdZmqFO5A", [
+    ("yt-qrwdZmqFO5A-1.jpg", 0.45, 0.4),   # tapping a Trailblazer at a gallery station
+    ("yt-qrwdZmqFO5A-3.jpg", 0.4, 0.45),   # kids laughing in a gallery
+    ("gallery-03363.jpg", 0.5, 0.5),       # the Narrative Galleries
+], {"kicker": "WATCH HOW IT WORKS", "title": "YOUR TRAILBLAZER",
+    "sub": "Tap in at every stop, then take your photos and journal home", "length": "1:21"},
+    colors=160, dither=True)  # indoor light bands badly with fewer colors
+
 for p in sorted(OUT.glob("video-*")):
     print(p.name, p.stat().st_size // 1024, "KB")
