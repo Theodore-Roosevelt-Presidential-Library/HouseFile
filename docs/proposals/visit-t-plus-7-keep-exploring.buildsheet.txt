@@ -40,10 +40,12 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  15. Text · Know someone who would love it here? As a member you take 10% off gift m
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
- 16. Text · Coming back? A membership covers a full year of visits for you and your 
+ 16. Button · Give a Membership
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 17. Text · Coming back? A membership covers a full year of visits for you and your 
       DEFAULT ROW (group p3): contacts who match none of the group's other rows
- 17. Footer
+ 18. Footer
       everyone
 
 GROUPS
-  p3: Acme - Is Active Member — rows 15, 16; values active, new; has a default row
+  p3: Acme - Is Active Member — rows 15, 16, 17; values active, new; has a default row

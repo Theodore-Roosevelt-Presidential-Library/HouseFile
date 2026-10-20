@@ -30,23 +30,25 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  10. Text · Know someone who would love it here? As a member you take 10% off gift m
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
- 11. Divider
+ 11. Button · Give a Membership
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
+ 12. Divider
       DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 12. Heading · Come Back as a Member
+ 13. Heading · Come Back as a Member
       DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 13. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
+ 14. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
       DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 14. Table · Level / Free admission for / A year
+ 15. Table · Level / Free admission for / A year
       DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 15. Button · See Membership Levels
+ 16. Button · See Membership Levels
       DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 16. Divider
+ 17. Divider
       everyone
- 17. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
+ 18. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
       everyone
- 18. Footer
+ 19. Footer
       everyone
 
 GROUPS
   p1: Acme - Is Active Member — rows 4; values active, new; no default row (contacts matching nothing see none of these rows)
-  p2: Acme - Is Active Member — rows 10, 11, 12, 13, 14, 15; values active, new; has a default row
+  p2: Acme - Is Active Member — rows 10, 11, 12, 13, 14, 15, 16; values active, new; has a default row

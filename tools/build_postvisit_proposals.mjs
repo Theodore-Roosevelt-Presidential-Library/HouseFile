@@ -68,7 +68,12 @@ const MEMBERSHIP_TABLE = table({
   note: 'Every level adds the member line, early ticket access, invitations to member events, and 10% off in the Library Shop and at Salt+Scoria. Save 10% more with auto-renew or two years.',
 });
 const MEMBERSHIP_BTN = btn('See Membership Levels', `${SITE}/membership`);
-const GIFT = p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center');
+// Gift memberships: the same join page the website's "Gift Memberships" button opens.
+const GIFT_URL = 'https://access.trlibrary.com/membership/613/join';
+const GIFT = [
+  p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center'),
+  btn('Give a Membership', GIFT_URL),
+];
 const COMING_BACK = p(`<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href="${SITE}/membership">See the levels</a>.`, 'center');
 
 const emails = [
@@ -101,7 +106,7 @@ const emails = [
         ],
       }),
       btn('Choose Your Topics', NEWSLETTER),
-      ...memberRows([GIFT], [
+      ...memberRows(GIFT, [
         div,
         h('Come Back as a Member'),
         p('Admission is $26 for adults and $16 for youth. A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip.'),
@@ -142,7 +147,7 @@ const emails = [
       p('Ted Roosevelt V hosts conversations with people who step into the arena to build up the country and protect the planet. The <i>Live from the TRPL</i> series is recorded at the Library, beginning with presidential historian Doris Kearns Goodwin. Good Citizen was a 2024 Webby Award Honoree.'),
       p('<a href="https://podcasts.apple.com/us/podcast/good-citizen/id1713230937">Apple Podcasts</a> &nbsp;·&nbsp; <a href="https://open.spotify.com/show/7ywQA9wJGztUPmedmG6BSe">Spotify</a> &nbsp;·&nbsp; <a href="https://www.youtube.com/playlist?list=PL-sck-PjBiFcxu6QSF_0u7aDB9EJ5mLe_">YouTube</a>', 'center'),
       btn('Listen to Good Citizen', `${SITE}/podcast/good-citizen`),
-      ...memberRows([GIFT], [COMING_BACK]),
+      ...memberRows(GIFT, [COMING_BACK]),
       footer,
     ],
   },
@@ -171,7 +176,7 @@ const emails = [
           text: 'A Bella Luna journal and pen for your own field notes.', label: 'Shop Gifts', href: `${SHOP}/collections/all` }),
       btn('Shop Online', SHOP),
       p(`Hear about new arrivals and seasonal sales first: add <a href="${NEWSLETTER}">The Shop</a> to your newsletter topics.`, 'center'),
-      ...memberRows([GIFT], [
+      ...memberRows(GIFT, [
         div,
         h('Save 10% as a Member'),
         p('A membership pays you back twice: 10% off in the shop, online and in Medora, and free admission for a full year. Individual and Dual pay for themselves on your second visit.'),
@@ -224,9 +229,9 @@ const emails = [
       h('Come Back to the Badlands'),
       p(`${GREET}<br><br>No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.`),
       cols(
-        { src: IMG + 'pv-come-back-audience.jpg', alt: 'An audience watching a program at the Library', heading: 'Special Events',
+        { src: IMG + 'pv-come-back-events.jpg', alt: 'A family under the stars at the Elkhorn campfire in the galleries', heading: 'Special Events',
           text: 'Talks, screenings, festivals and evening programs, each with its own date and ticket.', label: 'See Special Events', href: `${SITE}/calendar/special-event` },
-        { src: IMG + 'pv-come-back-exhibit.jpg', alt: 'A participant pointing out an exhibit in the galleries', heading: 'Specialty Tours',
+        { src: IMG + 'pv-come-back-tours.jpg', alt: 'Visitors hearing the story of the Elkhorn Ranch cabin', heading: 'Specialty Tours',
           text: 'Tours built around a single subject, offered on select days.', label: 'See Tours', href: `${SITE}/calendar/specialty-tour` }),
       p(`Hear about events while seats are still open: add <a href="${NEWSLETTER}">Events &amp; Programs</a> to your newsletter topics.`, 'center'),
       ...memberRows(

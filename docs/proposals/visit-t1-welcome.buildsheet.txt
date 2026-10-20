@@ -34,27 +34,29 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  12. Text · Know someone who would love it here? As a member you take 10% off gift m
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m2]
- 13. Divider
+ 13. Button · Give a Membership
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group m2]
+ 14. Divider
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 14. Heading · Make This Visit a Membership
+ 15. Heading · Make This Visit a Membership
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 15. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
+ 16. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 16. Table · Level / Free admission for / A year
+ 17. Table · Level / Free admission for / A year
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 17. Text · To switch, email membership@trlibrary.com with your order number ([[cust
+ 18. Text · To switch, email membership@trlibrary.com with your order number ([[cust
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 18. Button · See Membership Levels
+ 19. Button · See Membership Levels
       DEFAULT ROW (group m2): contacts who match none of the group's other rows
- 19. Divider
+ 20. Divider
       everyone
- 20. Text · Questions about your trip? Write to hello@trlibrary.com and the Welcome 
+ 21. Text · Questions about your trip? Write to hello@trlibrary.com and the Welcome 
       everyone
- 21. Button · Plan Your Visit
+ 22. Button · Plan Your Visit
       everyone
- 22. Footer
+ 23. Footer
       everyone
 
 GROUPS
   m1: Acme - Is Active Member — rows 4; values active, new; no default row (contacts matching nothing see none of these rows)
-  m2: Acme - Is Active Member — rows 12, 13, 14, 15, 16, 17, 18; values active, new; has a default row
+  m2: Acme - Is Active Member — rows 12, 13, 14, 15, 16, 17, 18, 19; values active, new; has a default row

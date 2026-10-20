@@ -59,7 +59,12 @@ const memberRows = (memberBlocks, otherBlocks) => {
   ];
 };
 const memberOnly = (...blocks) => memberRows(blocks, []);
-const GIFT = p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center');
+// Gift memberships: the same join page the website's "Gift Memberships" button opens.
+const GIFT_URL = 'https://access.trlibrary.com/membership/613/join';
+const GIFT = [
+  p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center'),
+  btn('Give a Membership', GIFT_URL),
+];
 
 // ---- shared content ----
 const MEMBERSHIP_TABLE = table({
@@ -116,7 +121,7 @@ const emails = [
         ],
       }),
       p(`Want it all handled? <a href="${SITE}/visit/one-medora">One Medora packages</a> bundle a hotel night, an evening show and Library admission in one booking.`),
-      ...memberRows([GIFT], [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
+      ...memberRows(GIFT, [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
       div,
       p(`Questions about your trip? Write to ${HELLO} and the Welcome Team will help you plan.`, 'center'),
       btn('Plan Your Visit', `${SITE}/visit`),
@@ -157,7 +162,7 @@ const emails = [
           text: "Step into Roosevelt's Amazon expedition, one of the galleries you will walk through.", label: 'Watch (0:53)', href: VID('yEEsRy7sdng') },
         { src: THUMB('zRPJAdE-IBI'), alt: 'The TR Library Boardwalk through the Badlands', heading: 'The Boardwalk',
           text: 'A one-mile loop through restored prairie, with Badlands views the whole way.', label: 'Watch (1:34)', href: VID('zRPJAdE-IBI') }),
-      ...memberRows([GIFT], [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
+      ...memberRows(GIFT, [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
       div,
       p(`Questions? Write to ${HELLO}. The Welcome Team is glad to help you plan.`, 'center'),
       btn('Plan Your Visit', `${SITE}/visit`),

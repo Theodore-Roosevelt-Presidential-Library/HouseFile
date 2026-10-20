@@ -151,6 +151,25 @@
       }
     },
     {
+      "type": "button",
+      "props": {
+        "label": "Give a Membership",
+        "href": "https://access.trlibrary.com/membership/613/join"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
       "type": "text",
       "props": {
         "html": "<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href=\"https://www.trlibrary.com/membership\">See the levels</a>.",

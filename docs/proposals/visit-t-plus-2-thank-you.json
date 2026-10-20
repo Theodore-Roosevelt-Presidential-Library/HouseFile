@@ -140,6 +140,25 @@
       }
     },
     {
+      "type": "button",
+      "props": {
+        "label": "Give a Membership",
+        "href": "https://access.trlibrary.com/membership/613/join"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
       "type": "divider",
       "props": {},
       "cond": {
