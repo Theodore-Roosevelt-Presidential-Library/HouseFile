@@ -47,6 +47,10 @@ A contact is attributed to a source when **any** rule in its `match` block hits:
 - `include_all_lists` is `false` by default so internal segment names (donor tiers, staff lists) stay off the public page.
 - The optional `--checkpoint` file holds the same counters, never records, and is gitignored.
 
+## Dates & members tab
+
+Aggregates of the ACME date and membership fields that sync into Constant Contact (`insights:` in `config.yml` names the fields): booking lead time (next visit date minus last purchase date, overall, in-state vs out-of-state, and by visit month), upcoming visits by day, visits and purchases by weekday and month, purchase recency, latest ticket type, and membership (active members by level, expirations by month, the renewal calendar by level, where members live, whether they have a visit booked, overlap with other source systems). Computed in `insights.py` during the daily collector run; only counts are published, and category labels on fewer than `min_cell` contacts fold into "Other". Each contact carries only its latest order and next visit, so lead time describes each person's most recent booking. Open with `#dates`.
+
 ## Automations tab
 
 Shows every Constant Contact automation path, grouped by flow (pre-visit, post-visit, membership) and ordered by when it sends relative to the trigger date, with a thumbnail of each email.

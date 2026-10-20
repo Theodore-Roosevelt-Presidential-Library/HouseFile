@@ -39,6 +39,8 @@ from pathlib import Path
 import requests
 import yaml
 
+from insights import Insights
+
 ROOT = Path(__file__).resolve().parent
 TOKEN_URL = "https://authz.constantcontact.com/oauth2/default/v1/token"
 API = "https://api.cc.email/v3"
@@ -226,12 +228,14 @@ class Agg:
                     for s in cfg["sources"]}
         self.list_members = collections.Counter()   # list_id -> members seen in scan
         self.src_created_month = collections.Counter()  # "source_key|YYYY-MM" -> contacts created
+        self.ins = Insights(cfg.get("insights"), self.now) if cfg.get("insights") else None
         self.cursor = None
 
     # -- (de)serialization for checkpoints ---------------------------------
     def to_dict(self):
-        d = {k: v for k, v in self.__dict__.items() if k not in ("cfg", "cf_labels", "list_names", "now", "centroids")}
+        d = {k: v for k, v in self.__dict__.items() if k not in ("cfg", "cf_labels", "list_names", "now", "centroids", "ins")}
         d["now"] = self.now.isoformat()
+        d["ins"] = self.ins.to_dict() if self.ins else None
         return d
 
     @classmethod
@@ -240,6 +244,8 @@ class Agg:
         for k, v in d.items():
             if k == "now":
                 a.now = dt.datetime.fromisoformat(v)
+            elif k == "ins":
+                a.ins = Insights.from_dict(v, cfg.get("insights"), a.now) if (v and cfg.get("insights")) else a.ins
             elif isinstance(getattr(a, k, None), collections.Counter):
                 setattr(a, k, collections.Counter(v))
             else:
@@ -351,6 +357,7 @@ class Agg:
         if fields.get(ss_field):
             self.c["has_source_system"] += 1
         hits = 0
+        src_keys = []
         for s in cfg["sources"]:
             m = s.get("match", {})
             hit = (m.get("list") and m["list"] in lnames) \
@@ -359,6 +366,7 @@ class Agg:
             if not hit:
                 continue
             hits += 1
+            src_keys.append(s["key"])
             st = self.src[s["key"]]
             st["total"] += 1
             if created:
@@ -383,6 +391,8 @@ class Agg:
                 elif v in ("false", "no", "0"):
                     st["opt_in_false"] += 1
         self.source_count_hist[str(min(hits, 3))] += 1
+        if self.ins:
+            self.ins.add(fields, state, src_keys)
         if hits == 0:
             self.c["unattributed"] += 1
             if created:
@@ -554,6 +564,7 @@ def build_stats(agg: Agg, cfg, lists, counts, centroids):
         "growth": growth,
         "growth_by_source": growth_by_source,
         "top_email_domains": top_domains,
+        "insights": agg.ins.build(n, {s["key"]: s["label"] for s in cfg["sources"]}) if agg.ins else None,
     }
 
 

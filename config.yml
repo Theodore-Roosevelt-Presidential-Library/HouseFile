@@ -94,6 +94,20 @@ geo:
   # The plain "State" completeness figure always reflects what is on file.
   infer_state_from_zip: true
 
+# "Dates & members" tab: the custom fields the ticketing / membership sync
+# writes. Only counts are published (months, weekdays, lead-time buckets,
+# levels); labels on fewer than min_cell contacts fold into "Other".
+insights:
+  visit_date_field: "Acme - Visit Date (Next)"
+  purchase_date_field: "Acme - Last Purchase Date"
+  membership_expiration_field: "Acme - Membership Expiration Date"
+  membership_level_field: "Acme - Membership Level"
+  active_member_field: "Acme - Is Active Member"
+  ticket_type_field: "Acme - Ticket Type (Last)"
+  home_state: "ND"        # booking lead time is compared for in-state vs out-of-state
+  upcoming_days: 120      # daily view of upcoming visits
+  min_cell: 3
+
 # A contact is "stale" if it hasn't been updated in this many days.
 stale_days: 365
 

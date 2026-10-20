@@ -165,6 +165,7 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <a href="#house-file" role="tab" id="t-file" aria-controls="tab-file" aria-selected="true">House file</a>
     <a href="#automations" role="tab" id="t-auto" aria-controls="tab-automations" aria-selected="false">Automations<span class="count" id="auto-count"></span></a>
+    <a href="#dates" role="tab" id="t-ins" aria-controls="tab-insights" aria-selected="false">Dates &amp; members</a>
   </nav>
   <div id="tab-file" role="tabpanel" aria-labelledby="t-file">
 
@@ -252,6 +253,72 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
 
 
   </div><!-- /tab-file -->
+
+  <div id="tab-insights" role="tabpanel" aria-labelledby="t-ins" hidden>
+    <p class="auto-note">From the ACME fields synced into Constant Contact: next visit date, last purchase date, last ticket type, and membership level, status and expiration. Each contact carries only its <b>latest</b> order and <b>next</b> visit, so lead time describes each person's most recent booking. Counts only; no individual dates leave the collector.</p>
+    <div id="ins-body">
+      <div class="grid kpis" id="ins-kpis"></div>
+
+      <section>
+        <h2>How far ahead people book</h2>
+        <p class="hint">Days between a contact's last purchase and their next visit date.</p>
+        <div class="grid two">
+          <div class="chart" id="ins-lead"></div>
+          <div><div style="overflow-x:auto" id="ins-region"></div><p class="hint" style="margin-top:12px">Where they live comes from the address on file (state inferred from ZIP where missing).</p></div>
+        </div>
+        <h2 style="margin-top:18px">Lead time by visit month</h2>
+        <p class="hint">Share of each month's visits by how far ahead they were booked.</p>
+        <div id="ins-lead-month-legend"></div>
+        <div class="chart" id="ins-lead-month"></div>
+      </section>
+
+      <section class="chart">
+        <h2>Upcoming visits</h2>
+        <p class="hint">Contacts with a next visit date in the days ahead. Weekends in orange.</p>
+        <div id="ins-upcoming"></div>
+      </section>
+
+      <div class="grid two">
+        <section class="chart"><h2>Visits by weekday</h2><p class="hint">Next visit date, all contacts.</p><div id="ins-visit-dow"></div></section>
+        <section class="chart"><h2>Next visit by month</h2><p class="hint">Current month in orange.</p><div id="ins-visit-month"></div></section>
+      </div>
+
+      <div class="grid two">
+        <section class="chart"><h2>Latest purchase by month</h2><p class="hint">When each contact last bought something in ACME.</p><div id="ins-purchase-month"></div></section>
+        <section class="chart"><h2>Purchases by weekday</h2><p class="hint">Day of the week of each contact's latest order.</p><div id="ins-purchase-dow"></div></section>
+      </div>
+
+      <div class="grid two">
+        <section><h2>How recently they bought</h2><p class="hint">Days since the latest ACME purchase.</p><div id="ins-recency"></div></section>
+        <section><h2>Ticket type, latest order</h2><p class="hint">Types on fewer than three contacts are grouped as Other.</p><div id="ins-tickets"></div></section>
+      </div>
+
+      <section>
+        <h2>Membership</h2>
+        <p class="hint">Active means ACME flags the contact as an active member, or, where the flag is blank, an expiration date still ahead.</p>
+        <div class="grid two">
+          <div><h2 style="font-size:13px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.02em">Active members by level</h2><div id="ins-levels"></div></div>
+          <div><h2 style="font-size:13px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.02em">Who the members are</h2><div id="ins-member-facts"></div></div>
+        </div>
+      </section>
+
+      <div class="grid two">
+        <section class="chart"><h2>When active memberships expire</h2><p class="hint" id="ins-exp-note"></p><div id="ins-exp-month"></div></section>
+        <section><h2>Time to expiration</h2><p class="hint">Every contact with a membership expiration date, active or not.</p><div id="ins-exp-buckets"></div></section>
+      </div>
+
+      <section>
+        <h2>Renewal calendar by level</h2>
+        <p class="hint">Active memberships by level and the month they expire: the renewal workload, month by month.</p>
+        <div style="overflow-x:auto" id="ins-level-exp"></div>
+      </section>
+
+      <div class="grid two">
+        <section><h2>Members in other systems</h2><p class="hint">Active members also matched to each source system.</p><div id="ins-member-sources"></div></section>
+        <section><h2>Data checks</h2><div class="hint" id="ins-checks" style="color:var(--ink-2)"></div><p class="hint" style="margin-top:10px">Fields read: <span id="ins-fields"></span></p></section>
+      </div>
+    </div>
+  </div>
 
   <div id="tab-automations" role="tabpanel" aria-labelledby="t-auto" hidden>
     <p class="auto-note" id="auto-stamp">Loading automations…</p>
@@ -558,10 +625,11 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
 </script>
 
 <script src="automations.js"></script>
+<script src="insights.js"></script>
 <script>
 (() => {
   const A = window.HFAuto, fmtN = d3.format(",");
-  const tabs = { "house-file": ["t-file", "tab-file"], "automations": ["t-auto", "tab-automations"] };
+  const tabs = { "house-file": ["t-file", "tab-file"], "automations": ["t-auto", "tab-automations"], "dates": ["t-ins", "tab-insights"] };
   let loaded = false, filter = "all", DATA = null;
 
   function show(name) {
@@ -572,6 +640,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     }
     document.getElementById("stamp").style.visibility = name === "house-file" ? "" : "hidden";
     if (name === "automations" && !loaded) { loaded = true; load(); }
+    if (name === "dates") window.HFInsights.start();
   }
   window.addEventListener("hashchange", () => show(location.hash.slice(1)));
   document.querySelectorAll(".tabs a").forEach(a => a.addEventListener("keydown", e => {
