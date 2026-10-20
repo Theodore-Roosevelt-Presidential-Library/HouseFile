@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-20T12:30:00+00:00",
- "rebuilt_at": "2026-10-20T13:16:46+00:00",
+ "rebuilt_at": "2026-10-20T14:04:38+00:00",
  "source": "seed",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -16,6 +16,7 @@
   "custom.acme_-_membership_number": "100245",
   "custom.acme_-_membership_level": "Family",
   "custom.acme_-_membership_expiration_date": "December 31",
+  "custom.acme_-_ticket_type_last": "Member Adult",
   "account.OrganizationName": "Theodore Roosevelt Presidential Library Foundation",
   "account.AddressLine1": "401 East Main Avenue, Suite 201",
   "account.City": "Bismarck",
@@ -185,23 +186,27 @@
       "label": "60 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Is Active Member is Yes"
+      "Acme - Is Active Member is active or new",
+      "Not on auto-renew"
      ],
-     "action": "First renewal notice: the member's number, level and expiration date, the 10% auto-renew or two-year offer, what membership keeps, and how to renew.",
+     "action": "First renewal notice, one email with conditional rows: Founding Members get a thank-you, permanent recognition on the Digital Donor Wall and a guide to Dual or Family; every other level sees its own renewal prices (1 year, auto-renew, 2 years), a nudge to the next level up, and a thank-you or visit invitation depending on their last ticket.",
      "emails": [
       {
        "slug": "renew-t-60-renewal-notice",
        "task": "RENEW: T-60 Renewal Notice",
-       "subject": "Your membership renews in two months",
-       "preheader": "Renew now and your benefits continue without a gap.",
+       "subject": "Two months left in your membership year",
+       "preheader": "Your level, your renewal options, and 10% off with auto-renew or two years.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "membership@trlibrary.com",
        "reply_to": "membership@trlibrary.com",
        "html": "proposals/renew-t-60-renewal-notice.html",
        "proposed": true,
        "notes": [
-        "Confirm the Constant Contact tag spelling for the membership fields with a test send.",
-        "Confirm ACME renews from the same link for every level."
+        "Conditional rows switch on Acme - Membership Level (Founding Membership, Individual, Dual, Family, Contributing, Patron, Donor Patron) and Acme - Ticket Type (Last) (Member Adult or Member Youth = visited as a member). Use the switches above the preview.",
+        "Constant Contact dynamic content works on rows in the drag-and-drop editor, not in custom-code emails, so this one goes into Constant Contact as a drag-and-drop email when it is approved.",
+        "Members on auto-renew should not get this series. Constant Contact has no auto-renew field yet: ask ACME to sync one, or exclude them another way.",
+        "Confirm the Founding Member wording on the Digital Donor Wall with Development.",
+        "Confirm ACME renews from the same link for every level, including Founding to a standard level."
        ],
        "stats": {}
       }
@@ -218,10 +223,11 @@
       "label": "30 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Is Active Member is Yes",
+      "Acme - Is Active Member is active or new",
+      "Not on auto-renew",
       "Not yet renewed"
      ],
-     "action": "Reminder with the expiration date, the 10% offer and a short guide to the levels.",
+     "action": "Reminder with the member's own renewal prices and next-level nudge; Founding Members get the Dual or Family guide and their permanent recognition.",
      "emails": [
       {
        "slug": "renew-t-30-reminder",
@@ -251,10 +257,11 @@
       "label": "7 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Is Active Member is Yes",
+      "Acme - Is Active Member is active or new",
+      "Not on auto-renew",
       "Not yet renewed"
      ],
-     "action": "Short last-week note signed by the membership team.",
+     "action": "Short last-week note with the member's own renewal price, signed by the membership team; Founding Members are pointed to Dual or Family.",
      "emails": [
       {
        "slug": "renew-t-7-last-week",
@@ -296,9 +303,9 @@
       "label": "7 days after the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Is Active Member is No"
+      "Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"
      ],
-     "action": "Lapsed notice: the membership has ended, how to renew, and what membership supports.",
+     "action": "Lapsed notice: the member's own rejoin price and what membership supports; Founding Members hear that their status and Digital Donor Wall name are permanent.",
      "emails": [
       {
        "slug": "renew-t-plus-7-membership-ended",
@@ -328,9 +335,9 @@
       "label": "45 days after the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Is Active Member is No"
+      "Acme - Is Active Member is not active (confirm the lapsed value, likely dropped)"
      ],
-     "action": "Final invitation to renew, with a one-question reply survey on why not.",
+     "action": "Final invitation to renew, with a one-question reply survey on why not; Founding Members are reminded their recognition is permanent.",
      "emails": [
       {
        "slug": "renew-t-plus-45-last-note",

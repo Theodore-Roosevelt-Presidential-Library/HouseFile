@@ -93,6 +93,12 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
 .proposal li{margin:2px 0}
 .badge.proposed{border-style:dashed;border-color:#eb6834;color:var(--ink)}
 .badge.proposed::before{background:#eb6834}
+.conds{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.conds .row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0}
+.conds .lab{font-size:12.5px;color:var(--muted);margin-right:4px;min-width:110px}
+.conds button{font:inherit;font-size:12.5px;padding:3px 10px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--ink-2);cursor:pointer}
+.conds button[aria-pressed="true"]{background:#eb6834;border-color:#eb6834;color:#000}
+.conds .note{font-size:12px;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -114,6 +120,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
           <button id="m-raw" aria-pressed="false">Show merge tags</button>
         </div>
       </div>
+      <div class="conds" id="conds" hidden></div>
       <div class="inbox" aria-label="How it looks in the inbox">
         <div class="av" id="ib-av">T</div>
         <div class="l1"><b id="ib-from"></b><span id="ib-date"></span></div>
@@ -136,6 +143,12 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
       <section id="stats-sec" hidden>
         <h2>Performance to date</h2>
         <div class="stats" id="stats"></div>
+      </section>
+
+      <section id="cond-sec" hidden>
+        <h2>Conditional content</h2>
+        <p class="hint">One email, with rows that show or hide by contact field. In Constant Contact these are dynamic content rows: each gets a display condition, and a default row covers everyone else.</p>
+        <div id="cond-rules"></div>
       </section>
 
       <section>
@@ -201,6 +214,27 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const whenWord = /expir/i.test(path.trigger.field || "") ? "membership expires" : /visit/i.test(path.trigger.field || "") ? "visit is" : (path.trigger.field || "trigger date") + " is";
   syncTrigger();
 
+
+  const conds = A.findConditions(html);
+  function renderConds() {
+    const box = document.getElementById("conds"), sec = document.getElementById("cond-sec");
+    if (!conds.length) return;
+    box.hidden = false; sec.hidden = false;
+    box.innerHTML = conds.map((c, ci) => {
+      const cur = String(A.lookup(sample, c.tag) ?? "").trim();
+      const opts = c.values.map(v => ({ v, label: v, on: cur === v }));
+      if (c.hasElse) opts.push({ v: "", label: c.other || "Anything else", on: !c.values.includes(cur) });
+      return `<div class="row" role="group" aria-label="${A.esc(c.label)}"><span class="lab">${A.esc(c.label)}</span>${opts.map((o, oi) =>
+        `<button data-c="${ci}" data-o="${oi}" aria-pressed="${o.on}">${A.esc(o.label)}</button>`).join("")}</div>`;
+    }).join("") + `<div class="note">Switch a condition to see what that member receives.</div>`;
+    box.querySelectorAll("button").forEach(b => b.onclick = () => {
+      const c = conds[+b.dataset.c], opts = c.values.concat(c.hasElse ? [""] : []);
+      sample[c.tag] = opts[+b.dataset.o];
+      renderConds(); renderFields(); renderFrame();
+    });
+    document.getElementById("cond-rules").innerHTML = `<dl class="kv">` + conds.map(c => `<dt>${A.esc(c.label)}</dt><dd>${c.groups} section${c.groups === 1 ? "" : "s"} switch on <code class="tag">${A.esc(c.field)}</code><div class="src">Rule: ${A.esc(c.field)} <b>is</b> ${c.values.map(v => "“" + A.esc(v) + "”").join(", ")}${c.hasElse ? "; default row for everyone else" : ""}</div></dd>`).join("") + `</dl>`;
+  }
+
   function renderFrame() {
     const out = raw ? html : A.fill(html, sample);
     document.getElementById("frame").srcdoc = out.replace(/<head>/i, '<head><base target="_blank">');
@@ -257,7 +291,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
       ? `<thead><tr><th>Field</th><th>Sample value</th></tr></thead><tbody>${rows.join("")}</tbody>`
       : `<tbody><tr><td class="src">This email has no personalization tags.</td></tr></tbody>`;
     document.querySelectorAll("#fields input[data-key]").forEach(inp => inp.addEventListener("input", () => {
-      sample[inp.dataset.key] = inp.value; renderFrame();
+      sample[inp.dataset.key] = inp.value; renderConds(); renderFrame();
     }));
     const vi = document.getElementById("visit-in");
     if (vi) vi.addEventListener("change", () => { if (vi.value) { visit = new Date(vi.value + "T12:00:00"); syncTrigger(); renderAuto(); renderFrame(); } });
@@ -304,9 +338,9 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const ms = document.getElementById("m-sample"), mr = document.getElementById("m-raw");
   ms.onclick = () => { raw = false; press(ms, mr); renderFrame(); };
   mr.onclick = () => { raw = true; press(mr, ms); renderFrame(); };
-  document.getElementById("reset").onclick = () => { sample = Object.assign({}, BASE); syncTrigger(); renderFields(); renderFrame(); };
+  document.getElementById("reset").onclick = () => { sample = Object.assign({}, BASE); syncTrigger(); renderConds(); renderFields(); renderFrame(); };
 
-  renderAuto(); renderFields(); renderStats(); pager(); renderFrame();
+  renderAuto(); renderConds(); renderFields(); renderStats(); pager(); renderFrame();
 })();
 </script>
 </body>

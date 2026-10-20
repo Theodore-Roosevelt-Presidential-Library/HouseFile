@@ -1,6 +1,7 @@
 // Builds the RENEW proposal emails with TRPL's own Newsletter Builder and Header Studio,
 // so the HTML is exactly what the builder exports.
-// Usage (from the repo root): node tools/build_renew_proposals.mjs docs/proposals <photo-dir>
+// Usage (from the repo root): node tools/build_renew_proposals.mjs docs/proposals [<photo-dir>]
+// (omit <photo-dir> to rebuild the copy and keep the existing header images)
 // <photo-dir> holds the header photos named in HEADERS below (downloaded from trlibrary.com,
 // resized to ~2400 px wide). Each email gets its own photo and plaque colour.
 // then: python collect_automations.py --offline
@@ -41,26 +42,102 @@ const btn = (label, href = RENEW_URL) => ({ type: 'button', props: { label, href
 const img = (src, alt) => ({ type: 'image', props: { src: IMG + src, alt, href: '', caption: '' } });
 const div = { type: 'divider', props: {} };
 
-const KEEPS = '<ul><li><b>Free admission</b> for every visit, for the number of people your level covers</li><li><b>The member line</b> at the entrance</li><li><b>10% off</b> at the Library Shop and Salt+Scoria</li><li><b>Early ticket access</b> and invitations to member tours and events</li><li><b>The member magazine</b>, quarterly, and virtual member town halls</li></ul>';
-const STEPS = '<ol><li>Have your membership number ready. It is at the top of this email.</li><li>Select <b>Renew My Membership</b> and verify with your membership number and the primary cardholder\'s last name.</li><li>Select <b>Renew</b>, choose a level and complete checkout. Your membership number stays the same.</li></ol>';
+// ---- Membership facts (access.trlibrary.com/membership/613/join, checked 2026-10-20) ----
+// Every level: 1 year, Annual Auto-Renew (10% off) or 2 Years (10% off).
+// Founding Membership (Jan 1 - Jul 31, 2026, valid through Dec 31, 2026) is a once-only
+// designation: member + one additional adult + children under 13. Founding Members keep the
+// designation and their place on the Digital Donor Wall permanently (Matt, 2026-10-20).
+const LEVELS = {
+  'Individual':   { price: '$50',    auto: '$45',     two: '$90',    covers: 'free admission for you on every visit',
+                    up: 'Dual is $95 and adds a guest on every visit, so a friend or partner comes in free too.' },
+  'Dual':         { price: '$95',    auto: '$85.50',  two: '$171',   covers: 'free admission for you and a guest on every visit',
+                    up: 'Family is $175 and covers you and three guests, plus family programming.' },
+  'Family':       { price: '$175',   auto: '$157.50', two: '$315',   covers: 'free admission for you and three guests, plus family programming',
+                    up: 'Contributing is $250 and covers you and five guests, with a commemorative gift.' },
+  'Contributing': { price: '$250',   auto: '$225',    two: '$450',   covers: 'free admission for you and five guests, family programming and a commemorative gift',
+                    up: 'Patron is $500. It keeps the same six admissions and doubles your support of the Library\'s programs.' },
+  'Patron':       { price: '$500',   auto: '$450',    two: '$900',   covers: 'free admission for you and five guests, family programming and a commemorative gift',
+                    up: 'Donor Patron is $1,000. It covers you and seven guests and adds your name to the Library\'s Digital Donor Wall.' },
+  'Donor Patron': { price: '$1,000', auto: '$900',    two: '$1,800', covers: 'free admission for you and seven guests, family programming, a commemorative gift and your name on the Digital Donor Wall',
+                    up: null },
+};
+const FOUNDING = 'Founding Membership';
+const STANDARD = Object.keys(LEVELS);
+
+// ---- Conditional rows (Constant Contact dynamic content) ----
+// cond(block, spec) marks a builder block; after export its row is wrapped in
+// <!--cc:if …-->…<!--cc:end--> or <!--cc:else …-->…<!--cc:end--> comments, which the dashboard
+// preview reads and email clients ignore. In Constant Contact each becomes a row with a
+// display condition, built in the drag-and-drop editor.
+const LEVEL_F = { tag: 'custom.acme_-_membership_level', field: 'Acme - Membership Level', label: 'Membership level', other: 'No level on file' };
+const TICKET_F = { tag: 'custom.acme_-_ticket_type_last', field: 'Acme - Ticket Type (Last)', label: 'Last ticket', other: 'Not a member ticket' };
+let G = 0;
+const cond = (block, spec) => Object.assign(block, { cond: spec });
+// One row per value (or value list), plus a default row. variants: [[isList, block], …], fallback block or null.
+function byField(F, variants, fallback) {
+  const group = 'g' + (++G);
+  const out = variants.map(([is, b]) => cond(b, Object.assign({ group, kind: 'if', is: [].concat(is).join('|') }, F)));
+  if (fallback) out.push(cond(fallback, Object.assign({ group, kind: 'else' }, F)));
+  return out;
+}
+const byLevel = (fn, fallback) => byField(LEVEL_F, [FOUNDING, ...STANDARD].map(l => [l, fn(l)]).filter(([, b]) => b), fallback);
+const MEMBER_TICKETS = ['Member Adult', 'Member Youth'];
+
+const EXP = '[[custom.acme_-_membership_expiration_date]]';
+const VISIT_URL = 'https://www.trlibrary.com/visit';
+
+const priceLine = l => {
+  const x = LEVELS[l];
+  return `<b>Renew at ${l}</b> for ${x.covers}.<br>1 year: <b>${x.price}</b> &nbsp;·&nbsp; Auto-renew each year: <b>${x.auto}</b> (save 10%) &nbsp;·&nbsp; 2 years: <b>${x.two}</b> (save 10%)`;
+};
+const FOUNDING_OPTIONS = 'Founding Membership covered you, one more adult and children under 13. Two standard levels keep that going:<ul>'
+  + '<li><b>Dual, $95 a year</b>: free admission for you and a guest.</li>'
+  + '<li><b>Family, $175 a year</b>: free admission for you and three guests, plus family programming.</li></ul>'
+  + 'Either one is <b>10% off</b> with auto-renew or a two-year membership. Higher levels add more admissions, a commemorative gift and, at Donor Patron, a name on the Digital Donor Wall.';
+const FOUNDING_KEEPS = 'Two things do not expire. <b>You are a Founding Member for good</b>, and <b>your name stays on the Library\'s Digital Donor Wall permanently</b>, in recognition of your early commitment.';
+
+const CORE = '<ul><li><b>Free general admission</b> for the people your level covers, and <b>25% off</b> extra admission tickets</li>'
+  + '<li><b>The member line</b> at the entrance and dedicated member support</li>'
+  + '<li><b>10% off</b> in the Library Shop, online and onsite, and at Salt+Scoria (excluding alcohol)</li>'
+  + '<li><b>Priority access</b> to select ticketed events and discounted tickets for programs and lectures</li>'
+  + '<li><b>Member tours</b>, exhibition previews and member events</li>'
+  + '<li><b>10% off gift memberships</b>, and the monthly member e-news</li></ul>';
+
+const visitedRows = (short) => byField(TICKET_F, [[MEMBER_TICKETS, p(short
+    ? 'Thank you for using your membership in Medora this year.'
+    : 'Thank you for using your membership in Medora this year. Renew, and your free admission carries on into next year.')]],
+  p(short
+    ? `There is still time to use your free admission before ${EXP}. <a href="${VISIT_URL}">Plan a visit</a>.`
+    : `If you have not made it to Medora yet, there is still time: your free admission, the member line and 10% off in the Library Shop and Salt+Scoria run through ${EXP}. <a href="${VISIT_URL}">Plan a visit</a>.`));
+
+const STEPS = '<ol><li>Have your membership number ready. It is at the top of this email.</li><li>Select <b>Renew My Membership</b> and verify with your membership number and the primary cardholder\'s last name.</li><li>Choose your level and term: 1 year, auto-renew or 2 years. Your membership number stays the same.</li></ol>';
 
 const emails = [
   {
     slug: 'renew-t-60-renewal-notice',
     title: 'RENEW: T-60 Renewal Notice',
-    preheader: 'Renew now and your benefits continue without a gap.',
+    preheader: 'Your level, your renewal options, and 10% off with auto-renew or two years.',
     blocks: [
       'HEADER',
-      h('Another Year in the Arena'),
+      ...byField(LEVEL_F, [[FOUNDING, h('Thank You, Founding Member')]], h('Another Year in the Arena')),
       p(CARD, 'center'),
-      p(`${GREET}<br><br>Thank you for your year as a member of the Theodore Roosevelt Presidential Library. Your membership expires on [[custom.acme_-_membership_expiration_date]]. Renew now and every benefit carries straight on.`),
-      p('<b>Save 10%</b> when you choose auto-renew or a two-year membership.', 'center'),
-      btn('Renew My Membership'),
+      ...byField(LEVEL_F, [[FOUNDING, p(`${GREET}<br><br>You joined the Theodore Roosevelt Presidential Library in its founding year and helped open its doors. Founding Membership was a once-only offer for 2026, so it ends on ${EXP} and does not renew. To keep free admission and member benefits in 2027, choose one of the standard levels below.`)]],
+        p(`${GREET}<br><br>Thank you for a year as a [[custom.acme_-_membership_level]] member of the Theodore Roosevelt Presidential Library. Your membership expires on ${EXP}. Renew now and every benefit carries on without a gap.`)),
+      ...byField(LEVEL_F, [[FOUNDING, p(FOUNDING_KEEPS)]], null),
+      ...visitedRows(false),
       div,
-      h('What Your Membership Keeps'),
+      ...byField(LEVEL_F, [[FOUNDING, h('Choose Your Level for 2027')]], h('Your Renewal Options')),
+      ...byLevel(l => p(l === FOUNDING ? FOUNDING_OPTIONS : priceLine(l), l === FOUNDING ? 'left' : 'center'),
+        p('Every level is <b>10% off</b> with auto-renew or a two-year membership.', 'center')),
+      p('<b>Auto-renew</b> takes care of next year for you. <b>Two years</b> covers your next two membership years in one step.', 'center'),
+      btn('Renew My Membership'),
+      ...byLevel(l => l === FOUNDING ? null : LEVELS[l].up
+        ? p(`<b>Room for more people next year?</b> ${LEVELS[l].up} <a href="${LEVELS_URL}">Compare levels</a>.`, 'center')
+        : p('Thank you for supporting the Library at its highest membership level.', 'center'), null),
+      div,
+      h('Every Membership Includes'),
       img('renew-campfire.jpg', 'A grandfather points out a detail to two children inside the Elkhorn Ranch cabin recreation'),
-      p(KEEPS),
-      btn('Compare Membership Levels', LEVELS_URL),
+      p(CORE),
       div,
       h('How to Renew'),
       p(STEPS),
@@ -71,18 +148,18 @@ const emails = [
   {
     slug: 'renew-t-30-reminder',
     title: 'RENEW: T-30 Reminder',
-    preheader: 'Renew by [[custom.acme_-_membership_expiration_date]] to keep your free admission and member benefits.',
+    preheader: `Renew by ${EXP} to keep your free admission and member benefits.`,
     blocks: [
       'HEADER',
       h('One Month to Go'),
       p(CARD, 'center'),
-      p(`${GREET}<br><br>Your membership expires on [[custom.acme_-_membership_expiration_date]]. Renewing takes your membership number and the primary cardholder's last name.`),
-      p('<b>Save 10%</b> with auto-renew or a two-year membership.', 'center'),
+      ...byField(LEVEL_F, [[FOUNDING, p(`${GREET}<br><br>Your Founding Membership ends on ${EXP}. The recognition does not: you are a Founding Member for good, and your name stays on the Library's Digital Donor Wall. Choose a standard level to keep free admission and member benefits in 2027.`)]],
+        p(`${GREET}<br><br>Your [[custom.acme_-_membership_level]] membership expires on ${EXP}. Renewing takes your membership number and the primary cardholder's last name.`)),
+      ...visitedRows(true),
+      ...byLevel(l => p(l === FOUNDING ? FOUNDING_OPTIONS : priceLine(l), l === FOUNDING ? 'left' : 'center'),
+        p('<b>Save 10%</b> with auto-renew or a two-year membership.', 'center')),
       btn('Renew My Membership'),
-      div,
-      h('The Right Level for the Year Ahead'),
-      p('Individual covers one admission, Dual two, Family four, and Contributing and Patron six. Donor Patron covers eight and adds recognition and an annual in-person member town hall. Every level includes the member line and 10% off at the Library Shop and Salt+Scoria.'),
-      btn('Compare Membership Levels', LEVELS_URL),
+      ...byLevel(l => l === FOUNDING || !LEVELS[l].up ? null : p(`${LEVELS[l].up} <a href="${LEVELS_URL}">Compare levels</a>.`, 'center'), null),
       p(`Questions? Write to ${MAIL}.`),
       footer,
     ],
@@ -90,12 +167,14 @@ const emails = [
   {
     slug: 'renew-t-7-last-week',
     title: 'RENEW: T-7 Last Week',
-    preheader: 'Your member benefits end on [[custom.acme_-_membership_expiration_date]].',
+    preheader: `Your member benefits end on ${EXP}.`,
     blocks: [
       'HEADER',
       h('One Week Left'),
       p(CARD, 'center'),
-      p(`${GREET}<br><br>Your membership ends on [[custom.acme_-_membership_expiration_date]]. Renew this week and nothing changes: same membership number, same benefits, no gap.`),
+      ...byField(LEVEL_F, [[FOUNDING, p(`${GREET}<br><br>Your Founding Membership ends on ${EXP}. Choose Dual or Family this week and your free admission carries straight into 2027.`)]],
+        p(`${GREET}<br><br>Your membership ends on ${EXP}. Renew this week and nothing changes: same membership number, same benefits, no gap.`)),
+      ...byLevel(l => l === FOUNDING ? null : p(priceLine(l), 'center'), null),
       btn('Renew My Membership'),
       p(`Need a hand? Reply to this email or write to ${MAIL}, and the membership team will help.`),
       p('With gratitude,<br><b>The Membership Team</b><br>Theodore Roosevelt Presidential Library'),
@@ -108,9 +187,11 @@ const emails = [
     preheader: 'Renew online with your membership number.',
     blocks: [
       'HEADER',
-      h('Your Membership Has Ended'),
+      ...byField(LEVEL_F, [[FOUNDING, h('Still a Founding Member')]], h('Your Membership Has Ended')),
       p(CARD, 'center'),
-      p(`${GREET}<br><br>Your membership expired on [[custom.acme_-_membership_expiration_date]]. The Library would be glad to have you back. Renew online with your membership number and the primary cardholder's last name.`),
+      ...byField(LEVEL_F, [[FOUNDING, p(`${GREET}<br><br>Your Founding Membership ended on ${EXP}. ${FOUNDING_KEEPS.replace('Two things do not expire. ', '')} To bring back free admission and member benefits, choose a standard level.`)]],
+        p(`${GREET}<br><br>Your membership expired on ${EXP}. The Library would be glad to have you back. Renew online with your membership number and the primary cardholder's last name.`)),
+      ...byLevel(l => p(l === FOUNDING ? FOUNDING_OPTIONS : priceLine(l), l === FOUNDING ? 'left' : 'center'), null),
       btn('Renew My Membership'),
       div,
       img('renew-members.jpg', 'Members gather on the Library terrace outside the lobby'),
@@ -127,7 +208,8 @@ const emails = [
     blocks: [
       'HEADER',
       h('One Last Note'),
-      p(`${GREET}<br><br>This is the last renewal note you will receive. If you would like to return, your membership can be renewed online at any time.`),
+      ...byField(LEVEL_F, [[FOUNDING, p(`${GREET}<br><br>This is the last renewal note you will receive. Whatever you decide, you will always be one of the Library's Founding Members, and your name stays on the Digital Donor Wall. If you would like to return, a standard membership can be started online at any time.`)]],
+        p(`${GREET}<br><br>This is the last renewal note you will receive. If you would like to return, your membership can be renewed online at any time.`)),
       btn('Renew My Membership'),
       div,
       h('One Question'),
@@ -141,7 +223,8 @@ const emails = [
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }).catch(() => chromium.launch());
 
 // 1. Headers from Header Studio (PNG, 1800 x 600; convert to JPG at 1320 x 440 afterwards).
-{
+//    Only when a photo directory is given; otherwise the existing header JPGs are kept.
+if (process.argv[3]) {
   const pg = await browser.newPage();
   await pg.goto('https://newsletter.labs.trlibrary.com/header.html');
   for (const [slug, h] of Object.entries(HEADERS)) {
@@ -162,10 +245,33 @@ await pg.goto('https://newsletter.labs.trlibrary.com/');
 await pg.waitForFunction(() => window.NB);
 for (const e of emails) {
   e.blocks = e.blocks.map(b => b === 'HEADER' ? headerFor(e.slug) : b);
-  const html = await pg.evaluate(({ title, preheader, blocks }) => {
+  // Conditional blocks carry a sentinel through the builder, then their row is wrapped.
+  const conds = [];
+  const blocks = e.blocks.map(b => {
+    if (!b.cond) return b;
+    const id = `ZQC${conds.length}QZ`; conds.push(b.cond);
+    const props = Object.assign({}, b.props);
+    if ('html' in props) props.html = id + props.html;
+    else if ('text' in props) props.text = id + props.text;
+    else if ('label' in props) props.label = id + props.label;
+    return { type: b.type, props };
+  });
+  let html = await pg.evaluate(({ title, preheader, blocks }) => {
     NB.setState({ title, preheader, blocks });
     return NB.exportHTML();
-  }, e);
+  }, { title: e.title, preheader: e.preheader, blocks });
+  conds.forEach((c, i) => {
+    const id = `ZQC${i}QZ`, pos = html.indexOf(id);
+    if (pos < 0 || html.indexOf(id, pos + 1) >= 0) throw new Error(`${e.slug}: condition ${i} not found once`);
+    const start = html.lastIndexOf('\n<tr>', pos) + 1;
+    const ends = [html.indexOf('\n<tr>', pos), html.indexOf('\n</table>', pos)].filter(x => x > 0);
+    const end = Math.min(...ends);
+    const attr = Object.entries({ group: c.group, tag: c.tag, field: c.field, label: c.label, other: c.other, ...(c.kind === 'if' ? { is: c.is } : {}) })
+      .map(([k, v]) => `${k}="${String(v).replace(/"/g, '&quot;')}"`).join(' ');
+    const row = html.slice(start, end).replace(id, '');
+    html = html.slice(0, start) + `<!--cc:${c.kind} ${attr}-->\n${row}\n<!--cc:end-->` + html.slice(end);
+  });
+  if (/ZQC\d+QZ/.test(html)) throw new Error('leftover condition marker in ' + e.slug);
   if (/\[#|\$\{|<@/.test(html)) throw new Error('forbidden sequence in ' + e.slug);
   // The builder HTML-escapes quotes inside merge tags; Constant Contact needs them literal.
   const fixed = html.replace(/\[\[[^\]]*\]\]/g, t => t.replace(/&quot;/g, '"').replace(/&#39;/g, "'"));

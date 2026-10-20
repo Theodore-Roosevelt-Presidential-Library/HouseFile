@@ -68,9 +68,46 @@
     return [...seen.values()];
   }
 
+  // Conditional rows: a preview of Constant Contact dynamic content. In Constant Contact
+  // each row gets a display condition "<field> is <value>" (several values = ANY rule),
+  // plus a default row for contacts who match none. Proposal HTML marks them with
+  // comments, which every email client ignores:
+  //   <!--cc:if group="g1" tag="custom.acme_-_membership_level" field="Acme - Membership Level" label="Membership level" is="Dual|Family"-->…<!--cc:end-->
+  //   <!--cc:else group="g1" tag="…" field="…" label="…"-->…<!--cc:end-->
+  const COND_RE = /<!--cc:(if|else)\s+([^>]*?)-->([\s\S]*?)<!--cc:end-->/g;
+  function condAttrs(s) { const o = {}; String(s).replace(/(\w+)="([^"]*)"/g, (_, k, v) => (o[k] = v)); return o; }
+  function condValue(sample, tag) { const v = lookup(sample || {}, tag); return v == null ? "" : String(v).trim(); }
+  // One entry per field the email switches on, with every value it has a row for.
+  function findConditions(html) {
+    const byTag = new Map();
+    for (const m of String(html).matchAll(COND_RE)) {
+      const a = condAttrs(m[2]);
+      if (!byTag.has(a.tag)) byTag.set(a.tag, { tag: a.tag, field: a.field, label: a.label || a.field, values: [], groups: new Set(), hasElse: false, other: a.other });
+      const c = byTag.get(a.tag);
+      c.groups.add(a.group);
+      if (m[1] === "else") c.hasElse = true;
+      else (a.is || "").split("|").forEach(v => { if (v && !c.values.includes(v)) c.values.push(v); });
+      if (a.other) c.other = a.other;
+    }
+    return [...byTag.values()].map(c => Object.assign(c, { groups: c.groups.size }));
+  }
+  function applyConditions(html, sample) {
+    const hit = new Set();
+    for (const m of String(html).matchAll(COND_RE)) {
+      const a = condAttrs(m[2]);
+      if (m[1] === "if" && (a.is || "").split("|").includes(condValue(sample, a.tag))) hit.add(a.group);
+    }
+    return String(html).replace(COND_RE, (_, kind, at, body) => {
+      const a = condAttrs(at);
+      if (kind === "if") return (a.is || "").split("|").includes(condValue(sample, a.tag)) ? body : "";
+      return hit.has(a.group) ? "" : body;
+    });
+  }
+
   // Replace merge tags with sample values. Values are HTML-escaped; inside
   // href/src attributes they are URL-encoded too (except emails stay readable).
   function fill(html, sample) {
+    html = applyConditions(html, sample);
     return String(html).replace(/(href|src)="([^"]*)"/g, (all, attr, val) => {
       const v = val.replace(TAG_RE, (_, inner) => {
         const t = parseTag(inner);
@@ -164,5 +201,5 @@
     return "T";
   }
 
-  global.HFAuto = { groupByTrigger, anchorWord, isSystem, esc, parseTag, lookup, fieldLabel, fieldSource, findTags, fill, fillText, findLinks, dayLabel, loadData, loadEmail, allEmails };
+  global.HFAuto = { findConditions, applyConditions, groupByTrigger, anchorWord, isSystem, esc, parseTag, lookup, fieldLabel, fieldSource, findTags, fill, fillText, findLinks, dayLabel, loadData, loadEmail, allEmails };
 })(window);

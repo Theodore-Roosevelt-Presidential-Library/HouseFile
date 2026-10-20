@@ -32,8 +32,8 @@ RECENCY_BUCKETS = [  # days since last purchase
     ("91–180 days", 91, 180), ("181–365 days", 181, 365), ("Over a year", 366, 10 ** 6),
 ]
 WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-TRUE = {"true", "yes", "y", "1", "active", "t"}
-FALSE = {"false", "no", "n", "0", "inactive", "f"}
+TRUE = {"true", "yes", "y", "1", "active", "new", "t"}   # ACME writes active / new / dropped
+FALSE = {"false", "no", "n", "0", "inactive", "dropped", "f"}
 
 
 def bucket(days, buckets):
