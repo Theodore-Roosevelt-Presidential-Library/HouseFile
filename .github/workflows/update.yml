@@ -4,6 +4,9 @@ on:
   schedule:
     # Daily at 05:17 America/Denver (11:17 UTC; 12:17 UTC in winter). Cron is UTC-only.
     - cron: "17 11 * * *"
+    # Daily at 08:45 CST / 09:45 CDT, after ACME's morning update to Constant Contact:
+    # copy changed date fields into their text fields (date-text-daily).
+    - cron: "45 14 * * *"
   workflow_dispatch:
     inputs:
       task:
@@ -36,7 +39,7 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Collect aggregate statistics
-        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
+        if: ${{ github.event.schedule == '17 11 * * *' || inputs.task == 'stats' }}
         env:
           CC_CLIENT_ID: ${{ secrets.CC_CLIENT_ID }}
           CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
@@ -58,7 +61,7 @@ jobs:
           python -u tools/acme_timing.py --days 14 | tee "${{ runner.temp }}/out.txt"
 
       - name: Date fields to text
-        if: ${{ startsWith(inputs.task, 'date-text') }}
+        if: ${{ github.event.schedule == '45 14 * * *' || startsWith(inputs.task, 'date-text') }}
         env:
           CC_CLIENT_ID: ${{ secrets.CC_CLIENT_ID }}
           CC_CLIENT_SECRET: ${{ secrets.CC_CLIENT_SECRET }}
@@ -66,7 +69,9 @@ jobs:
           CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
         run: |
           set -o pipefail
-          case "${{ inputs.task }}" in
+          task="${{ inputs.task }}"
+          [ "${{ github.event.schedule }}" = "45 14 * * *" ] && task="date-text-daily"
+          case "$task" in
             date-text-apply) args="--apply" ;;
             date-text-test) args="--apply --limit 25 --wait" ;;
             date-text-daily) args="--apply --since-days 2" ;;
@@ -76,7 +81,7 @@ jobs:
           python -u sync_date_text.py $args | tee "${{ runner.temp }}/out.txt"
 
       - name: Privacy guard for diagnostic output
-        if: ${{ always() && (inputs.task == 'timing' || startsWith(inputs.task, 'date-text')) }}
+        if: ${{ always() && (inputs.task == 'timing' || startsWith(inputs.task, 'date-text') || github.event.schedule == '45 14 * * *') }}
         run: |
           f="${{ runner.temp }}/out.txt"
           [ -f "$f" ] || exit 0
@@ -101,7 +106,7 @@ jobs:
           fi
 
       - name: Privacy guard — fail if anything that looks personal reached the output
-        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
+        if: ${{ github.event.schedule == '17 11 * * *' || inputs.task == 'stats' }}
         run: |
           set -e
           for f in docs/data/stats.json docs/data/history.json; do
@@ -115,7 +120,7 @@ jobs:
           echo "Privacy guard passed."
 
       - name: Commit updated data
-        if: ${{ github.event_name == 'schedule' || inputs.task == 'stats' }}
+        if: ${{ github.event.schedule == '17 11 * * *' || inputs.task == 'stats' }}
         run: |
           git config user.name "housefile-bot"
           git config user.email "housefile-bot@users.noreply.github.com"
