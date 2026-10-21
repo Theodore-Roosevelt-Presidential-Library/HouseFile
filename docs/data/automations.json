@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-21T11:32:54+00:00",
- "rebuilt_at": "2026-10-21T11:32:54+00:00",
+ "rebuilt_at": "2026-10-21T12:28:10+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -47,7 +47,23 @@
      "filters": [],
      "action": "For the 16% who book more than a month out: a checklist (lodging, evenings and seasonal attractions, the drive, a park day), their visit day with a link to that day's hours, winter road advice, the premiere preview and two short gallery and boardwalk videos, and the membership offer or a member thank-you.",
      "split": "Active Members (ACME field: active or new) segment",
-     "emails": [],
+     "emails": [
+      {
+       "slug": "visit-t-30-plan-ahead",
+       "task": "VISIT: T-30 Plan Ahead",
+       "subject": "One month to Medora: your planning checklist",
+       "preheader": "Lodging, seasonal hours and what to book before you go.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-30-plan-ahead.html",
+       "proposed": true,
+       "notes": [
+        "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
+       ],
+       "stats": {}
+      }
+     ],
      "cc_status": "ACTIVE"
     },
     {
@@ -63,7 +79,24 @@
      "filters": [],
      "action": "The entry window, a bring / leave-in-the-car table, parking, the live Medora weather card, making a day of it with the national park, the Trailblazer video, and a member welcome or the ticket-to-membership offer at the Welcome Desk.",
      "split": "Active Members (ACME field: active or new) segment: members get the member email, everyone else the non-member email",
-     "emails": [],
+     "emails": [
+      {
+       "slug": "visit-t-3-know-before",
+       "task": "VISIT: T-3 Pre-Visit Excitement",
+       "subject": "Three days to the Badlands: what to know before you go",
+       "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t-3-know-before.html",
+       "proposed": true,
+       "notes": [
+        "Live 2026-10-20: replaced the original drag-and-drop T-3 email in place (same path, split on the Active Members segment, one custom-code email per branch).",
+        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
+       ],
+       "stats": {}
+      }
+     ],
      "cc_status": "ACTIVE"
     },
     {
@@ -113,7 +146,27 @@
      "filters": [],
      "action": "Sent the day after tickets are bought, once the overnight ACME sync has landed: the 3\u00bd-minute Library preview, the four things that are hard to plan in Medora (where to stay, getting here, planning the days, the national park), nearest airports and One Medora packages. Members are thanked; everyone else is offered membership with their ticket cost applied and their reservation kept.",
      "split": "Active Members (ACME field: active or new) segment",
-     "emails": [],
+     "emails": [
+      {
+       "slug": "visit-t1-welcome",
+       "task": "VISIT: T+1 Welcome",
+       "subject": "You're going to Medora. Here's how to plan it.",
+       "preheader": "Where to stay, how to get here and what to see before your visit.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "hello@trlibrary.com",
+       "reply_to": "hello@trlibrary.com",
+       "html": "proposals/visit-t1-welcome.html",
+       "proposed": true,
+       "notes": [
+        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt.",
+        "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building.",
+        "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20).",
+        "The visit date prints from Acme - Visit Date (Text), a text copy of the date field written daily by sync_date_text.py (fallback: \"your visit date\"). Verified with a live test send 2026-10-20; Constant Contact's \"double-check\" warning on custom fields is a false alarm.",
+        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Constant Contact's trigger filters have no relative-date rule, so the path can't skip visits in the next few days: someone who visits the day after buying gets the welcome after their visit."
+       ],
+       "stats": {}
+      }
+     ],
      "cc_status": "ACTIVE"
     }
    ]

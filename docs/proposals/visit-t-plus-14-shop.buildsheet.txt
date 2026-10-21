@@ -42,7 +42,11 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       DEFAULT ROW (group p5): contacts who match none of the group's other rows
  16. Button · See Membership Levels
       DEFAULT ROW (group p5): contacts who match none of the group's other rows
- 17. Footer
+ 17. Divider
+      everyone
+ 18. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
+      everyone
+ 19. Footer
       everyone
 
 GROUPS

@@ -34,9 +34,21 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       DEFAULT ROW (group p6): contacts who match none of the group's other rows
  12. Divider
       everyone
- 13. Button · Plan Your Next Visit
+ 13. Heading · Carry the Story Forward
       everyone
- 14. Footer
+ 14. Text · The Library is a nonprofit, and it runs on people who believe T.R.'s sto
+      everyone
+ 15. Text · MISSION Explore TR’s life, legacy, and enduring relevance. VISION Inspir
+      everyone
+ 16. Button · Join Us in the Arena
+      everyone
+ 17. Text · Planning another trip? Start here.
+      everyone
+ 18. Divider
+      everyone
+ 19. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
+      everyone
+ 20. Footer
       everyone
 
 GROUPS

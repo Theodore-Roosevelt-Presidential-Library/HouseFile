@@ -184,10 +184,49 @@
       "props": {}
     },
     {
+      "type": "heading",
+      "props": {
+        "text": "Carry the Story Forward",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "The Library is a nonprofit, and it runs on people who believe T.R.'s story still has something to teach. If your visit stayed with you, help carry it forward.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply",
+        "align": "center"
+      }
+    },
+    {
       "type": "button",
       "props": {
-        "label": "Plan Your Next Visit",
-        "href": "https://www.trlibrary.com/visit"
+        "label": "Join Us in the Arena",
+        "href": "https://www.trlibrary.com/join-us"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Planning another trip? <a href=\"https://www.trlibrary.com/visit\">Start here</a>.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Follow the Library</b><br><a href=\"https://www.facebook.com/TRPresidentialLibrary\">Facebook</a> &nbsp;·&nbsp; <a href=\"https://www.instagram.com/trlibrary\">Instagram</a> &nbsp;·&nbsp; <a href=\"https://www.youtube.com/channel/UCPOPdzgpO4liPSWkk7VqS5A\">YouTube</a> &nbsp;·&nbsp; <a href=\"https://www.linkedin.com/company/trlibrary/\">LinkedIn</a> &nbsp;·&nbsp; <a href=\"https://x.com/TRPresLibrary\">X</a> &nbsp;·&nbsp; <a href=\"https://bsky.app/profile/trpl.bsky.social\">Bluesky</a>",
+        "align": "center"
       }
     },
     {

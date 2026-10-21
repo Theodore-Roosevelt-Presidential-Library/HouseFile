@@ -74,6 +74,24 @@ const GIFT = [
   p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center'),
   btn('Give a Membership', GIFT_URL),
 ];
+// Reviews (listing IDs match the review dashboard, Reviews repo): Google place, TripAdvisor d34391224, Yelp.
+const REVIEW_GOOGLE = 'https://search.google.com/local/writereview?placeid=ChIJbynQegDrJVMRSCAxmOeViVg';
+const REVIEW_TRIPADVISOR = 'https://www.tripadvisor.com/UserReviewEdit-g60973-d34391224-Theodore_Roosevelt_Presidential_Library-Medora_North_Dakota.html';
+const REVIEW_YELP = 'https://www.yelp.com/biz/theodore-roosevelt-presidential-library-medora-2';
+// Social profiles: the trlibrary.com site footer, checked 2026-10-21.
+const YOUTUBE = 'https://www.youtube.com/channel/UCPOPdzgpO4liPSWkk7VqS5A';
+const SOCIAL = [
+  ['Facebook', 'https://www.facebook.com/TRPresidentialLibrary'],
+  ['Instagram', 'https://www.instagram.com/trlibrary'],
+  ['YouTube', YOUTUBE],
+  ['LinkedIn', 'https://www.linkedin.com/company/trlibrary/'],
+  ['X', 'https://x.com/TRPresLibrary'],
+  ['Bluesky', 'https://bsky.app/profile/trpl.bsky.social'],
+];
+const SOCIAL_LINKS = SOCIAL.map(([n, u]) => `<a href="${u}">${n}</a>`).join(' &nbsp;·&nbsp; ');
+const FOLLOW_LINE = p(`<b>Follow the Library</b><br>${SOCIAL_LINKS}`, 'center');
+const JOIN_US = `${SITE}/join-us`;
+
 const COMING_BACK = p(`<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href="${SITE}/membership">See the levels</a>.`, 'center');
 
 const emails = [
@@ -88,6 +106,11 @@ const emails = [
       h('Thank You for Coming'),
       p(`${GREET}<br><br>Thank you for spending a day at the Theodore Roosevelt Presidential Library. If you carried a Trailblazer through the galleries, your journal and photos arrived in a separate email. They stay online for 30 days, so save the ones you want to keep.`),
       ...memberOnly(p('<b>Thank you for visiting as a member.</b> Your membership covers every visit until it renews, so come back whenever the Badlands call.')),
+      div,
+      h('How Was Your Visit?'),
+      p("A few words from you help the next traveler decide to make the drive to Medora. The Library reads every review, and a short one counts just as much as a long one."),
+      btn('Review on Google', REVIEW_GOOGLE),
+      p(`Or share it on <a href="${REVIEW_TRIPADVISOR}">TripAdvisor</a> or <a href="${REVIEW_YELP}">Yelp</a>.`, 'center'),
       div,
       h('Tell Us What to Send You'),
       p("The Library's newsletter, <i>Mail from the Badlands</i>, comes in topics. Pick the ones you care about, and those are the only ones you will get."),
@@ -113,6 +136,10 @@ const emails = [
         MEMBERSHIP_TABLE,
         MEMBERSHIP_BTN,
       ]),
+      div,
+      h('Follow Along'),
+      p("On-this-day stories from T.R.'s life, the Badlands through the seasons and the latest from the Library, every week on social media."),
+      p(SOCIAL_LINKS, 'center'),
       div,
       p(`Something to tell the Library about your day? Write to ${HELLO}.`, 'center'),
       footer,
@@ -143,11 +170,21 @@ const emails = [
           text: 'A family edition: nine short questions on what T.R. watched from the saddle, and what is still out there.', label: 'Play Together', href: `${SITE}/quiz/badlands-wildlife-family` }),
       p(`Dozens more, from family editions to expert level, at <a href="${SITE}/quiz">trlibrary.com/quiz</a>.`, 'center'),
       div,
+      h('Watch and Tune In Live'),
+      p("Book talks with authors, curator talks from the collection and Taste of History stream live on the Library's YouTube channel at 5:30 p.m. MT. Subscribe, like the videos you enjoy and turn on notifications to be the first to know when the next virtual event goes live."),
+      cols(
+        { src: IMG + 'pv-watch-youtube.jpg', alt: 'Book Talk title card for a virtual program streamed by the Library', heading: 'Live on YouTube',
+          text: 'Virtual events stream on the Library channel. Subscribe so the next one lands in your feed.', label: 'Subscribe', href: `${YOUTUBE}?sub_confirmation=1` },
+        { src: IMG + 'pv-watch-videos.jpg', alt: 'Curator Talk title card from the Library video collection', heading: 'The Video Library',
+          text: 'Every past talk, film and program, sorted into series, at trlibrary.com/video.', label: 'Start Watching', href: `${SITE}/video` }),
+      div,
       h('Listen: Good Citizen'),
       p('Ted Roosevelt V hosts conversations with people who step into the arena to build up the country and protect the planet. The <i>Live from the TRPL</i> series is recorded at the Library, beginning with presidential historian Doris Kearns Goodwin. Good Citizen was a 2024 Webby Award Honoree.'),
       p('<a href="https://podcasts.apple.com/us/podcast/good-citizen/id1713230937">Apple Podcasts</a> &nbsp;·&nbsp; <a href="https://open.spotify.com/show/7ywQA9wJGztUPmedmG6BSe">Spotify</a> &nbsp;·&nbsp; <a href="https://www.youtube.com/playlist?list=PL-sck-PjBiFcxu6QSF_0u7aDB9EJ5mLe_">YouTube</a>', 'center'),
       btn('Listen to Good Citizen', `${SITE}/podcast/good-citizen`),
       ...memberRows(GIFT, [COMING_BACK]),
+      div,
+      FOLLOW_LINE,
       footer,
     ],
   },
@@ -183,6 +220,8 @@ const emails = [
         MEMBERSHIP_TABLE,
         MEMBERSHIP_BTN,
       ]),
+      div,
+      FOLLOW_LINE,
       footer,
     ],
   },
@@ -215,6 +254,8 @@ const emails = [
           text: 'Terraces above the Badlands, and menus for receptions, seated dinners and everything in between.', label: 'See Catering', href: `${SITE}/private-events/catering` }),
       btn('Start an Inquiry', `${SITE}/private-events/inquiry`),
       p("Planning something that doesn't fit a category? Ask anyway.", 'center'),
+      div,
+      FOLLOW_LINE,
       footer,
     ],
   },
@@ -238,7 +279,13 @@ const emails = [
         [p('<b>As a member</b>, you get early ticket access and invitations to member events, and your free admission covers every visit until your membership renews.')],
         [div, h('Make It a Membership'), p('A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip.'), MEMBERSHIP_TABLE, MEMBERSHIP_BTN]),
       div,
-      btn('Plan Your Next Visit', `${SITE}/visit`),
+      h('Carry the Story Forward'),
+      p("The Library is a nonprofit, and it runs on people who believe T.R.'s story still has something to teach. If your visit stayed with you, help carry it forward."),
+      p('<b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply', 'center'),
+      btn('Join Us in the Arena', JOIN_US),
+      p(`Planning another trip? <a href="${SITE}/visit">Start here</a>.`, 'center'),
+      div,
+      FOLLOW_LINE,
       footer,
     ],
   },

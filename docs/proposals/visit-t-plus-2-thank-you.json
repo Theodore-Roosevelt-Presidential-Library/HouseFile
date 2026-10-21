@@ -54,6 +54,38 @@
     {
       "type": "heading",
       "props": {
+        "text": "How Was Your Visit?",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "A few words from you help the next traveler decide to make the drive to Medora. The Library reads every review, and a short one counts just as much as a long one.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Review on Google",
+        "href": "https://search.google.com/local/writereview?placeid=ChIJbynQegDrJVMRSCAxmOeViVg"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Or share it on <a href=\"https://www.tripadvisor.com/UserReviewEdit-g60973-d34391224-Theodore_Roosevelt_Presidential_Library-Medora_North_Dakota.html\">TripAdvisor</a> or <a href=\"https://www.yelp.com/biz/theodore-roosevelt-presidential-library-medora-2\">Yelp</a>.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
         "text": "Tell Us What to Send You",
         "align": "center"
       }
@@ -258,6 +290,31 @@
         "label": "Membership",
         "other": "Not a member",
         "kind": "else"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Follow Along",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "On-this-day stories from T.R.'s life, the Badlands through the seasons and the latest from the Library, every week on social media.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<a href=\"https://www.facebook.com/TRPresidentialLibrary\">Facebook</a> &nbsp;·&nbsp; <a href=\"https://www.instagram.com/trlibrary\">Instagram</a> &nbsp;·&nbsp; <a href=\"https://www.youtube.com/channel/UCPOPdzgpO4liPSWkk7VqS5A\">YouTube</a> &nbsp;·&nbsp; <a href=\"https://www.linkedin.com/company/trlibrary/\">LinkedIn</a> &nbsp;·&nbsp; <a href=\"https://x.com/TRPresLibrary\">X</a> &nbsp;·&nbsp; <a href=\"https://bsky.app/profile/trpl.bsky.social\">Bluesky</a>",
+        "align": "center"
       }
     },
     {

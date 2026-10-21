@@ -114,6 +114,17 @@
       }
     },
     {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Follow the Library</b><br><a href=\"https://www.facebook.com/TRPresidentialLibrary\">Facebook</a> &nbsp;·&nbsp; <a href=\"https://www.instagram.com/trlibrary\">Instagram</a> &nbsp;·&nbsp; <a href=\"https://www.youtube.com/channel/UCPOPdzgpO4liPSWkk7VqS5A\">YouTube</a> &nbsp;·&nbsp; <a href=\"https://www.linkedin.com/company/trlibrary/\">LinkedIn</a> &nbsp;·&nbsp; <a href=\"https://x.com/TRPresLibrary\">X</a> &nbsp;·&nbsp; <a href=\"https://bsky.app/profile/trpl.bsky.social\">Bluesky</a>",
+        "align": "center"
+      }
+    },
+    {
       "type": "footer",
       "props": {
         "logoSrc": "https://newsletter.labs.trlibrary.com/assets/trpl-wordmark-horizontal-white.png",

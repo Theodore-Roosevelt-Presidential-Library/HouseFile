@@ -28,5 +28,9 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   9. Text · Planning something that doesn't fit a category? Ask anyway.
       everyone
- 10. Footer
+ 10. Divider
+      everyone
+ 11. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
+      everyone
+ 12. Footer
       everyone

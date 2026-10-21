@@ -20,35 +20,53 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p1]
   5. Divider
       everyone
-  6. Heading · Tell Us What to Send You
+  6. Heading · How Was Your Visit?
       everyone
-  7. Text · The Library's newsletter, Mail from the Badlands, comes in topics. Pick 
+  7. Text · A few words from you help the next traveler decide to make the drive to 
       everyone
-  8. Table · Topic / What arrives
+  8. Button · Review on Google
       everyone
-  9. Button · Choose Your Topics
+  9. Text · Or share it on TripAdvisor or Yelp.
       everyone
- 10. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 10. Divider
+      everyone
+ 11. Heading · Tell Us What to Send You
+      everyone
+ 12. Text · The Library's newsletter, Mail from the Badlands, comes in topics. Pick 
+      everyone
+ 13. Table · Topic / What arrives
+      everyone
+ 14. Button · Choose Your Topics
+      everyone
+ 15. Text · Know someone who would love it here? As a member you take 10% off gift m
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
- 11. Button · Give a Membership
+ 16. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
- 12. Divider
-      DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 13. Heading · Come Back as a Member
-      DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 14. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
-      DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 15. Table · Level / Free admission for / A year
-      DEFAULT ROW (group p2): contacts who match none of the group's other rows
- 16. Button · See Membership Levels
-      DEFAULT ROW (group p2): contacts who match none of the group's other rows
  17. Divider
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 18. Heading · Come Back as a Member
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 19. Text · Admission is $26 for adults and $16 for youth. A membership covers a ful
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 20. Table · Level / Free admission for / A year
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 21. Button · See Membership Levels
+      DEFAULT ROW (group p2): contacts who match none of the group's other rows
+ 22. Divider
       everyone
- 18. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
+ 23. Heading · Follow Along
       everyone
- 19. Footer
+ 24. Text · On-this-day stories from T.R.'s life, the Badlands through the seasons a
+      everyone
+ 25. Text · Facebook · Instagram · YouTube · LinkedIn · X · Bluesky
+      everyone
+ 26. Divider
+      everyone
+ 27. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
+      everyone
+ 28. Footer
       everyone
 
 GROUPS
   p1: Acme - Is Active Member — rows 4; values active, new; no default row (contacts matching nothing see none of these rows)
-  p2: Acme - Is Active Member — rows 10, 11, 12, 13, 14, 15, 16; values active, new; has a default row
+  p2: Acme - Is Active Member — rows 15, 16, 17, 18, 19, 20, 21; values active, new; has a default row
