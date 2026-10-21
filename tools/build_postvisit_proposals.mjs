@@ -92,6 +92,24 @@ const SOCIAL_LINKS = SOCIAL.map(([n, u]) => `<a href="${u}">${n}</a>`).join(' &n
 const FOLLOW_LINE = p(`<b>Follow the Library</b><br>${SOCIAL_LINKS}`, 'center');
 const JOIN_US = `${SITE}/join-us`;
 
+// ---- member track: gratitude and benefits, never a membership pitch ----
+// Benefits from trlibrary.com/membership, checked 2026-10-21. Admissions per level from its comparison table.
+const MEMBER_HELP = p('Questions about your membership or your benefits? Write to <a href="mailto:membership@trlibrary.com">membership@trlibrary.com</a>.', 'center');
+const VISIT_AGAIN = btn('Plan Your Next Visit', `${SITE}/tickets`);
+const BENEFITS_TABLE = table({
+  columns: ['Your benefit', 'How to use it'],
+  rowLabels: true,
+  rows: [
+    ['Free admission', 'Come back as often as you like until your membership renews. Your level sets how many people get in free: 1 for Individual, 2 for Dual, 4 for Family, 6 for Contributing and Patron, 8 for Donor Patron.'],
+    ['Member line', 'Head for the dedicated member line when you arrive.'],
+    ['Early ticket access', 'Tickets for special events open to members before the public, so watch your inbox.'],
+    ['Member tours and events', 'Exclusive member tours and invitations to member events come to you by email.'],
+    ['Shop and Salt+Scoria', '10% off in the Library Shop, online and in Medora, and at Salt+Scoria, the Library restaurant.'],
+    ['Family programming', 'Family level and up: programs built for exploring together.'],
+  ],
+});
+const COMING_2027 = p('<b>Coming in 2027:</b> a quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.', 'center');
+
 const COMING_BACK = p(`<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href="${SITE}/membership">See the levels</a>.`, 'center');
 
 const emails = [
@@ -105,7 +123,7 @@ const emails = [
       header('visit-t-plus-2-thank-you'),
       h('Thank You for Coming'),
       p(`${GREET}<br><br>Thank you for spending a day at the Theodore Roosevelt Presidential Library. If you carried a Trailblazer through the galleries, your journal and photos arrived in a separate email. They stay online for 30 days, so save the ones you want to keep.`),
-      ...memberOnly(p('<b>Thank you for visiting as a member.</b> Your membership covers every visit until it renews, so come back whenever the Badlands call.')),
+      ...memberOnly(p("<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every visitor who comes after you.")),
       div,
       h('How Was Your Visit?'),
       p("A few words from you help the next traveler decide to make the drive to Medora. The Library reads every review, and a short one counts just as much as a long one."),
@@ -129,7 +147,15 @@ const emails = [
         ],
       }),
       btn('Choose Your Topics', NEWSLETTER),
-      ...memberRows(GIFT, [
+      ...memberRows([
+        div,
+        h('Make the Most of Your Membership'),
+        p('Your membership keeps working long after you leave Medora. Here is everything it includes, and how to put it to use.'),
+        BENEFITS_TABLE,
+        VISIT_AGAIN,
+        ...GIFT,
+        MEMBER_HELP,
+      ], [
         div,
         h('Come Back as a Member'),
         p('Admission is $26 for adults and $16 for youth. A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip.'),
@@ -182,7 +208,13 @@ const emails = [
       p('Ted Roosevelt V hosts conversations with people who step into the arena to build up the country and protect the planet. The <i>Live from the TRPL</i> series is recorded at the Library, beginning with presidential historian Doris Kearns Goodwin. Good Citizen was a 2024 Webby Award Honoree.'),
       p('<a href="https://podcasts.apple.com/us/podcast/good-citizen/id1713230937">Apple Podcasts</a> &nbsp;·&nbsp; <a href="https://open.spotify.com/show/7ywQA9wJGztUPmedmG6BSe">Spotify</a> &nbsp;·&nbsp; <a href="https://www.youtube.com/playlist?list=PL-sck-PjBiFcxu6QSF_0u7aDB9EJ5mLe_">YouTube</a>', 'center'),
       btn('Listen to Good Citizen', `${SITE}/podcast/good-citizen`),
-      ...memberRows(GIFT, [COMING_BACK]),
+      ...memberRows([
+        div,
+        h('Bring Someone Next Time'),
+        p("Dual, Family and the higher levels admit more than one person free, so your next visit can include the person who would love T.R.'s story most. Your admissions renew with your membership."),
+        VISIT_AGAIN,
+        ...GIFT,
+      ], [COMING_BACK]),
       div,
       FOLLOW_LINE,
       footer,
@@ -199,7 +231,7 @@ const emails = [
       h('From the Library Shop'),
       p(`${GREET}<br><br>The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.`),
       ...memberRows(
-        [p('<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR "Library"]] member, you take 10% off every order, online and in the Library Shop in Medora.')],
+        [p('<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR "Library"]] member, you take 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.')],
         [p('<b>Members take 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.')]),
       cols(
         { src: IMG + 'pv-shop-backpack.jpg', alt: 'Special Edition Filson Olive All-Weather Backpack', heading: 'Filson All-Weather Backpack',
@@ -276,7 +308,9 @@ const emails = [
           text: 'Tours built around a single subject, offered on select days.', label: 'See Tours', href: `${SITE}/calendar/specialty-tour` }),
       p(`Hear about events while seats are still open: add <a href="${NEWSLETTER}">Events &amp; Programs</a> to your newsletter topics.`, 'center'),
       ...memberRows(
-        [p('<b>As a member</b>, you get early ticket access and invitations to member events, and your free admission covers every visit until your membership renews.')],
+        [div, h('First in Line'),
+         p('Thank you for being a member. Tickets for special events open to you before the public, and invitations to exclusive member tours and member events come straight to your inbox. Your free admission covers every visit until your membership renews.'),
+         COMING_2027, VISIT_AGAIN, MEMBER_HELP],
         [div, h('Make It a Membership'), p('A membership covers a full year of visits, and Individual and Dual pay for themselves on your second trip.'), MEMBERSHIP_TABLE, MEMBERSHIP_BTN]),
       div,
       h('Carry the Story Forward'),

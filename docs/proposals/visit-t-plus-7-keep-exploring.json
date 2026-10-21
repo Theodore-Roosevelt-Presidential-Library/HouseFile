@@ -173,6 +173,79 @@
       }
     },
     {
+      "type": "divider",
+      "props": {},
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Bring Someone Next Time",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Dual, Family and the higher levels admit more than one person free, so your next visit can include the person who would love T.R.'s story most. Your admissions renew with your membership.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Plan Your Next Visit",
+        "href": "https://www.trlibrary.com/tickets"
+      },
+      "cond": {
+        "group": "p3",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
       "type": "text",
       "props": {
         "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",

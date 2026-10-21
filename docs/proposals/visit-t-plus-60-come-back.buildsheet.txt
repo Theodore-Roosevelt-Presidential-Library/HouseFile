@@ -20,36 +20,46 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   5. Text · Hear about events while seats are still open: add Events & Programs to y
       everyone
-  6. Text · As a member, you get early ticket access and invitations to member event
+  6. Divider
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
-  7. Divider
-      DEFAULT ROW (group p6): contacts who match none of the group's other rows
-  8. Heading · Make It a Membership
-      DEFAULT ROW (group p6): contacts who match none of the group's other rows
-  9. Text · A membership covers a full year of visits, and Individual and Dual pay f
-      DEFAULT ROW (group p6): contacts who match none of the group's other rows
- 10. Table · Level / Free admission for / A year
-      DEFAULT ROW (group p6): contacts who match none of the group's other rows
- 11. Button · See Membership Levels
-      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+  7. Heading · First in Line
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
+  8. Text · Thank you for being a member. Tickets for special events open to you bef
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
+  9. Text · Coming in 2027: a quarterly member magazine and annual virtual member to
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
+ 10. Button · Plan Your Next Visit
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
+ 11. Text · Questions about your membership or your benefits? Write to membership@tr
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
  12. Divider
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+ 13. Heading · Make It a Membership
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+ 14. Text · A membership covers a full year of visits, and Individual and Dual pay f
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+ 15. Table · Level / Free admission for / A year
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+ 16. Button · See Membership Levels
+      DEFAULT ROW (group p6): contacts who match none of the group's other rows
+ 17. Divider
       everyone
- 13. Heading · Carry the Story Forward
+ 18. Heading · Carry the Story Forward
       everyone
- 14. Text · The Library is a nonprofit, and it runs on people who believe T.R.'s sto
+ 19. Text · The Library is a nonprofit, and it runs on people who believe T.R.'s sto
       everyone
- 15. Text · MISSION Explore TR’s life, legacy, and enduring relevance. VISION Inspir
+ 20. Text · MISSION Explore TR’s life, legacy, and enduring relevance. VISION Inspir
       everyone
- 16. Button · Join Us in the Arena
+ 21. Button · Join Us in the Arena
       everyone
- 17. Text · Planning another trip? Start here.
+ 22. Text · Planning another trip? Start here.
       everyone
- 18. Divider
+ 23. Divider
       everyone
- 19. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
+ 24. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
       everyone
- 20. Footer
+ 25. Footer
       everyone
 
 GROUPS
-  p6: Acme - Is Active Member — rows 6, 7, 8, 9, 10, 11; values active, new; has a default row
+  p6: Acme - Is Active Member — rows 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16; values active, new; has a default row

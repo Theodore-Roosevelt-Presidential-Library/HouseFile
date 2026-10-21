@@ -46,18 +46,26 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  18. Button · Listen to Good Citizen
       everyone
- 19. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 19. Divider
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
- 20. Button · Give a Membership
+ 20. Heading · Bring Someone Next Time
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
- 21. Text · Coming back? A membership covers a full year of visits for you and your 
+ 21. Text · Dual, Family and the higher levels admit more than one person free, so y
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 22. Button · Plan Your Next Visit
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 23. Text · Know someone who would love it here? As a member you take 10% off gift m
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 24. Button · Give a Membership
+      SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
+ 25. Text · Coming back? A membership covers a full year of visits for you and your 
       DEFAULT ROW (group p3): contacts who match none of the group's other rows
- 22. Divider
+ 26. Divider
       everyone
- 23. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
+ 27. Text · Follow the Library Facebook · Instagram · YouTube · LinkedIn · X · Blues
       everyone
- 24. Footer
+ 28. Footer
       everyone
 
 GROUPS
-  p3: Acme - Is Active Member — rows 19, 20, 21; values active, new; has a default row
+  p3: Acme - Is Active Member — rows 19, 20, 21, 22, 23, 24, 25; values active, new; has a default row

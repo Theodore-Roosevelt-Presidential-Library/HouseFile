@@ -31,7 +31,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Thank you for visiting as a member.</b> Your membership covers every visit until it renews, so come back whenever the Badlands call.",
+        "html": "<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every visitor who comes after you.",
         "align": "left"
       },
       "cond": {
@@ -153,6 +153,131 @@
       }
     },
     {
+      "type": "divider",
+      "props": {},
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "Make the Most of Your Membership",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Your membership keeps working long after you leave Medora. Here is everything it includes, and how to put it to use.",
+        "align": "left"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "props": {
+        "intro": "",
+        "note": "",
+        "columns": [
+          "Your benefit",
+          "How to use it"
+        ],
+        "rows": [
+          [
+            "Free admission",
+            "Come back as often as you like until your membership renews. Your level sets how many people get in free: 1 for Individual, 2 for Dual, 4 for Family, 6 for Contributing and Patron, 8 for Donor Patron."
+          ],
+          [
+            "Member line",
+            "Head for the dedicated member line when you arrive."
+          ],
+          [
+            "Early ticket access",
+            "Tickets for special events open to members before the public, so watch your inbox."
+          ],
+          [
+            "Member tours and events",
+            "Exclusive member tours and invitations to member events come to you by email."
+          ],
+          [
+            "Shop and Salt+Scoria",
+            "10% off in the Library Shop, online and in Medora, and at Salt+Scoria, the Library restaurant."
+          ],
+          [
+            "Family programming",
+            "Family level and up: programs built for exploring together."
+          ]
+        ],
+        "rowLabels": true,
+        "highlight": null,
+        "style": "standard"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Plan Your Next Visit",
+        "href": "https://www.trlibrary.com/tickets"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
       "type": "text",
       "props": {
         "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
@@ -176,6 +301,25 @@
       "props": {
         "label": "Give a Membership",
         "href": "https://access.trlibrary.com/membership/613/join"
+      },
+      "cond": {
+        "group": "p2",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Questions about your membership or your benefits? Write to <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a>.",
+        "align": "center"
       },
       "cond": {
         "group": "p2",

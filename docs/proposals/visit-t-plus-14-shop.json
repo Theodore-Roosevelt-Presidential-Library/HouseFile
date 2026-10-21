@@ -31,7 +31,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR \"Library\"]] member, you take 10% off every order, online and in the Library Shop in Medora.",
+        "html": "<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR \"Library\"]] member, you take 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.",
         "align": "left"
       },
       "cond": {

@@ -59,10 +59,102 @@
       }
     },
     {
+      "type": "divider",
+      "props": {},
+      "cond": {
+        "group": "p6",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "props": {
+        "text": "First in Line",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p6",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
       "type": "text",
       "props": {
-        "html": "<b>As a member</b>, you get early ticket access and invitations to member events, and your free admission covers every visit until your membership renews.",
+        "html": "Thank you for being a member. Tickets for special events open to you before the public, and invitations to exclusive member tours and member events come straight to your inbox. Your free admission covers every visit until your membership renews.",
         "align": "left"
+      },
+      "cond": {
+        "group": "p6",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Coming in 2027:</b> a quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.",
+        "align": "center"
+      },
+      "cond": {
+        "group": "p6",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Plan Your Next Visit",
+        "href": "https://www.trlibrary.com/tickets"
+      },
+      "cond": {
+        "group": "p6",
+        "tag": "custom.acme_-_is_active_member",
+        "field": "Acme - Is Active Member",
+        "label": "Membership",
+        "other": "Not a member",
+        "kind": "if",
+        "is": [
+          "active",
+          "new"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Questions about your membership or your benefits? Write to <a href=\"mailto:membership@trlibrary.com\">membership@trlibrary.com</a>.",
+        "align": "center"
       },
       "cond": {
         "group": "p6",
