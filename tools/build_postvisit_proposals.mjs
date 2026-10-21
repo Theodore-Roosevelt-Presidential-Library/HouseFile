@@ -196,6 +196,11 @@ const emails = [
           text: 'A family edition: nine short questions on what T.R. watched from the saddle, and what is still out there.', label: 'Play Together', href: `${SITE}/quiz/badlands-wildlife-family` }),
       p(`Dozens more, from family editions to expert level, at <a href="${SITE}/quiz">trlibrary.com/quiz</a>.`, 'center'),
       div,
+      h('For the Teacher in Your Life'),
+      p("Teach with TR is the Library's collection of classroom resources for K-12: lesson plans built on North Dakota and national standards, primary-source packets on the Rough Riders, the Pure Food and Drug Act, women's suffrage and more, timelines (one written just for kids), and hands-on activities, from designing a cattle brand to making T.R.'s own frying pan bread."),
+      btn('Explore Teach with TR', `${SITE}/teach-tr`),
+      p(`<b>Know a teacher who would use these?</b> Forward this email, or send them <a href="${SITE}/teach-tr">trlibrary.com/teach-tr</a>.`, 'center'),
+      div,
       h('Watch and Tune In Live'),
       p("Book talks with authors, curator talks from the collection and Taste of History stream live on the Library's YouTube channel at 5:30 p.m. MT. Subscribe, like the videos you enjoy and turn on notifications to be the first to know when the next virtual event goes live."),
       cols(

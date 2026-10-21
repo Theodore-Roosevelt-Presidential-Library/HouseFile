@@ -106,6 +106,38 @@
     {
       "type": "heading",
       "props": {
+        "text": "For the Teacher in Your Life",
+        "align": "center"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "Teach with TR is the Library's collection of classroom resources for K-12: lesson plans built on North Dakota and national standards, primary-source packets on the Rough Riders, the Pure Food and Drug Act, women's suffrage and more, timelines (one written just for kids), and hands-on activities, from designing a cattle brand to making T.R.'s own frying pan bread.",
+        "align": "left"
+      }
+    },
+    {
+      "type": "button",
+      "props": {
+        "label": "Explore Teach with TR",
+        "href": "https://www.trlibrary.com/teach-tr"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Know a teacher who would use these?</b> Forward this email, or send them <a href=\"https://www.trlibrary.com/teach-tr\">trlibrary.com/teach-tr</a>.",
+        "align": "center"
+      }
+    },
+    {
+      "type": "divider",
+      "props": {}
+    },
+    {
+      "type": "heading",
+      "props": {
         "text": "Watch and Tune In Live",
         "align": "center"
       }
