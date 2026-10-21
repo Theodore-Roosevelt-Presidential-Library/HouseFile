@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-10-21T11:32:54+00:00",
- "rebuilt_at": "2026-10-21T12:28:10+00:00",
+ "rebuilt_at": "2026-10-21T14:13:55+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -178,8 +178,8 @@
    "paths": [
     {
      "name": "VISIT: T+2 Thank You",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-21",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",
@@ -212,8 +212,8 @@
     },
     {
      "name": "VISIT: T+7 Keep Exploring",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-21",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",
@@ -244,8 +244,8 @@
     },
     {
      "name": "VISIT: T+14 From the Shop",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-21",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",
@@ -278,8 +278,8 @@
     },
     {
      "name": "VISIT: T+30 Host an Event",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-21",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",
@@ -310,8 +310,8 @@
     },
     {
      "name": "VISIT: T+60 Reasons to Come Back",
-     "status": "proposed",
-     "activated": null,
+     "status": "active",
+     "activated": "2026-10-21",
      "trigger": {
       "type": "date_field",
       "field": "Acme - Visit Date (Next)",

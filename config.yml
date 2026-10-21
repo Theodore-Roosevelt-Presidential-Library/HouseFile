@@ -270,7 +270,10 @@ automations:
     # private events, reasons to come back. Members are thanked; everyone else sees membership.
     - name: "VISIT: T+2 Thank You"
       flow: post-visit
-      status: proposed
+      campaign_id: "15094dd0-aafd-4a32-9648-8eba7b7fb218"
+      status: active
+      activated: "2026-10-21"
+      emails: ["VISIT: T+2 Thank You · Member", "VISIT: T+2 Thank You · Not a member"]
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 2}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
@@ -290,7 +293,10 @@ automations:
           - "Topic descriptions are from the newsletter form, checked 2026-10-20."
     - name: "VISIT: T+7 Keep Exploring"
       flow: post-visit
-      status: proposed
+      campaign_id: "9acdf098-900e-46d5-b066-fc1e38d33bf8"
+      status: active
+      activated: "2026-10-21"
+      emails: ["VISIT: T+7 Keep Exploring · Member", "VISIT: T+7 Keep Exploring · Not a member"]
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 7}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
@@ -308,7 +314,10 @@ automations:
           - "Facts from trlibrary.com/tr, /quiz and /podcast/good-citizen, checked 2026-10-20. No single episode is featured, so the email does not date."
     - name: "VISIT: T+14 From the Shop"
       flow: post-visit
-      status: proposed
+      campaign_id: "bdb20d85-ba3b-4cc1-99be-bf8375059179"
+      status: active
+      activated: "2026-10-21"
+      emails: ["VISIT: T+14 From the Shop · Member", "VISIT: T+14 From the Shop · Not a member"]
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 14}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
@@ -326,9 +335,13 @@ automations:
           - "Confirm before going live: which pieces are online-only (the copy says some are). The 10% member discount applies online and in Medora (confirmed by Matt, 2026-10-20)."
           - "Members see their level merged in ([[custom.acme_-_membership_level]]); everyone else gets the membership levels and the 10% shop savings."
           - "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
+    # T+30 has no member-only copy: both branches send the same HTML, kept split for consistent reporting.
     - name: "VISIT: T+30 Host an Event"
       flow: post-visit
-      status: proposed
+      campaign_id: "d6a18430-3808-4db1-96ad-2f62df088a42"
+      status: active
+      activated: "2026-10-21"
+      emails: ["VISIT: T+30 Host an Event · Member", "VISIT: T+30 Host an Event · Not a member"]
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 30}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
@@ -346,7 +359,10 @@ automations:
           - "Every claim is from trlibrary.com/private-events, checked 2026-10-20."
     - name: "VISIT: T+60 Reasons to Come Back"
       flow: post-visit
-      status: proposed
+      campaign_id: "514a8ad9-7980-426c-9c27-5a0e2c9edc14"
+      status: active
+      activated: "2026-10-21"
+      emails: ["VISIT: T+60 Reasons to Come Back · Member", "VISIT: T+60 Reasons to Come Back · Not a member"]
       trigger: {type: date_field, field: "Acme - Visit Date (Next)", offset_days: 60}
       filters: []
       split: "Active Members (ACME field: active or new) segment"
