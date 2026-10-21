@@ -23,6 +23,27 @@ LIBRARY = {
     "proposals/img/video-qrwdZmqFO5A-teaser.gif": "https://files.constantcontact.com/d94543ed901/23465662-c9d6-4af4-863c-533a4c336bae.gif",
     "proposals/img/video-yEEsRy7sdng.jpg": "https://files.constantcontact.com/d94543ed901/6d5b123c-3b40-4310-a2d0-3022d9acae27.jpg",
     "proposals/img/video-zRPJAdE-IBI.jpg": "https://files.constantcontact.com/d94543ed901/5585d129-3c85-4eed-855e-25358d9a9d79.jpg",
+    # Post-visit series, uploaded 2026-10-21.
+    "proposals/img/visit-t-plus-2-thank-you-header.jpg": "https://files.constantcontact.com/d94543ed901/3203f1cf-2282-4dab-987c-8a1b35ec12ce.jpg",
+    "proposals/img/visit-t-plus-7-keep-exploring-header.jpg": "https://files.constantcontact.com/d94543ed901/841f3c3d-6895-4b63-a8f6-7ac98c87df37.jpg",
+    "proposals/img/visit-t-plus-14-shop-header.jpg": "https://files.constantcontact.com/d94543ed901/25ce2d76-f8c0-48bc-8d13-cdd66ed8a8c9.jpg",
+    "proposals/img/visit-t-plus-30-host-an-event-header.jpg": "https://files.constantcontact.com/d94543ed901/3af8f475-5a5c-410c-8f30-11d34e3f01fd.jpg",
+    "proposals/img/visit-t-plus-60-come-back-header.jpg": "https://files.constantcontact.com/d94543ed901/22c9df38-50b7-4885-b437-bd3b7602679f.jpg",
+    "proposals/img/pv-come-back-events.jpg": "https://files.constantcontact.com/d94543ed901/003b0f29-1881-48f6-8c84-27efb9c5f3d7.jpg",
+    "proposals/img/pv-come-back-tours.jpg": "https://files.constantcontact.com/d94543ed901/acf0ad1a-dd79-4966-ba87-5ec6763800bb.jpg",
+    "proposals/img/pv-events-galleries.jpg": "https://files.constantcontact.com/d94543ed901/869fa03b-9631-474d-9c52-b3ec2e0a929a.jpg",
+    "proposals/img/pv-events-overlook-wide.jpg": "https://files.constantcontact.com/d94543ed901/5b016321-c2c5-4d6f-a467-b86bb0389f41.jpg",
+    "proposals/img/pv-events-terrace.jpg": "https://files.constantcontact.com/d94543ed901/5c8ca671-ddd2-4e5d-8553-4a77f7bbca5f.jpg",
+    "proposals/img/pv-quiz-family.jpg": "https://files.constantcontact.com/d94543ed901/de111365-7965-407f-bf2b-fc37c26fb409.jpg",
+    "proposals/img/pv-quiz-myths.jpg": "https://files.constantcontact.com/d94543ed901/7ba41e53-1564-49ca-97af-3292f37216ef.jpg",
+    "proposals/img/pv-shop-arena-tee.jpg": "https://files.constantcontact.com/d94543ed901/1ee56ff3-26a8-4b62-b6a0-465262894e0f.jpg",
+    "proposals/img/pv-shop-backpack.jpg": "https://files.constantcontact.com/d94543ed901/65765f89-7e40-4ed7-b3b4-8ff604f013e1.jpg",
+    "proposals/img/pv-shop-bully-hat.jpg": "https://files.constantcontact.com/d94543ed901/f2167526-c416-43d5-9bde-71b911b7b12c.jpg",
+    "proposals/img/pv-shop-journal.jpg": "https://files.constantcontact.com/d94543ed901/d1eccedd-ca33-4d9d-b1c9-f490589f6096.jpg",
+    "proposals/img/pv-tr-badlands.jpg": "https://files.constantcontact.com/d94543ed901/f42884b6-8a24-4215-93d5-4880cb49ceef.jpg",
+    "proposals/img/pv-tr-conservation.jpg": "https://files.constantcontact.com/d94543ed901/c5fd709a-807d-45cd-8ba2-c63276d1ee39.jpg",
+    "proposals/img/pv-watch-videos.jpg": "https://files.constantcontact.com/d94543ed901/89af0c99-fdf0-4517-bf29-03bd0eab3ab7.jpg",
+    "proposals/img/pv-watch-youtube.jpg": "https://files.constantcontact.com/d94543ed901/60697ae5-79ea-4c7d-9ce7-615258f8d644.jpg",
 }
 COND = re.compile(r"<!--cc:(if|else)\s+([^>]*?)-->([\s\S]*?)<!--cc:end-->")
 
@@ -47,7 +68,9 @@ def resolve(html, values):
     return COND.sub(sub, html)
 
 
-for slug in ["visit-t1-welcome", "visit-t-30-plan-ahead", "visit-t-3-know-before"]:
+for slug in ["visit-t1-welcome", "visit-t-30-plan-ahead", "visit-t-3-know-before",
+             "visit-t-plus-2-thank-you", "visit-t-plus-7-keep-exploring", "visit-t-plus-14-shop",
+             "visit-t-plus-30-host-an-event", "visit-t-plus-60-come-back"]:
     html = (SRC / f"{slug}.html").read_text()
     for rel, url in LIBRARY.items():
         html = html.replace(rel, url)
