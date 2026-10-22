@@ -123,7 +123,7 @@ const emails = [
       header('visit-t-plus-2-thank-you'),
       h('Thank You for Coming'),
       p(`${GREET}<br><br>Thank you for spending a day at the Theodore Roosevelt Presidential Library. If you carried a Trailblazer through the galleries, your journal and photos arrived in a separate email. They stay online for 30 days, so save the ones you want to keep.`),
-      ...memberOnly(p("<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every visitor who comes after you.")),
+      ...memberOnly(p("<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every participant who comes after you.")),
       div,
       h('How Was Your Visit?'),
       p("A few words from you help the next traveler decide to make the trip to Medora. The Library reads every review, and a short one counts just as much as a long one."),
@@ -309,7 +309,7 @@ const emails = [
       cols(
         { src: IMG + 'pv-come-back-events.jpg', alt: 'A family under the stars at the Elkhorn campfire in the galleries', heading: 'Special Events',
           text: 'Talks, screenings, festivals and evening programs, each with its own date and ticket.', label: 'See Special Events', href: `${SITE}/calendar/special-event` },
-        { src: IMG + 'pv-come-back-tours.jpg', alt: 'Visitors hearing the story of the Elkhorn Ranch cabin', heading: 'Specialty Tours',
+        { src: IMG + 'pv-come-back-tours.jpg', alt: 'Participants hearing the story of the Elkhorn Ranch cabin', heading: 'Specialty Tours',
           text: 'Tours built around a single subject, offered on select days.', label: 'See Tours', href: `${SITE}/calendar/specialty-tour` }),
       p(`Hear about events while seats are still open: add <a href="${NEWSLETTER}">Events &amp; Programs</a> to your newsletter topics.`, 'center'),
       ...memberRows(

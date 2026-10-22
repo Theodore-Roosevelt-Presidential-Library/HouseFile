@@ -31,7 +31,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every visitor who comes after you.",
+        "html": "<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every participant who comes after you.",
         "align": "left"
       },
       "cond": {
