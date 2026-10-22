@@ -192,8 +192,8 @@ const emails = [
       cols(
         { src: IMG + 'pv-quiz-myths.jpg', alt: 'Clifford Berryman 1902 cartoon Drawing the Line in Mississippi', heading: 'Fact or Fiction',
           text: 'Fifteen questions separating the famous stories from the record.', label: 'Take the Quiz', href: `${SITE}/quiz/myths` },
-        { src: IMG + 'pv-quiz-family.jpg', alt: 'A grassy coulee opening onto badlands country', heading: 'What Lives Out There',
-          text: 'Fifteen questions on the wildlife T.R. watched from the saddle, what was lost and what you can see today.', label: 'Take the Quiz', href: `${SITE}/quiz/badlands-wildlife` }),
+        { src: IMG + 'pv-quiz-family.jpg', alt: 'A grassy coulee opening onto badlands country', heading: 'Animals of the Badlands',
+          text: 'Nine short questions on the animals T.R. watched from the saddle. Made for kids and grown-ups to play together.', label: 'Take the Quiz', href: `${SITE}/quiz/badlands-wildlife-family` }),
       p(`Dozens more, from family editions to expert level, at <a href="${SITE}/quiz">trlibrary.com/quiz</a>.`, 'center'),
       div,
       h('For the Teacher in Your Life'),
