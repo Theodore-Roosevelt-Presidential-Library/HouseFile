@@ -32,7 +32,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  11. Text · Want it all handled? One Medora packages bundle a hotel night, an evenin
       everyone
- 12. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 12. Text · Know someone who would love it here? As a member you receive 10% off gif
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m2]
  13. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m2]
@@ -52,9 +52,11 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  21. Text · Questions about your trip? Write to hello@trlibrary.com and the Welcome 
       everyone
- 22. Button · Plan Your Visit
+ 22. Button · Everything to Know
       everyone
- 23. Footer
+ 23. Text · Theodore Roosevelt Presidential Library 3410 Chateau Rd, Medora, ND 5864
+      everyone
+ 24. Footer
       everyone
 
 GROUPS

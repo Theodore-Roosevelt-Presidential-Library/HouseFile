@@ -14,11 +14,11 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   2. Heading · From the Library Shop
       everyone
-  3. Text · Hello [[FIRSTNAME OR "Friend"]], The Library Shop is open online, and so
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Thank you for visiting the Theodore Roo
       everyone
   4. Text · Your member discount works here too. As a [[custom.acme_-_membership_lev
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p4]
-  5. Text · Members take 10% off every order, online and in the Library Shop in Medo
+  5. Text · Members receive 10% off every order, online and in the Library Shop in M
       DEFAULT ROW (group p4): contacts who match none of the group's other rows
   6. Two columns · Filson All-Weather Backpack
       everyone
@@ -28,7 +28,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   9. Text · Hear about new arrivals and seasonal sales first: add The Shop to your n
       everyone
- 10. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 10. Text · Know someone who would love it here? As a member you receive 10% off gif
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p5]
  11. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p5]

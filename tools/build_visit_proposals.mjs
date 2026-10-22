@@ -62,7 +62,7 @@ const memberOnly = (...blocks) => memberRows(blocks, []);
 // Gift memberships: the same join page the website's "Gift Memberships" button opens.
 const GIFT_URL = 'https://access.trlibrary.com/membership/613/join';
 const GIFT = [
-  p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center'),
+  p('<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.', 'center'),
   btn('Give a Membership', GIFT_URL),
 ];
 
@@ -96,7 +96,7 @@ const emails = [
       h("You're Coming to the Badlands"),
       p(`${GREET}<br><br>Your tickets to the Theodore Roosevelt Presidential Library are booked for ${VISIT_DAY}, and your entry time is on your ticket confirmation. Medora is a small town in a big landscape, so a little planning now makes the whole trip easier. Here is what to sort out first.`),
       ...memberOnly(MEMBER_THANKS),
-      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'A 3½-minute look at the galleries, the building, Medora and the national park'),
+      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'A 3½-minute look at the galleries, the building, Medora and Theodore Roosevelt National Park'),
       div,
       h('Four Things to Plan Now'),
       cols(
@@ -124,7 +124,8 @@ const emails = [
       ...memberRows(GIFT, [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
       div,
       p(`Questions about your trip? Write to ${HELLO} and the Welcome Team will help you plan.`, 'center'),
-      btn('Plan Your Visit', `${SITE}/visit`),
+      btn('Everything to Know', `${SITE}/visit/faq`),
+      p(`<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href="${SITE}/visit/directions">Directions</a>`, 'center'),
       footer,
     ],
   },
@@ -139,15 +140,15 @@ const emails = [
       h('One Month to Medora'),
       p(`${GREET}<br><br>Your visit to the Theodore Roosevelt Presidential Library is one month away, on ${VISIT_DAY}. This is the right moment to lock in the parts of a Badlands trip that fill up.`),
       ...memberOnly(p('<b>Thank you for planning another visit as a member.</b> Bringing friends? Your membership takes 25% off their admission tickets.')),
-      h('Your Checklist'),
+      h('Your Guide to a Great Visit'),
       table({
         columns: ['To do', 'Why now', ''],
         rowLabels: true,
         rows: [
           ['Book a place to stay', 'Medora is a small town. When it is full, Dickinson is 35 minutes east on I-94.', `<a href="${SITE}/visit/lodging/availability">Check availability</a>`],
-          ['Pick your evenings', 'The Medora Musical and many attractions run on a summer season, roughly Memorial Day to Labor Day.', `<a href="${SITE}/visit/activities">Things to do</a>`],
+          ['Things to do', 'The Medora Musical and many attractions run on a summer season, roughly Memorial Day to Labor Day, so book evenings and tours early.', `<a href="${SITE}/visit/activities">See what's on</a>`],
           ['Map the drive', 'Mobile coverage is limited in parts of the Badlands. Download your route before you go.', `<a href="${SITE}/visit/directions">Directions</a>`],
-          ['Plan a park day', 'The South Unit is minutes from the Library; the quieter North Unit is about 70 minutes north.', `<a href="${SITE}/visit/national-park">The park</a>`],
+          ['Plan a park day', 'The South Unit of Theodore Roosevelt National Park is minutes from the Library; the quieter North Unit is about 70 minutes north.', `<a href="${SITE}/visit/national-park">The park</a>`],
         ],
       }),
       h('Your Visit Day'),
@@ -155,8 +156,8 @@ const emails = [
       btn('Hours for Your Visit', `${SITE}/visit/hours`),
       p('<b>Coming between late fall and spring?</b> Snow and high winds can close I-94 in western North Dakota. Check road conditions before you set out and give yourself extra time.'),
       div,
-      h('A Preview of What Is Waiting'),
-      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'Not seen it yet? A 3½-minute look at the Library, Medora and the national park'),
+      h('A Preview of What Is Waiting for You'),
+      img(TEASER, 'Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)', VID('W9sq8PuGQVo'), 'Not seen it yet? A 3½-minute look at the Library, Medora and Theodore Roosevelt National Park'),
       cols(
         { src: THUMB('yEEsRy7sdng'), alt: "Step into the Amazon: Theodore Roosevelt's River of Doubt", heading: 'The River of Doubt',
           text: "Step into Roosevelt's Amazon expedition, one of the galleries you will walk through.", label: 'Watch (0:53)', href: VID('yEEsRy7sdng') },
@@ -165,7 +166,7 @@ const emails = [
       ...memberRows(GIFT, [div, SELL_HEAD, SELL_BODY, MEMBERSHIP_TABLE, SELL_HOW, SELL_BTN]),
       div,
       p(`Questions? Write to ${HELLO}. The Welcome Team is glad to help you plan.`, 'center'),
-      btn('Plan Your Visit', `${SITE}/visit`),
+      p(`<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href="${SITE}/visit/directions">Directions</a>`, 'center'),
       footer,
     ],
   },
@@ -183,7 +184,7 @@ const emails = [
         [p('<b>Welcome back, member.</b> Use the member line at the entrance, and remember 25% off extra admission tickets and 10% off in the Library Shop and at Salt+Scoria.')],
         [p(`<b>Thinking about membership?</b> Anyone at the front desk can refund these tickets and put what you paid toward a membership, and your reservation stays as it is. You can also email ${MEMBERSHIP_MAIL} before you come with your order number (${ORDER}).`)]),
       h('Your Entry Window'),
-      p('Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Leave a few minutes for the walk from the lot and a quick security check.', 'left'),
+      p('Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Allow a few minutes for the walk from the lot and a quick security check.', 'left'),
       table({
         columns: ['Bring', 'Leave in the car'],
         rows: [
@@ -198,10 +199,11 @@ const emails = [
       h('Badlands Weather'),
       img('https://weather.labs.trlibrary.com/images/social.png', 'Current weather and three-day forecast for Medora, North Dakota', 'https://trlibrary.com/weather/', 'Live from the National Weather Service. Tap for the full forecast.'),
       h('Make a Day of It'),
-      p(`Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many visitors pair the Library with the national park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.`),
+      p(`Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many pair the Library with Theodore Roosevelt National Park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.`),
       img(`${IMG}video-qrwdZmqFO5A-teaser.gif`, 'Watch how it works: Your Journey Starts Here, The Trailblazer (1:21)', VID('qrwdZmqFO5A'), 'Watch: how your Trailblazer works (1:21). A link to set yours up arrives the day before your visit.'),
       p(`Check the <a href="${SITE}/visit/hours">hours</a> and, in winter, <a href="https://travel.dot.nd.gov/">North Dakota road conditions</a> before you leave. Need a wheelchair, help from the lot or anything arranged ahead? Write to ${HELLO}.`),
       btn('Everything to Know', `${SITE}/visit/faq`),
+      p(`<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href="${SITE}/visit/directions">Directions</a>`, 'center'),
       footer,
     ],
   },

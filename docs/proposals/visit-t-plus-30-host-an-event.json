@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.",
         "align": "left"
       }
     },
@@ -109,7 +109,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Planning something that doesn't fit a category? Ask anyway.",
+        "html": "Planning something outside of these categories? Let's explore the possibilities.",
         "align": "center"
       }
     },

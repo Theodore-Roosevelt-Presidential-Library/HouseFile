@@ -14,7 +14,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   2. Heading · The Story Keeps Going
       everyone
-  3. Text · Hello [[FIRSTNAME OR "Friend"]], The galleries cover a lot of ground in 
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Thank you for visiting the Theodore Roo
       everyone
   4. Two columns · The Badlands
       everyone
@@ -22,7 +22,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   6. Divider
       everyone
-  7. Heading · Test What You Learned
+  7. Heading · Put Your Knowledge to Work
       everyone
   8. Two columns · Fact or Fiction
       everyone
@@ -64,7 +64,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
  27. Button · Plan Your Next Visit
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
- 28. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 28. Text · Know someone who would love it here? As a member you receive 10% off gif
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]
  29. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p3]

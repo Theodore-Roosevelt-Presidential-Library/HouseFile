@@ -14,7 +14,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   2. Heading · Host Your Event at the Library
       everyone
-  3. Text · Hello [[FIRSTNAME OR "Friend"]], You have seen the galleries by day. Aft
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Thank you for visiting the Theodore Roo
       everyone
   4. Image · Two people on the Library boardwalk looking out over the Badlands
       everyone
@@ -26,7 +26,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   8. Button · Start an Inquiry
       everyone
-  9. Text · Planning something that doesn't fit a category? Ask anyway.
+  9. Text · Planning something outside of these categories? Let's explore the possib
       everyone
  10. Divider
       everyone

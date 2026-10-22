@@ -72,7 +72,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Leave a few minutes for the walk from the lot and a quick security check.",
+        "html": "Arrive up to <b>15 minutes before</b> the time on your ticket, or any time within that hour. With a 10:00 AM ticket, come any time from 9:45 to 11:00 AM. Allow a few minutes for the walk from the lot and a quick security check.",
         "align": "left"
       }
     },
@@ -144,7 +144,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many visitors pair the Library with the national park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.",
+        "html": "Plan about three and a half hours for the galleries, then walk the one-mile boardwalk or the rooftop prairie. Many pair the Library with Theodore Roosevelt National Park: drive the South Unit's scenic loop in the morning, when wildlife is most active, and spend the afternoon here. Salt+Scoria serves breakfast and lunch, and it is quieter before or after the noon rush.",
         "align": "left"
       }
     },
@@ -169,6 +169,13 @@
       "props": {
         "label": "Everything to Know",
         "href": "https://www.trlibrary.com/visit/faq"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href=\"https://www.trlibrary.com/visit/directions\">Directions</a>",
+        "align": "center"
       }
     },
     {

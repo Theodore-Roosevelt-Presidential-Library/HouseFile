@@ -50,7 +50,7 @@
     {
       "type": "heading",
       "props": {
-        "text": "Your Checklist",
+        "text": "Your Guide to a Great Visit",
         "align": "center"
       }
     },
@@ -71,9 +71,9 @@
             "<a href=\"https://www.trlibrary.com/visit/lodging/availability\">Check availability</a>"
           ],
           [
-            "Pick your evenings",
-            "The Medora Musical and many attractions run on a summer season, roughly Memorial Day to Labor Day.",
-            "<a href=\"https://www.trlibrary.com/visit/activities\">Things to do</a>"
+            "Things to do",
+            "The Medora Musical and many attractions run on a summer season, roughly Memorial Day to Labor Day, so book evenings and tours early.",
+            "<a href=\"https://www.trlibrary.com/visit/activities\">See what's on</a>"
           ],
           [
             "Map the drive",
@@ -82,7 +82,7 @@
           ],
           [
             "Plan a park day",
-            "The South Unit is minutes from the Library; the quieter North Unit is about 70 minutes north.",
+            "The South Unit of Theodore Roosevelt National Park is minutes from the Library; the quieter North Unit is about 70 minutes north.",
             "<a href=\"https://www.trlibrary.com/visit/national-park\">The park</a>"
           ]
         ],
@@ -126,7 +126,7 @@
     {
       "type": "heading",
       "props": {
-        "text": "A Preview of What Is Waiting",
+        "text": "A Preview of What Is Waiting for You",
         "align": "center"
       }
     },
@@ -136,7 +136,7 @@
         "src": "proposals/img/video-W9sq8PuGQVo-teaser.gif",
         "alt": "Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)",
         "href": "https://www.trlibrary.com/video/view/W9sq8PuGQVo?pid=PLafKMriNZlgo",
-        "caption": "Not seen it yet? A 3½-minute look at the Library, Medora and the national park"
+        "caption": "Not seen it yet? A 3½-minute look at the Library, Medora and Theodore Roosevelt National Park"
       }
     },
     {
@@ -165,7 +165,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "html": "<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.",
         "align": "center"
       },
       "cond": {
@@ -329,10 +329,10 @@
       }
     },
     {
-      "type": "button",
+      "type": "text",
       "props": {
-        "label": "Plan Your Visit",
-        "href": "https://www.trlibrary.com/visit"
+        "html": "<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href=\"https://www.trlibrary.com/visit/directions\">Directions</a>",
+        "align": "center"
       }
     },
     {

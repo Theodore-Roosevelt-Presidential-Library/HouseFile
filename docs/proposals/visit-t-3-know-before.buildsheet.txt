@@ -44,7 +44,9 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  17. Button · Everything to Know
       everyone
- 18. Footer
+ 18. Text · Theodore Roosevelt Presidential Library 3410 Chateau Rd, Medora, ND 5864
+      everyone
+ 19. Footer
       everyone
 
 GROUPS

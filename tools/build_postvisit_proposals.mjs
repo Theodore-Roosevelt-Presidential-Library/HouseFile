@@ -71,13 +71,13 @@ const MEMBERSHIP_BTN = btn('See Membership Levels', `${SITE}/membership`);
 // Gift memberships: the same join page the website's "Gift Memberships" button opens.
 const GIFT_URL = 'https://access.trlibrary.com/membership/613/join';
 const GIFT = [
-  p('<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.', 'center'),
+  p('<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.', 'center'),
   btn('Give a Membership', GIFT_URL),
 ];
 // Reviews (listing IDs match the review dashboard, Reviews repo): Google place, TripAdvisor d34391224, Yelp.
 const REVIEW_GOOGLE = 'https://search.google.com/local/writereview?placeid=ChIJbynQegDrJVMRSCAxmOeViVg';
 const REVIEW_TRIPADVISOR = 'https://www.tripadvisor.com/UserReviewEdit-g60973-d34391224-Theodore_Roosevelt_Presidential_Library-Medora_North_Dakota.html';
-const REVIEW_YELP = 'https://www.yelp.com/biz/theodore-roosevelt-presidential-library-medora-2';
+const REVIEW_YELP = 'https://www.yelp.com/writeareview/biz/pj4rzLmUB3s-Vxc4JAfhwg';
 // Social profiles: the trlibrary.com site footer, checked 2026-10-21.
 const YOUTUBE = 'https://www.youtube.com/channel/UCPOPdzgpO4liPSWkk7VqS5A';
 const SOCIAL = [
@@ -108,7 +108,7 @@ const BENEFITS_TABLE = table({
     ['Family programming', 'Family level and up: programs built for exploring together.'],
   ],
 });
-const COMING_2027 = p('<b>Coming in 2027:</b> a quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.', 'center');
+const COMING_2027 = p('<b>Coming in 2027:</b> A quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.', 'center');
 
 const COMING_BACK = p(`<b>Coming back?</b> A membership covers a full year of visits for you and your guests. <a href="${SITE}/membership">See the levels</a>.`, 'center');
 
@@ -126,12 +126,12 @@ const emails = [
       ...memberOnly(p("<b>Thank you for being a member.</b> Your membership does more than open the doors for you. It supports educational programming, conservation education and the work of keeping T.R.'s story alive for every visitor who comes after you.")),
       div,
       h('How Was Your Visit?'),
-      p("A few words from you help the next traveler decide to make the drive to Medora. The Library reads every review, and a short one counts just as much as a long one."),
+      p("A few words from you help the next traveler decide to make the trip to Medora. The Library reads every review, and a short one counts just as much as a long one."),
       btn('Review on Google', REVIEW_GOOGLE),
       p(`Or share it on <a href="${REVIEW_TRIPADVISOR}">TripAdvisor</a> or <a href="${REVIEW_YELP}">Yelp</a>.`, 'center'),
       div,
-      h('Tell Us What to Send You'),
-      p("The Library's newsletter, <i>Mail from the Badlands</i>, comes in topics. Pick the ones you care about, and those are the only ones you will get."),
+      h('Stay Connected to What Interests You'),
+      p('Stay connected to the Theodore Roosevelt Presidential Library through <i>Mail from the Badlands</i>. Choose the topics that interest you most and receive updates tailored to your preferences.'),
       table({
         columns: ['Topic', 'What arrives'],
         rowLabels: true,
@@ -167,7 +167,7 @@ const emails = [
       p("On-this-day stories from T.R.'s life, the Badlands through the seasons and the latest from the Library, every week on social media."),
       p(SOCIAL_LINKS, 'center'),
       div,
-      p(`Something to tell the Library about your day? Write to ${HELLO}.`, 'center'),
+      p(`Have a story, favorite moment or feedback to share about your visit? The Library would love to hear from you. Send a note to ${HELLO}.`, 'center'),
       footer,
     ],
   },
@@ -180,7 +180,7 @@ const emails = [
     blocks: [
       header('visit-t-plus-7-keep-exploring'),
       h('The Story Keeps Going'),
-      p(`${GREET}<br><br>The galleries cover a lot of ground in one visit. The rest of Theodore Roosevelt's life is online, told in six chapters, from a Manhattan childhood to an unmapped river in the Amazon.`),
+      p(`${GREET}<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. The galleries cover a lot of ground in one visit. The rest of Theodore Roosevelt's life is online, told in six chapters, from a Manhattan childhood to an unmapped river in the Amazon.`),
       cols(
         { src: IMG + 'pv-tr-badlands.jpg', alt: 'Theodore Roosevelt in buckskin standing guard with his rifle', heading: 'The Badlands',
           text: 'He came to Dakota to hunt a bison and stayed to run cattle on the Little Missouri. Read how the Badlands gave him a new life.', label: 'Read the Chapter', href: `${SITE}/tr/badlands` },
@@ -188,12 +188,12 @@ const emails = [
           text: 'Parks, forests, monuments and bird reserves: roughly 230 million acres protected, and how he did it.', label: 'Explore', href: `${SITE}/tr/presidency/conservation` }),
       btn("Explore T.R.'s Life", `${SITE}/tr`),
       div,
-      h('Test What You Learned'),
+      h('Put Your Knowledge to Work'),
       cols(
         { src: IMG + 'pv-quiz-myths.jpg', alt: 'Clifford Berryman 1902 cartoon Drawing the Line in Mississippi', heading: 'Fact or Fiction',
           text: 'Fifteen questions separating the famous stories from the record.', label: 'Take the Quiz', href: `${SITE}/quiz/myths` },
-        { src: IMG + 'pv-quiz-family.jpg', alt: 'A grassy coulee opening onto badlands country', heading: 'Animals of the Badlands',
-          text: 'A family edition: nine short questions on what T.R. watched from the saddle, and what is still out there.', label: 'Play Together', href: `${SITE}/quiz/badlands-wildlife-family` }),
+        { src: IMG + 'pv-quiz-family.jpg', alt: 'A grassy coulee opening onto badlands country', heading: 'What Lives Out There',
+          text: 'Fifteen questions on the wildlife T.R. watched from the saddle, what was lost and what you can see today.', label: 'Take the Quiz', href: `${SITE}/quiz/badlands-wildlife` }),
       p(`Dozens more, from family editions to expert level, at <a href="${SITE}/quiz">trlibrary.com/quiz</a>.`, 'center'),
       div,
       h('For the Teacher in Your Life'),
@@ -234,10 +234,10 @@ const emails = [
     blocks: [
       header('visit-t-plus-14-shop'),
       h('From the Library Shop'),
-      p(`${GREET}<br><br>The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.`),
+      p(`${GREET}<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.`),
       ...memberRows(
-        [p('<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR "Library"]] member, you take 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.')],
-        [p('<b>Members take 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.')]),
+        [p('<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR "Library"]] member, you receive 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.')],
+        [p('<b>Members receive 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.')]),
       cols(
         { src: IMG + 'pv-shop-backpack.jpg', alt: 'Special Edition Filson Olive All-Weather Backpack', heading: 'Filson All-Weather Backpack',
           text: "A special edition of Filson's all-weather pack, in olive or slate.", label: 'Shop Bags', href: `${SHOP}/collections/luggage-bags` },
@@ -271,7 +271,7 @@ const emails = [
     blocks: [
       header('visit-t-plus-30-host-an-event'),
       h('Host Your Event at the Library'),
-      p(`${GREET}<br><br>You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.`),
+      p(`${GREET}<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. You have seen the galleries by day. After hours, the Library hosts weddings, leadership retreats, private dinners and family reunions, with sunset over the Badlands as the backdrop.`),
       img(IMG + 'pv-events-overlook-wide.jpg', 'Two people on the Library boardwalk looking out over the Badlands'),
       table({
         columns: ['Event', 'At the Library'],
@@ -290,7 +290,7 @@ const emails = [
         { src: IMG + 'pv-events-terrace.jpg', alt: 'A family on the Library terrace', heading: 'Terraces and Catering',
           text: 'Terraces above the Badlands, and menus for receptions, seated dinners and everything in between.', label: 'See Catering', href: `${SITE}/private-events/catering` }),
       btn('Start an Inquiry', `${SITE}/private-events/inquiry`),
-      p("Planning something that doesn't fit a category? Ask anyway.", 'center'),
+      p("Planning something outside of these categories? Let's explore the possibilities.", 'center'),
       div,
       FOLLOW_LINE,
       footer,
@@ -305,7 +305,7 @@ const emails = [
     blocks: [
       header('visit-t-plus-60-come-back'),
       h('Come Back to the Badlands'),
-      p(`${GREET}<br><br>No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.`),
+      p(`${GREET}<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.`),
       cols(
         { src: IMG + 'pv-come-back-events.jpg', alt: 'A family under the stars at the Elkhorn campfire in the galleries', heading: 'Special Events',
           text: 'Talks, screenings, festivals and evening programs, each with its own date and ticket.', label: 'See Special Events', href: `${SITE}/calendar/special-event` },
@@ -320,7 +320,7 @@ const emails = [
       div,
       h('Carry the Story Forward'),
       p("The Library is a nonprofit, and it runs on people who believe T.R.'s story still has something to teach. If your visit stayed with you, help carry it forward."),
-      p('<b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply', 'center'),
+      p('<b>PILLARS</b><br>Citizenship | Leadership | Conservation<br><br><b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply', 'center'),
       btn('Join Us in the Arena', JOIN_US),
       p(`Planning another trip? <a href="${SITE}/visit">Start here</a>.`, 'center'),
       div,

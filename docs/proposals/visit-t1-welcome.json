@@ -53,7 +53,7 @@
         "src": "proposals/img/video-W9sq8PuGQVo-teaser.gif",
         "alt": "Watch the preview: Discover the Theodore Roosevelt Presidential Library (3:35)",
         "href": "https://www.trlibrary.com/video/view/W9sq8PuGQVo?pid=PLafKMriNZlgo",
-        "caption": "A 3½-minute look at the galleries, the building, Medora and the national park"
+        "caption": "A 3½-minute look at the galleries, the building, Medora and Theodore Roosevelt National Park"
       }
     },
     {
@@ -160,7 +160,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "html": "<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.",
         "align": "center"
       },
       "cond": {
@@ -326,8 +326,15 @@
     {
       "type": "button",
       "props": {
-        "label": "Plan Your Visit",
-        "href": "https://www.trlibrary.com/visit"
+        "label": "Everything to Know",
+        "href": "https://www.trlibrary.com/visit/faq"
+      }
+    },
+    {
+      "type": "text",
+      "props": {
+        "html": "<b>Theodore Roosevelt Presidential Library</b><br>3410 Chateau Rd, Medora, ND 58645 &nbsp;·&nbsp; <a href=\"https://www.trlibrary.com/visit/directions\">Directions</a>",
+        "align": "center"
       }
     },
     {

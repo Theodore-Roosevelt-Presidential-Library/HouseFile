@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. No two visits to the Library have to look alike. Special events change with the seasons: talks with historians and authors, film screenings in the auditorium, family days, festivals and evening programs on the butte.",
         "align": "left"
       }
     },
@@ -115,7 +115,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Coming in 2027:</b> a quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.",
+        "html": "<b>Coming in 2027:</b> A quarterly member magazine and annual virtual member town halls, with a printed magazine for Patron and Donor Patron members.",
         "align": "center"
       },
       "cond": {
@@ -292,7 +292,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply",
+        "html": "<b>PILLARS</b><br>Citizenship | Leadership | Conservation<br><br><b>MISSION</b><br>Explore TR’s life, legacy, and enduring relevance.<br><br><b>VISION</b><br>Inspire action and fearless participation in the arena.<br><br><b>VALUES</b><br>Dare Greatly | Think Boldly | Live Passionately | Care Deeply",
         "align": "center"
       }
     },

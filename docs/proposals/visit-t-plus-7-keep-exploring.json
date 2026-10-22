@@ -24,7 +24,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>The galleries cover a lot of ground in one visit. The rest of Theodore Roosevelt's life is online, told in six chapters, from a Manhattan childhood to an unmapped river in the Amazon.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. The galleries cover a lot of ground in one visit. The rest of Theodore Roosevelt's life is online, told in six chapters, from a Manhattan childhood to an unmapped river in the Amazon.",
         "align": "left"
       }
     },
@@ -65,7 +65,7 @@
     {
       "type": "heading",
       "props": {
-        "text": "Test What You Learned",
+        "text": "Put Your Knowledge to Work",
         "align": "center"
       }
     },
@@ -84,10 +84,10 @@
           {
             "src": "proposals/img/pv-quiz-family.jpg",
             "alt": "A grassy coulee opening onto badlands country",
-            "heading": "Animals of the Badlands",
-            "text": "A family edition: nine short questions on what T.R. watched from the saddle, and what is still out there.",
-            "label": "Play Together",
-            "href": "https://www.trlibrary.com/quiz/badlands-wildlife-family"
+            "heading": "What Lives Out There",
+            "text": "Fifteen questions on the wildlife T.R. watched from the saddle, what was lost and what you can see today.",
+            "label": "Take the Quiz",
+            "href": "https://www.trlibrary.com/quiz/badlands-wildlife"
           }
         ]
       }
@@ -280,7 +280,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "html": "<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.",
         "align": "center"
       },
       "cond": {

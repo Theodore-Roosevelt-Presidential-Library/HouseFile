@@ -14,7 +14,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   2. Heading · Come Back to the Badlands
       everyone
-  3. Text · Hello [[FIRSTNAME OR "Friend"]], No two visits to the Library have to lo
+  3. Text · Hello [[FIRSTNAME OR "Friend"]], Thank you for visiting the Theodore Roo
       everyone
   4. Two columns · Special Events
       everyone
@@ -26,7 +26,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
   8. Text · Thank you for being a member. Tickets for special events open to you bef
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
-  9. Text · Coming in 2027: a quarterly member magazine and annual virtual member to
+  9. Text · Coming in 2027: A quarterly member magazine and annual virtual member to
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
  10. Button · Plan Your Next Visit
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p6]
@@ -48,7 +48,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  19. Text · The Library is a nonprofit, and it runs on people who believe T.R.'s sto
       everyone
- 20. Text · MISSION Explore TR’s life, legacy, and enduring relevance. VISION Inspir
+ 20. Text · PILLARS Citizenship | Leadership | Conservation MISSION Explore TR’s lif
       everyone
  21. Button · Join Us in the Arena
       everyone

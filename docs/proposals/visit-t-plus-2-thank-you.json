@@ -61,7 +61,7 @@
     {
       "type": "text",
       "props": {
-        "html": "A few words from you help the next traveler decide to make the drive to Medora. The Library reads every review, and a short one counts just as much as a long one.",
+        "html": "A few words from you help the next traveler decide to make the trip to Medora. The Library reads every review, and a short one counts just as much as a long one.",
         "align": "left"
       }
     },
@@ -75,7 +75,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Or share it on <a href=\"https://www.tripadvisor.com/UserReviewEdit-g60973-d34391224-Theodore_Roosevelt_Presidential_Library-Medora_North_Dakota.html\">TripAdvisor</a> or <a href=\"https://www.yelp.com/biz/theodore-roosevelt-presidential-library-medora-2\">Yelp</a>.",
+        "html": "Or share it on <a href=\"https://www.tripadvisor.com/UserReviewEdit-g60973-d34391224-Theodore_Roosevelt_Presidential_Library-Medora_North_Dakota.html\">TripAdvisor</a> or <a href=\"https://www.yelp.com/writeareview/biz/pj4rzLmUB3s-Vxc4JAfhwg\">Yelp</a>.",
         "align": "center"
       }
     },
@@ -86,14 +86,14 @@
     {
       "type": "heading",
       "props": {
-        "text": "Tell Us What to Send You",
+        "text": "Stay Connected to What Interests You",
         "align": "center"
       }
     },
     {
       "type": "text",
       "props": {
-        "html": "The Library's newsletter, <i>Mail from the Badlands</i>, comes in topics. Pick the ones you care about, and those are the only ones you will get.",
+        "html": "Stay connected to the Theodore Roosevelt Presidential Library through <i>Mail from the Badlands</i>. Choose the topics that interest you most and receive updates tailored to your preferences.",
         "align": "left"
       }
     },
@@ -280,7 +280,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "html": "<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.",
         "align": "center"
       },
       "cond": {
@@ -468,7 +468,7 @@
     {
       "type": "text",
       "props": {
-        "html": "Something to tell the Library about your day? Write to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>.",
+        "html": "Have a story, favorite moment or feedback to share about your visit? The Library would love to hear from you. Send a note to <a href=\"mailto:hello@trlibrary.com\">hello@trlibrary.com</a>.",
         "align": "center"
       }
     },

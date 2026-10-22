@@ -22,7 +22,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   6. Heading · How Was Your Visit?
       everyone
-  7. Text · A few words from you help the next traveler decide to make the drive to 
+  7. Text · A few words from you help the next traveler decide to make the trip to M
       everyone
   8. Button · Review on Google
       everyone
@@ -30,9 +30,9 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  10. Divider
       everyone
- 11. Heading · Tell Us What to Send You
+ 11. Heading · Stay Connected to What Interests You
       everyone
- 12. Text · The Library's newsletter, Mail from the Badlands, comes in topics. Pick 
+ 12. Text · Stay connected to the Theodore Roosevelt Presidential Library through Ma
       everyone
  13. Table · Topic / What arrives
       everyone
@@ -48,7 +48,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
  19. Button · Plan Your Next Visit
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
- 20. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 20. Text · Know someone who would love it here? As a member you receive 10% off gif
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
  21. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group p2]
@@ -74,7 +74,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  32. Divider
       everyone
- 33. Text · Something to tell the Library about your day? Write to hello@trlibrary.c
+ 33. Text · Have a story, favorite moment or feedback to share about your visit? The
       everyone
  34. Footer
       everyone

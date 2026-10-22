@@ -24,14 +24,14 @@
     {
       "type": "text",
       "props": {
-        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.",
+        "html": "Hello [[FIRSTNAME OR \"Friend\"]],<br><br>Thank you for visiting the Theodore Roosevelt Presidential Library. The Library Shop is open online, and some pieces are sold only there. Every purchase helps support the Library.",
         "align": "left"
       }
     },
     {
       "type": "text",
       "props": {
-        "html": "<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR \"Library\"]] member, you take 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.",
+        "html": "<b>Your member discount works here too.</b> As a [[custom.acme_-_membership_level OR \"Library\"]] member, you receive 10% off every order, online and in the Library Shop in Medora, and 10% off at Salt+Scoria when you are back at the Library. Thank you for supporting the Library with every purchase.",
         "align": "left"
       },
       "cond": {
@@ -50,7 +50,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Members take 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.",
+        "html": "<b>Members receive 10% off every order</b>, online and in the Library Shop in Medora, on top of a full year of free admission.",
         "align": "left"
       },
       "cond": {
@@ -125,7 +125,7 @@
     {
       "type": "text",
       "props": {
-        "html": "<b>Know someone who would love it here?</b> As a member you take 10% off gift memberships.",
+        "html": "<b>Know someone who would love it here?</b> As a member you receive 10% off gift memberships.",
         "align": "center"
       },
       "cond": {

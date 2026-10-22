@@ -18,7 +18,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
   4. Text · Thank you for planning another visit as a member. Bringing friends? Your
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m3]
-  5. Heading · Your Checklist
+  5. Heading · Your Guide to a Great Visit
       everyone
   6. Table · To do / Why now / 
       everyone
@@ -32,13 +32,13 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  11. Divider
       everyone
- 12. Heading · A Preview of What Is Waiting
+ 12. Heading · A Preview of What Is Waiting for You
       everyone
  13. Image · Watch the preview: Discover the Theodore Roosevelt Presidential Libra…
       everyone
  14. Two columns · The River of Doubt
       everyone
- 15. Text · Know someone who would love it here? As a member you take 10% off gift m
+ 15. Text · Know someone who would love it here? As a member you receive 10% off gif
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m4]
  16. Button · Give a Membership
       SHOW WHEN Acme - Is Active Member is any of active, new   [group m4]
@@ -58,7 +58,7 @@ Test sends won't show rows that depend on custom fields; use the preview toggles
       everyone
  24. Text · Questions? Write to hello@trlibrary.com. The Welcome Team is glad to hel
       everyone
- 25. Button · Plan Your Visit
+ 25. Text · Theodore Roosevelt Presidential Library 3410 Chateau Rd, Medora, ND 5864
       everyone
  26. Footer
       everyone
