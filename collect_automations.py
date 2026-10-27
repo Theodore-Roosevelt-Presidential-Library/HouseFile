@@ -280,6 +280,8 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                               and (not p.get("emails") or e.get("task") in p["emails"])]
             if old.get("cc_status"):
                 path["cc_status"] = old["cc_status"]
+            if old.get("campaign_stats"):
+                path["campaign_stats"] = old["campaign_stats"]
             for e in path["emails"]:
                 f = out / "emails" / Path(e["html"]).name
                 if f.exists():
@@ -332,6 +334,8 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 rep = safe_get(cc, f"/reports/stats/email_campaign_activities/{aid}")
                 for row in (rep or {}).get("results", []):
                     s = row.get("stats", {})
+                    # Numbers only (public log): which counters this report fills in.
+                    print(f"    activity stats: { {k: v for k, v in s.items() if isinstance(v, (int, float))} }")
                     stats = {
                         "sends": s.get("em_sends"),
                         "opens": s.get("em_opens"),
@@ -353,6 +357,20 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 path["emails"].append(email)
                 pages[f"{slug}.html"] = html
                 print(f"  {p['name']}: {email['subject']!r}")
+            # The per-email report has shown 0 sends for automation emails since the API
+            # took over (Oct 2026). The campaign summary counts the whole path.
+            summ = safe_get(cc, f"/reports/summary_reports/email_campaign_summaries/{cid}") or {}
+            uc = summ.get("unique_counts") or {}
+            if uc:
+                print(f"    campaign summary: { {k: v for k, v in uc.items() if isinstance(v, (int, float))} }")
+                path["campaign_stats"] = {
+                    "sends": uc.get("sends"), "opens": uc.get("opens"), "clicks": uc.get("clicks"),
+                    "bounces": uc.get("bounces"), "unsubscribes": uc.get("optouts"),
+                }
+                path["campaign_stats"] = {k: v for k, v in path["campaign_stats"].items() if v is not None}
+            email_sends = sum((e.get("stats") or {}).get("sends") or 0 for e in path["emails"])
+            if path.get("campaign_stats", {}).get("sends") and not email_sends and len(path["emails"]) == 1:
+                path["emails"][0]["stats"] = dict(path["campaign_stats"])
             if not path["emails"] or not any(pages.get(Path(e["html"]).name) for e in path["emails"]):
                 old = [e for e in previous.get(p["name"], {}).get("emails", []) if not e.get("proposed")]
                 kept = []

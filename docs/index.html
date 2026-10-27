@@ -686,8 +686,11 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     const thumb = e
       ? `<a class="thumb" href="${link}" aria-label="Open preview of ${A.esc(e.subject)}"><iframe data-src="${A.esc(e.html)}" title="" tabindex="-1" sandbox="" loading="lazy"></iframe></a>`
       : `<div class="thumb empty">No email built yet</div>`;
-    const st = (e && e.stats) || {};
-    const chips = e && st.sends != null ? `<div class="chips">
+    // Per-email counts when Constant Contact gives them; otherwise the path's total.
+    const own = p.emails.reduce((a, x) => a + ((x.stats && x.stats.sends) || 0), 0);
+    const st = own || !p.campaign_stats ? ((e && e.stats) || {}) : p.campaign_stats;
+    const pathTotal = !own && p.campaign_stats && p.emails.length > 1;
+    const chips = e && st.sends != null ? `<div class="chips">${pathTotal ? `<span class="chip" title="Constant Contact reports this path's totals, not each version">Both versions</span>` : ""}
         <span class="chip">${fmtN(st.sends)} sent</span>
         <span class="chip">${pct(st.opens, st.sends)} opened</span>
         <span class="chip">${pct(st.clicks, st.sends)} clicked</span></div>` : "";
@@ -793,8 +796,10 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     catch (e) { document.getElementById("auto-stamp").innerHTML = `<span style="color:var(--crit)">Could not load data/automations.json</span>`; return; }
     const paths = DATA.flows.flatMap(f => f.paths), active = paths.filter(p => p.status === "active");
     const proposed = paths.filter(p => p.status === "proposed");
-    const emails = A.allEmails(DATA), sends = emails.reduce((a, x) => a + (x.email.stats?.sends || 0), 0);
-    const clicks = emails.reduce((a, x) => a + (x.email.stats?.clicks || 0), 0);
+    const pathStat = (p, k) => { const own = p.emails.reduce((a, x) => a + (x.stats?.sends || 0), 0);
+      return own ? p.emails.reduce((a, x) => a + (x.stats?.[k] || 0), 0) : (p.campaign_stats?.[k] || 0); };
+    const sends = paths.reduce((a, p) => a + pathStat(p, "sends"), 0);
+    const clicks = paths.reduce((a, p) => a + pathStat(p, "clicks"), 0);
     document.getElementById("auto-kpis").innerHTML = [
       ["Active paths", active.length], ["Drafts in Constant Contact", paths.length - active.length - proposed.length],
       ["Proposed for review", proposed.length],
