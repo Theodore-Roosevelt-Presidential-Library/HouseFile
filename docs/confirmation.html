@@ -61,7 +61,7 @@ h1{font-size:22px;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
   </div>
   <div class="inbox" id="inbox"></div>
   <div class="shell" id="shell"><iframe id="frame" title="Email preview" sandbox=""></iframe></div>
-  <p class="note">Filled with a fake sample order (Jane Doe, jane.doe@example.com) from <code>config.yml</code>. Sections that the sample order doesn't use (combos, add-ons, donations, print-at-home tickets) stay hidden, as they would in a real email. Ticket QR codes and logos that ACME supplies at send time don't appear here.</p>
+  <p class="note">Filled with fake sample data (Jane Doe, jane.doe@example.com, example.com links) from <code>config.yml</code>. Sections the sample doesn't use stay hidden, as they would in a real email. QR codes, logos and links supplied at send time don't appear here.</p>
 </div>
 <script src="transactional.js"></script>
 <script>
@@ -81,7 +81,7 @@ h1{font-size:22px;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
     vbox.innerHTML = variants.map(v => `<button data-k="${esc(v.key)}" aria-pressed="${v.key === key}">${esc(v.label)}</button>`).join("");
     vbox.querySelectorAll("button").forEach(b => b.onclick = () => { key = b.dataset.k; history.replaceState(null, "", `?t=${encodeURIComponent(t.slug)}&v=${encodeURIComponent(key)}`); show(); });
     const s = T.sample(data, key);
-    document.getElementById("inbox").innerHTML = `<b>${esc(s.tenantName || "Theodore Roosevelt Presidential Library")}</b> · ${esc(T.subject(t, key, data) || "(subject set by ACME)")}`;
+    document.getElementById("inbox").innerHTML = `<b>${esc(s.tenantName || "Theodore Roosevelt Presidential Library")}</b> · ${esc(T.subject(t, key, data) || (s.subject || "(subject set at send time)"))}`;
     document.getElementById("frame").srcdoc = await T.renderVariant(data, t, key);
   }
   const desk = document.getElementById("w-desk"), mob = document.getElementById("w-mob"), shell = document.getElementById("shell");

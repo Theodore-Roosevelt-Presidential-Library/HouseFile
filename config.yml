@@ -490,6 +490,16 @@ transactional:
           label: "Ticket order"
         - key: membership
           label: "Membership order"
+    - template_id: d-fd6b8bcfb0a84b88a777cb5d7d167c14
+      slug: trailblazer-takeaway
+      label: "Trailblazer Takeaway"
+      when: { value: "After", note: "the visit" }
+      sent_by: "The Cortina visitor system (VMS), through SendGrid"
+      trigger: "After a visit, to each Trailblazer wristband holder"
+      description: "\"From the journal of\" the visitor: the photo stations they explored and the takeaways they created, each linked, with the 30-day reminder to save their photos."
+      variants:
+        - key: takeaway
+          label: "Post-visit journal"
   samples:
     common: &common
       tenantName: "Theodore Roosevelt Presidential Library"
@@ -535,3 +545,16 @@ transactional:
       payments:
         - { transactionAmount: "$150.00", paymentMethod: "Credit card", creditCardBrand: "Visa", ccLastFourDigits: "0000" }
       balanceAmount: "$0.00"
+    takeaway:
+      subject: "Jane, thanks for visiting the Theodore Roosevelt Presidential Library"
+      visitorName: "Jane Doe"
+      photos:
+        - { title: "Life in TR's New York", url: "https://example.com/photo/1" }
+        - { title: "Ranching in the Badlands", url: "https://example.com/photo/2" }
+        - { title: "Joining the Rough Riders", url: "https://example.com/photo/3" }
+        - { title: "Leading as president", url: "https://example.com/photo/4" }
+      takeaways:
+        - { title: "Cattle brand reflecting your passions", url: "https://example.com/takeaway/1" }
+        - { title: "Pledge committing to take action", url: "https://example.com/takeaway/2" }
+      expiresOn: "November 26, 2026"
+      physicalAddress: "Theodore Roosevelt Presidential Library, 3410 Chateau Rd, Medora, ND 58645"

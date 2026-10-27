@@ -332,7 +332,7 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
     <div id="auto-flows"></div>
     <div id="auto-confirm"></div>
     <p class="auto-note"><b>Proposed</b> paths are drafts for team review. They are not in Constant Contact and send nothing; they live in the HouseFile repo until approved and built. Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender, email content and send stats are pulled from the Constant Contact API. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
-    <p class="auto-note"><b>Confirmations</b> are sent by ACME through SendGrid, not Constant Contact. The active version of each SendGrid dynamic template is read daily with a read-only key; SendGrid's stored test data is never read. Previews are filled with fake sample orders from <code>config.yml</code>.</p>
+    <p class="auto-note"><b>Sent through SendGrid</b>: ACME's order confirmation and the Trailblazer Takeaway are sent through SendGrid, not Constant Contact. The active version of each SendGrid dynamic template is read daily with a read-only key; SendGrid's stored test data is never read. Previews are filled with fake sample orders and a fake visitor from <code>config.yml</code>.</p>
   </div>
 
   <footer>
@@ -760,7 +760,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
         : `<div class="thumb empty">Preview after the first SendGrid refresh</div>`;
       const subj = t.html ? T.subject(t, v.key, TRANS) : "";
       return `<li class="step">
-        <div class="when"><b>0</b><small>at purchase</small></div>
+        <div class="when"><b>${A.esc((t.when && t.when.value) || "0")}</b><small>${A.esc((t.when && t.when.note) || "at purchase")}</small></div>
         ${thumb}
         <div>
           <h3>${link ? `<a href="${link}">${A.esc(t.label)}: ${A.esc(v.label)}</a>` : `${A.esc(t.label)}: ${A.esc(v.label)}`}
@@ -778,8 +778,8 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     }));
     const when = TRANS.generated_at ? new Date(TRANS.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : null;
     host.innerHTML = `<section>
-      <div class="flow-head"><h2>Confirmations</h2><span class="meta">${TRANS.templates.length} SendGrid template${TRANS.templates.length === 1 ? "" : "s"}${when ? ` · read ${A.esc(when)}` : ""}</span></div>
-      <p class="hint">Sent by ACME through SendGrid the moment someone buys tickets or a membership. The same template fills in whichever sections the order needs.</p>
+      <div class="flow-head"><h2>Sent through SendGrid</h2><span class="meta">${TRANS.templates.length} SendGrid template${TRANS.templates.length === 1 ? "" : "s"}${when ? ` · read ${A.esc(when)}` : ""}</span></div>
+      <p class="hint">Transactional emails that don't go through Constant Contact: ACME's order confirmation the moment someone buys tickets or a membership, and the Trailblazer Takeaway the visitor system sends after a visit.</p>
       <ol class="steps">${cards.join("")}</ol>
     </section>`;
     host.querySelectorAll("iframe[data-t]").forEach(async fr => {

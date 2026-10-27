@@ -106,6 +106,7 @@ def collect(cfg: dict, key: str, out: Path) -> int:
             "trigger": t.get("trigger", ""),
             "description": t.get("description", ""),
             "variants": t.get("variants") or [],
+            "when": t.get("when"),
             "version_name": v.get("name"),
             "editor": v.get("editor"),
             "subject": v.get("subject") or "",
@@ -154,14 +155,17 @@ def write_samples(cfg: dict, out: Path) -> None:
         # what is coming; previews appear after the first API refresh.
         data = {"generated_at": None, "source": "config", "templates": [
             {"slug": t.get("slug") or slugify(t.get("label", t["template_id"])),
-             "label": t.get("label"), "template_name": t.get("label"), "html": None}
+             "label": t.get("label"), "template_name": t.get("label"), "html": None,
+             "sent_by": t.get("sent_by", ""), "trigger": t.get("trigger", ""),
+             "description": t.get("description", ""), "variants": t.get("variants") or [],
+             "when": t.get("when")}
             for t in tcfg.get("templates", [])]}
     data["samples"] = tcfg.get("samples") or {}
     by_id = {t["template_id"]: t for t in tcfg.get("templates", [])}
     for row in data.get("templates", []):
         t = next((x for x in by_id.values() if (x.get("slug") or "") == row["slug"]), None)
         if t:
-            for k in ("label", "sent_by", "trigger", "description", "variants"):
+            for k in ("label", "sent_by", "trigger", "description", "variants", "when"):
                 if k in t:
                     row[k] = t[k]
     f.write_text(json.dumps(data, indent=1))

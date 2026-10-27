@@ -92,12 +92,14 @@ MIT — see [LICENSE](LICENSE). ZIP centroid data © GeoNames, CC BY 4.0.
 
 ## Confirmation emails (SendGrid)
 
-The Automations tab also shows the ACME order confirmation that ticket and
-membership buyers get, which ACME sends through a SendGrid dynamic template.
+The Automations tab also shows the emails sent through SendGrid dynamic
+templates rather than Constant Contact: the ACME order confirmation that ticket
+and membership buyers get, and the Trailblazer Takeaway the Cortina visitor
+system sends after a visit.
 `collect_sendgrid.py` runs in the daily job and reads each template listed under
 `transactional:` in `config.yml` (active version only: HTML, subject, version
 name, last edited). It needs a SendGrid API key with **Template Engine: Read
 Access** and nothing else, stored as the `SENDGRID_API_KEY` Actions secret;
 without it the step warns and the dashboard lists the template without a
 preview. SendGrid's stored test data is never read. Previews are rendered in the
-browser (`docs/confirmation.html`) with the fake sample orders in `config.yml`.
+browser (`docs/confirmation.html`) with the fake sample orders and fake visitor in `config.yml`.
