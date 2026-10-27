@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-27T16:21:56+00:00",
- "rebuilt_at": "2026-10-27T16:21:56+00:00",
+ "generated_at": "2026-10-27T16:26:26+00:00",
+ "rebuilt_at": "2026-10-27T16:26:26+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -49,36 +49,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-30-plan-ahead-member",
+       "slug": "visit-t-30-plan-ahead-1",
        "task": "VISIT: T-30 Plan Ahead \u00b7 Member",
        "subject": "One month to Medora: your planning checklist",
        "preheader": "Lodging, seasonal hours and what to book before you go.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-30-plan-ahead-member.html",
-       "proposed": false,
-       "notes": [
-        "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-30-plan-ahead-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-30-plan-ahead-nonmember",
+       "slug": "visit-t-30-plan-ahead-2",
        "task": "VISIT: T-30 Plan Ahead \u00b7 Not a member",
        "subject": "One month to Medora: your planning checklist",
        "preheader": "Lodging, seasonal hours and what to book before you go.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-30-plan-ahead-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Hours: Constant Contact can't show the hours for one date (its rules only match exact values), so the email names the visit date and links to the hours page. A dynamic image like the weather card, drawn from a ?date= parameter, could show that day's hours if the Library builds one."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-30-plan-ahead-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -98,38 +100,38 @@
      "split": "Active Members (ACME field: active or new) segment: members get the member email, everyone else the non-member email",
      "emails": [
       {
-       "slug": "visit-t-3-know-before-member",
+       "slug": "visit-t-3-pre-visit-excitement-1",
        "task": "VISIT: T-3 Know Before You Go \u00b7 Member",
        "subject": "Three days to the Badlands: what to know before you go",
        "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-3-know-before-member.html",
-       "proposed": false,
-       "notes": [
-        "Live 2026-10-20: replaced the original drag-and-drop T-3 email in place (same path, split on the Active Members segment, one custom-code email per branch).",
-        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-3-pre-visit-excitement-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-3-know-before-nonmember",
+       "slug": "visit-t-3-pre-visit-excitement-2",
        "task": "VISIT: T-3 Know Before You Go \u00b7 Not a member",
        "subject": "Three days to the Badlands: what to know before you go",
        "preheader": "Your entry window, parking, what to bring and how to make a day of it.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-3-know-before-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Live 2026-10-20: replaced the original drag-and-drop T-3 email in place (same path, split on the Active Members segment, one custom-code email per branch).",
-        "Every fact is from the What to Know pages (tickets, getting here, during your visit, rules and safety), checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-3-pre-visit-excitement-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -183,44 +185,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t1-welcome-member",
+       "slug": "visit-t-1-welcome-1",
        "task": "VISIT: T+1 Welcome \u00b7 Member",
        "subject": "You're going to Medora. Here's how to plan it.",
        "preheader": "Where to stay, how to get here and what to see before your visit.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t1-welcome-member.html",
-       "proposed": false,
-       "notes": [
-        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt.",
-        "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building.",
-        "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20).",
-        "The visit date prints from Acme - Visit Date (Text), a text copy of the date field written daily by sync_date_text.py (fallback: \"your visit date\"). Verified with a live test send 2026-10-20; Constant Contact's \"double-check\" warning on custom fields is a false alarm.",
-        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Constant Contact's trigger filters have no relative-date rule, so the path can't skip visits in the next few days: someone who visits the day after buying gets the welcome after their visit."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-1-welcome-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t1-welcome-nonmember",
+       "slug": "visit-t-1-welcome-2",
        "task": "VISIT: T+1 Welcome \u00b7 Not a member",
        "subject": "You're going to Medora. Here's how to plan it.",
        "preheader": "Where to stay, how to get here and what to see before your visit.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t1-welcome-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Conditional rows switch on Acme - Is Active Member (active or new = member). Build sheet: proposals/visit-t1-welcome.buildsheet.txt.",
-        "The premiere preview is an animated GIF teaser (987 KB) with a play button that links to the video page: email can't play video. Upload it and the thumbnails to the Constant Contact library before building.",
-        "Ticket-to-membership: people email membership@trlibrary.com with their order number, or anyone at the front desk can handle the refund on the day (confirmed by Matt, 2026-10-20).",
-        "The visit date prints from Acme - Visit Date (Text), a text copy of the date field written daily by sync_date_text.py (fallback: \"your visit date\"). Verified with a live test send 2026-10-20; Constant Contact's \"double-check\" warning on custom fields is a false alarm.",
-        "T+1, not T+0: ACME syncs to Constant Contact overnight, so the purchase date isn't there until the next day. Constant Contact's trigger filters have no relative-date rule, so the path can't skip visits in the next few days: someone who visits the day after buying gets the welcome after their visit."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-1-welcome-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 1,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -247,42 +243,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-plus-2-thank-you-member",
+       "slug": "visit-t-2-thank-you-1",
        "task": "VISIT: T+2 Thank You \u00b7 Member",
        "subject": "Thank you for coming to the Badlands",
        "preheader": "Pick what you want to hear about next, from the archive to the prairie.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-2-thank-you-member.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "The Trailblazer Takeaway email (SendGrid) arrives separately right after the visit; this one only points to it.",
-        "Choose Your Topics goes to trlibrary.com/newsletter; the form updates the existing contact, so topics land on the same record.",
-        "Topic descriptions are from the newsletter form, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-2-thank-you-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-plus-2-thank-you-nonmember",
+       "slug": "visit-t-2-thank-you-2",
        "task": "VISIT: T+2 Thank You \u00b7 Not a member",
        "subject": "Thank you for coming to the Badlands",
        "preheader": "Pick what you want to hear about next, from the archive to the prairie.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-2-thank-you-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "The Trailblazer Takeaway email (SendGrid) arrives separately right after the visit; this one only points to it.",
-        "Choose Your Topics goes to trlibrary.com/newsletter; the form updates the existing contact, so topics land on the same record.",
-        "Topic descriptions are from the newsletter form, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-2-thank-you-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 1,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -302,38 +294,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-plus-7-keep-exploring-member",
+       "slug": "visit-t-7-keep-exploring-1",
        "task": "VISIT: T+7 Keep Exploring \u00b7 Member",
        "subject": "The rest of T.R.'s story, from home",
        "preheader": "Six chapters of his life, quizzes for every level and a podcast recorded at the Library.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-7-keep-exploring-member.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Facts from trlibrary.com/tr, /quiz and /podcast/good-citizen, checked 2026-10-20. No single episode is featured, so the email does not date."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-7-keep-exploring-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 1,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-plus-7-keep-exploring-nonmember",
+       "slug": "visit-t-7-keep-exploring-2",
        "task": "VISIT: T+7 Keep Exploring \u00b7 Not a member",
        "subject": "The rest of T.R.'s story, from home",
        "preheader": "Six chapters of his life, quizzes for every level and a podcast recorded at the Library.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-7-keep-exploring-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Facts from trlibrary.com/tr, /quiz and /podcast/good-citizen, checked 2026-10-20. No single episode is featured, so the email does not date."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-7-keep-exploring-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 1,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -353,42 +345,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-plus-14-shop-member",
+       "slug": "visit-t-14-from-the-shop-1",
        "task": "VISIT: T+14 From the Shop \u00b7 Member",
        "subject": "Bring a piece of the Badlands home",
        "preheader": "The Library Shop is open online, with pieces you won't find in Medora.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-14-shop-member.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Confirm before going live: which pieces are online-only (the copy says some are). The 10% member discount applies online and in Medora (confirmed by Matt, 2026-10-20).",
-        "Members see their level merged in ([[custom.acme_-_membership_level]]); everyone else gets the membership levels and the 10% shop savings.",
-        "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-14-from-the-shop-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-plus-14-shop-nonmember",
+       "slug": "visit-t-14-from-the-shop-2",
        "task": "VISIT: T+14 From the Shop \u00b7 Not a member",
        "subject": "Bring a piece of the Badlands home",
        "preheader": "The Library Shop is open online, with pieces you won't find in Medora.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-14-shop-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Confirm before going live: which pieces are online-only (the copy says some are). The 10% member discount applies online and in Medora (confirmed by Matt, 2026-10-20).",
-        "Members see their level merged in ([[custom.acme_-_membership_level]]); everyone else gets the membership levels and the 10% shop savings.",
-        "Products from shop.trlibrary.com, checked 2026-10-20; prices are left out so the email does not go stale."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-14-from-the-shop-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -408,38 +396,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-plus-30-host-an-event-member",
+       "slug": "visit-t-30-host-an-event-1",
        "task": "VISIT: T+30 Host an Event \u00b7 Member",
        "subject": "Host your next gathering above the Badlands",
        "preheader": "Weddings, retreats, private dinners and reunions at the Library.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-30-host-an-event-member.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Every claim is from trlibrary.com/private-events, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-30-host-an-event-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-plus-30-host-an-event-nonmember",
+       "slug": "visit-t-30-host-an-event-2",
        "task": "VISIT: T+30 Host an Event \u00b7 Not a member",
        "subject": "Host your next gathering above the Badlands",
        "preheader": "Weddings, retreats, private dinners and reunions at the Library.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-30-host-an-event-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "Every claim is from trlibrary.com/private-events, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-30-host-an-event-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 0,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
@@ -459,40 +447,38 @@
      "split": "Active Members (ACME field: active or new) segment",
      "emails": [
       {
-       "slug": "visit-t-plus-60-come-back-member",
+       "slug": "visit-t-60-reasons-to-come-back-1",
        "task": "VISIT: T+60 Reasons to Come Back \u00b7 Member",
        "subject": "What's next at the Library",
        "preheader": "Talks, screenings, family days and evening programs on the butte.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-60-come-back-member.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "No specific events are named, so the email never goes out of date (per Matt).",
-        "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-60-reasons-to-come-back-1.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 1,
+        "unsubscribes": 0
+       }
       },
       {
-       "slug": "visit-t-plus-60-come-back-nonmember",
+       "slug": "visit-t-60-reasons-to-come-back-2",
        "task": "VISIT: T+60 Reasons to Come Back \u00b7 Not a member",
        "subject": "What's next at the Library",
        "preheader": "Talks, screenings, family days and evening programs on the butte.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "hello@trlibrary.com",
        "reply_to": "hello@trlibrary.com",
-       "html": "proposals/live/visit-t-plus-60-come-back-nonmember.html",
-       "proposed": false,
-       "notes": [
-        "Triggered off Acme - Visit Date (Next), which keeps the past visit date until the next booking. If someone books again inside 60 days, the field moves and the rest of this series stops (the pre-visit series takes over), which is the right behavior.",
-        "No specific events are named, so the email never goes out of date (per Matt).",
-        "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
-       ],
-       "stats": {},
-       "stale": true
+       "html": "data/emails/visit-t-60-reasons-to-come-back-2.html",
+       "stats": {
+        "sends": 0,
+        "opens": 0,
+        "clicks": 0,
+        "bounces": 3,
+        "unsubscribes": 0
+       }
       }
      ],
      "cc_status": "ACTIVE"
