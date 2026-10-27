@@ -299,8 +299,18 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             fetched = {}  # activity id -> /emails/activities/{id}
             if wanted:
                 for a in acts:
-                    fetched[a["campaign_activity_id"]] = safe_get(
-                        cc, f"/emails/activities/{a['campaign_activity_id']}") or {}
+                    aid = a["campaign_activity_id"]
+                    meta = safe_get(cc, f"/emails/activities/{aid}") or {}
+                    if not meta.get("html_content"):
+                        # Branch emails can come back without HTML; the preview has it.
+                        pv = safe_get(cc, f"/emails/activities/{aid}/previews") or {}
+                        meta = dict(meta, html_content=pv.get("preview_html_content") or "",
+                                    _preview=pv)
+                    fetched[aid] = meta
+                # Lengths and field names only (public log), to diagnose matching.
+                print(f"  {p['name']}: {len(acts)} email(s) in campaign, html lengths "
+                      f"{[len((fetched[a['campaign_activity_id']].get('html_content') or '')) for a in acts]}, "
+                      f"fields {sorted(k for k in next(iter(fetched.values()), {}) if not k.startswith('_'))}")
                 acts, missing = match_branches(p, wanted, acts, fetched, out.parent)
                 if missing:
                     print(f"  ! {p['name']}: emails not found in campaign: {missing}", file=sys.stderr)
@@ -314,7 +324,7 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             for i, a in enumerate(acts):
                 aid = a["campaign_activity_id"]
                 act = fetched.get(aid) or safe_get(cc, f"/emails/activities/{aid}") or {}
-                prev = safe_get(cc, f"/emails/activities/{aid}/previews") or {}
+                prev = (fetched.get(aid) or {}).get("_preview") or safe_get(cc, f"/emails/activities/{aid}/previews") or {}
                 html = prev.get("preview_html_content") or act.get("html_content") or ""
                 html = detokenize(html, account)
                 slug = slugify(p["name"]) + (f"-{i + 1}" if len(acts) > 1 else "")
