@@ -201,6 +201,37 @@ def built_branch_emails(p: dict, root: Path) -> list:
     return out
 
 
+def count_tracking(cc, aid: str, kind: str, cap: int = 200000):
+    """Count the rows of a per-email tracking report without keeping any of them.
+
+    Constant Contact's stats report leaves em_sends at 0 for automation emails, but
+    the tracking reports list each send, open and click. Only the count leaves this
+    function: the rows (which identify contacts) are discarded page by page."""
+    url, n, seen = f"/reports/email_reports/{aid}/tracking/{kind}", 0, set()
+    params = {"limit": 500}
+    while url and n < cap:
+        try:
+            page = cc.get(url, **params) if params else cc.get(url)
+        except requests.HTTPError as e:
+            code = e.response.status_code if e.response is not None else "?"
+            print(f"    tracking/{kind}: HTTP {code}", file=sys.stderr)
+            return None
+        rows = (page or {}).get("tracking_activities") or []
+        if kind in ("unique_opens", "clicks"):
+            # Unique contacts: hash in memory only, never written.
+            for r in rows:
+                seen.add(hash(r.get("contact_id")))
+            n = len(seen)
+        else:
+            n += len(rows)
+        nxt = ((page or {}).get("_links") or {}).get("next", {}).get("href")
+        url, params = (nxt if nxt else None), None
+        if url and url.startswith("/v3"):
+            url = url[3:]
+    del seen
+    return n
+
+
 def safe_get(cc: CC, url: str, **params):
     try:
         return cc.get(url, **params)
@@ -343,6 +374,14 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                         "bounces": s.get("em_bounces"),
                         "unsubscribes": s.get("em_optouts"),
                     }
+                if not stats.get("sends"):
+                    sends = count_tracking(cc, aid, "sends")
+                    if sends:
+                        stats["sends"] = sends
+                        stats["opens"] = count_tracking(cc, aid, "unique_opens") or 0
+                        stats["clicks"] = count_tracking(cc, aid, "clicks") or 0
+                        stats["source"] = "tracking"
+                    print(f"    tracking counts: sends={stats.get('sends')} opens={stats.get('opens')} clicks={stats.get('clicks')}")
                 email = {
                     "slug": slug,
                     "task": a.get("_task") or act.get("name") or p["name"],
@@ -357,20 +396,6 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 path["emails"].append(email)
                 pages[f"{slug}.html"] = html
                 print(f"  {p['name']}: {email['subject']!r}")
-            # The per-email report has shown 0 sends for automation emails since the API
-            # took over (Oct 2026). The campaign summary counts the whole path.
-            summ = safe_get(cc, f"/reports/summary_reports/email_campaign_summaries/{cid}") or {}
-            uc = summ.get("unique_counts") or {}
-            if uc:
-                print(f"    campaign summary: { {k: v for k, v in uc.items() if isinstance(v, (int, float))} }")
-                path["campaign_stats"] = {
-                    "sends": uc.get("sends"), "opens": uc.get("opens"), "clicks": uc.get("clicks"),
-                    "bounces": uc.get("bounces"), "unsubscribes": uc.get("optouts"),
-                }
-                path["campaign_stats"] = {k: v for k, v in path["campaign_stats"].items() if v is not None}
-            email_sends = sum((e.get("stats") or {}).get("sends") or 0 for e in path["emails"])
-            if path.get("campaign_stats", {}).get("sends") and not email_sends and len(path["emails"]) == 1:
-                path["emails"][0]["stats"] = dict(path["campaign_stats"])
             if not path["emails"] or not any(pages.get(Path(e["html"]).name) for e in path["emails"]):
                 old = [e for e in previous.get(p["name"], {}).get("emails", []) if not e.get("proposed")]
                 kept = []
