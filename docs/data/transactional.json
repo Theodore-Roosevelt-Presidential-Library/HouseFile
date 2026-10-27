@@ -1,0 +1,128 @@
+{
+ "generated_at": null,
+ "source": "config",
+ "templates": [
+  {
+   "slug": "acme-order-confirmation",
+   "label": "ACME order confirmation",
+   "template_name": "ACME order confirmation",
+   "html": null,
+   "sent_by": "ACME, through SendGrid",
+   "trigger": "When an order is completed in ACME",
+   "description": "One template for every ACME order. Sections switch on what was bought: tickets, combos, add-ons, donations and memberships, then the total, payments and the scannable tickets.",
+   "variants": [
+    {
+     "key": "tickets",
+     "label": "Ticket order"
+    },
+    {
+     "key": "membership",
+     "label": "Membership order"
+    }
+   ]
+  }
+ ],
+ "samples": {
+  "common": {
+   "tenantName": "Theodore Roosevelt Presidential Library",
+   "orderDate": "October 27, 2026",
+   "purchaserName": "Jane Doe",
+   "firstName": "Jane",
+   "lastName": "Doe",
+   "email": "jane.doe@example.com",
+   "baseUrl": "https://example.com",
+   "tenantId": "sample",
+   "themes": {
+    "email-confirmation-intro-message-1": "Thank you for your order!"
+   }
+  },
+  "tickets": {
+   "tenantName": "Theodore Roosevelt Presidential Library",
+   "orderDate": "October 27, 2026",
+   "purchaserName": "Jane Doe",
+   "firstName": "Jane",
+   "lastName": "Doe",
+   "email": "jane.doe@example.com",
+   "baseUrl": "https://example.com",
+   "tenantId": "sample",
+   "themes": {
+    "email-confirmation-intro-message-1": "Thank you for your order!"
+   },
+   "orderNumber": "100001",
+   "events": [
+    {
+     "name": "General Admission",
+     "startTime": "Saturday, November 7, 2026",
+     "tickets": [
+      {
+       "type": "Adult",
+       "quantity": 2,
+       "price": "$25.00"
+      },
+      {
+       "type": "Youth (6\u201317)",
+       "quantity": 1,
+       "price": "$15.00"
+      }
+     ],
+     "total": "$65.00"
+    }
+   ],
+   "totalItems": 3,
+   "totalAmount": "$65.00",
+   "payments": [
+    {
+     "transactionAmount": "$65.00",
+     "paymentMethod": "Credit card",
+     "creditCardBrand": "Visa",
+     "ccLastFourDigits": "0000"
+    }
+   ],
+   "balanceAmount": "$0.00",
+   "confirmationMessages": [
+    {
+     "name": "Know before you go",
+     "value": "Sample message. Show this email or your mobile tickets at the Welcome Desk."
+    }
+   ]
+  },
+  "membership": {
+   "tenantName": "Theodore Roosevelt Presidential Library",
+   "orderDate": "October 27, 2026",
+   "purchaserName": "Jane Doe",
+   "firstName": "Jane",
+   "lastName": "Doe",
+   "email": "jane.doe@example.com",
+   "baseUrl": "https://example.com",
+   "tenantId": "sample",
+   "themes": {
+    "email-confirmation-intro-message-1": "Thank you for your order!"
+   },
+   "orderNumber": "100002",
+   "memberships": [
+    [
+     {
+      "membershipLevelName": "Family Membership",
+      "pricePointName": "1 year",
+      "memberName": "Jane Doe",
+      "benefitsStartDate": "October 27, 2026",
+      "expirationDate": "October 31, 2027",
+      "discountedAmount": "$150.00",
+      "confirmationMessage": "Sample message. Your member card arrives by email; show it at the Welcome Desk for free admission."
+     }
+    ]
+   ],
+   "totalItems": 1,
+   "totalAmount": "$150.00",
+   "payments": [
+    {
+     "transactionAmount": "$150.00",
+     "paymentMethod": "Credit card",
+     "creditCardBrand": "Visa",
+     "ccLastFourDigits": "0000"
+    }
+   ],
+   "balanceAmount": "$0.00"
+  }
+ }
+}

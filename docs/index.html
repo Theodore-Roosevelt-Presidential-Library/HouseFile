@@ -10,6 +10,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a78d6'/%3E%3Cpath d='M7 22h4V12H7zm7 0h4V8h-4zm7 0h4v-7h-4z' fill='%23fff'/%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
 <style>
 :root {
   color-scheme: light;
@@ -329,7 +330,9 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
       <button id="f-proposed" aria-pressed="false">Proposed</button>
     </div>
     <div id="auto-flows"></div>
+    <div id="auto-confirm"></div>
     <p class="auto-note"><b>Proposed</b> paths are drafts for team review. They are not in Constant Contact and send nothing; they live in the HouseFile repo until approved and built. Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender, email content and send stats are pulled from the Constant Contact API. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
+    <p class="auto-note"><b>Confirmations</b> are sent by ACME through SendGrid, not Constant Contact. The active version of each SendGrid dynamic template is read daily with a read-only key; SendGrid's stored test data is never read. Previews are filled with fake sample orders from <code>config.yml</code>.</p>
   </div>
 
   <footer>
@@ -625,6 +628,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
 </script>
 
 <script src="automations.js"></script>
+<script src="transactional.js"></script>
 <script src="insights.js"></script>
 <script>
 (() => {
@@ -687,7 +691,11 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
         <span class="chip">${fmtN(st.sends)} sent</span>
         <span class="chip">${pct(st.opens, st.sends)} opened</span>
         <span class="chip">${pct(st.clicks, st.sends)} clicked</span></div>` : "";
-    const more = p.emails.length > 1 ? `<dt>Emails</dt><dd>${p.emails.length} in this path</dd>` : "";
+    const branch = x => { const t = String(x.task || ""); const i = t.lastIndexOf("·"); return i > -1 ? t.slice(i + 1).trim() : t; };
+    const more = p.emails.length > 1
+      ? `<dt>Emails</dt><dd>${p.emails.map(x => `<a href="email.html?e=${encodeURIComponent(x.slug)}">${A.esc(branch(x))}</a>`).join(" · ")}${p.split ? ` <span class="chip" title="How Constant Contact splits this path">${A.esc(p.split)}</span>` : ""}</dd>`
+      : "";
+    const stale = e && e.stale ? `<dt>Note</dt><dd>Showing the copy built into Constant Contact; the last refresh could not read this email from the API.</dd>` : "";
     const notes = e && e.notes && e.notes.length ? `<dt>Open items</dt><dd>${e.notes.map(A.esc).join("<br>")}</dd>` : "";
     return `<li class="step${p.status === "proposed" ? " proposed" : p.status !== "active" ? " draft" : ""}">
       <div class="when">${when}</div>
@@ -703,6 +711,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
           ${e ? `<dt>From</dt><dd>${A.esc(e.from_name)} &lt;${A.esc(e.from_email)}&gt;</dd>` : ""}
           ${more}
           ${notes}
+          ${stale}
         </dl>
         ${chips}
       </div>
@@ -729,6 +738,53 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     host.querySelectorAll("iframe[data-src]").forEach(async fr => {
       const html = await A.loadEmail(fr.dataset.src);
       fr.srcdoc = A.fill(html, DATA.sample_contact);
+    });
+    renderConfirm();
+  }
+
+  // ACME confirmations (SendGrid dynamic templates), one card per sample order.
+  let TRANS = null;
+  async function renderConfirm() {
+    const host = document.getElementById("auto-confirm");
+    if (filter === "proposed") { host.innerHTML = ""; return; }
+    if (!TRANS) {
+      try { TRANS = await window.HFTrans.loadData(); }
+      catch (e) { host.innerHTML = ""; return; }
+    }
+    const T = window.HFTrans;
+    const edited = d => d ? new Date(d.replace(" ", "T") + (/[zZ]|[+-]\d\d:?\d\d$/.test(d) ? "" : "Z")).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "";
+    const cards = TRANS.templates.flatMap(t => (t.variants && t.variants.length ? t.variants : [{ key: "", label: t.label }]).map(v => {
+      const link = t.html ? `confirmation.html?t=${encodeURIComponent(t.slug)}&v=${encodeURIComponent(v.key)}` : null;
+      const thumb = t.html
+        ? `<a class="thumb" href="${link}" aria-label="Open preview of ${A.esc(t.label)}: ${A.esc(v.label)}"><iframe data-t="${A.esc(t.slug)}" data-v="${A.esc(v.key)}" title="" tabindex="-1" sandbox="" loading="lazy"></iframe></a>`
+        : `<div class="thumb empty">Preview after the first SendGrid refresh</div>`;
+      const subj = t.html ? T.subject(t, v.key, TRANS) : "";
+      return `<li class="step">
+        <div class="when"><b>0</b><small>at purchase</small></div>
+        ${thumb}
+        <div>
+          <h3>${link ? `<a href="${link}">${A.esc(t.label)}: ${A.esc(v.label)}</a>` : `${A.esc(t.label)}: ${A.esc(v.label)}`}
+            ${t.version_name ? `<span class="badge ok" title="Active version in SendGrid">Active version: ${A.esc(t.version_name)}</span>` : `<span class="badge draft">Not read from SendGrid yet</span>`}</h3>
+          ${subj ? `<p class="subj"><b>${A.esc(subj)}</b></p>` : ""}
+          <dl class="facts">
+            <dt>Trigger</dt><dd>${A.esc(t.trigger || "—")}</dd>
+            <dt>Sent by</dt><dd>${A.esc(t.sent_by || "SendGrid")}</dd>
+            <dt>Template</dt><dd>${A.esc(t.template_name || t.label)}${t.editor ? ` <span class="chip">${A.esc(t.editor === "code" ? "Code editor" : "Design editor")}</span>` : ""}</dd>
+            ${t.updated_at ? `<dt>Last edited</dt><dd>${A.esc(edited(t.updated_at))}${t.other_versions ? ` · ${t.other_versions} other version${t.other_versions === 1 ? "" : "s"} in SendGrid` : ""}</dd>` : ""}
+            ${t.description ? `<dt>What's in it</dt><dd>${A.esc(t.description)}</dd>` : ""}
+          </dl>
+        </div>
+      </li>`;
+    }));
+    const when = TRANS.generated_at ? new Date(TRANS.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : null;
+    host.innerHTML = `<section>
+      <div class="flow-head"><h2>Confirmations</h2><span class="meta">${TRANS.templates.length} SendGrid template${TRANS.templates.length === 1 ? "" : "s"}${when ? ` · read ${A.esc(when)}` : ""}</span></div>
+      <p class="hint">Sent by ACME through SendGrid the moment someone buys tickets or a membership. The same template fills in whichever sections the order needs.</p>
+      <ol class="steps">${cards.join("")}</ol>
+    </section>`;
+    host.querySelectorAll("iframe[data-t]").forEach(async fr => {
+      const t = TRANS.templates.find(x => x.slug === fr.dataset.t);
+      fr.srcdoc = await T.renderVariant(TRANS, t, fr.dataset.v);
     });
   }
 

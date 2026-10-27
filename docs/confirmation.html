@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>Confirmation Email Preview</title>
+<meta name="description" content="Preview of an ACME confirmation email sent through SendGrid, filled with a fake sample order.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a78d6'/%3E%3Cpath d='M6 9h20v14H6z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cpath d='M6 9l10 8 10-8' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --border: rgba(11,11,11,.10); --s1: #2a78d6; --crit: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --border: rgba(255,255,255,.10); --s1: #3987e5;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+  --border: rgba(255,255,255,.10); --s1: #3987e5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumbs a{color:var(--ink-2)}
+h1{font-size:22px;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
+.sub{color:var(--ink-2);margin:0 0 14px;font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap}
+.toolbar button{font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--ink-2);cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.inbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;font-size:14px}
+.inbox b{font-weight:650}
+.shell{background:#474747;border-radius:12px;padding:14px;display:flex;justify-content:center;overflow:auto;border:1px solid var(--border)}
+.shell iframe{display:block;width:720px;max-width:100%;height:calc(100vh - 230px);min-height:520px;border:0;background:#fff;border-radius:4px;transition:width .15s}
+.shell.mobile iframe{width:390px}
+.note{color:var(--muted);font-size:12.5px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="./#automations">← Automations</a></div>
+  <h1 id="title">Confirmation preview</h1>
+  <p class="sub" id="sub"></p>
+  <div class="bar">
+    <div class="toolbar" role="group" aria-label="Sample order" id="variants"></div>
+    <div class="toolbar" role="group" aria-label="Width">
+      <button id="w-desk" aria-pressed="true">Desktop</button>
+      <button id="w-mob" aria-pressed="false">Mobile</button>
+    </div>
+  </div>
+  <div class="inbox" id="inbox"></div>
+  <div class="shell" id="shell"><iframe id="frame" title="Email preview" sandbox=""></iframe></div>
+  <p class="note">Filled with a fake sample order (Jane Doe, jane.doe@example.com) from <code>config.yml</code>. Sections that the sample order doesn't use (combos, add-ons, donations, print-at-home tickets) stay hidden, as they would in a real email. Ticket QR codes and logos that ACME supplies at send time don't appear here.</p>
+</div>
+<script src="transactional.js"></script>
+<script>
+(async function () {
+  const T = window.HFTrans, q = new URLSearchParams(location.search);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let data;
+  try { data = await T.loadData(); } catch (e) { document.getElementById("sub").textContent = "Could not load data/transactional.json"; return; }
+  const t = data.templates.find(x => x.slug === q.get("t")) || data.templates[0];
+  if (!t || !t.html) { document.getElementById("sub").textContent = "This template hasn't been read from SendGrid yet."; return; }
+  const variants = t.variants && t.variants.length ? t.variants : [{ key: "", label: t.label }];
+  let key = variants.some(v => v.key === q.get("v")) ? q.get("v") : variants[0].key;
+  document.getElementById("title").textContent = t.label;
+  document.getElementById("sub").innerHTML = `${esc(t.trigger)}. Sent by ${esc(t.sent_by)}. SendGrid template <b>${esc(t.template_name)}</b>, active version <b>${esc(t.version_name)}</b>.`;
+  const vbox = document.getElementById("variants");
+  async function show() {
+    vbox.innerHTML = variants.map(v => `<button data-k="${esc(v.key)}" aria-pressed="${v.key === key}">${esc(v.label)}</button>`).join("");
+    vbox.querySelectorAll("button").forEach(b => b.onclick = () => { key = b.dataset.k; history.replaceState(null, "", `?t=${encodeURIComponent(t.slug)}&v=${encodeURIComponent(key)}`); show(); });
+    const s = T.sample(data, key);
+    document.getElementById("inbox").innerHTML = `<b>${esc(s.tenantName || "Theodore Roosevelt Presidential Library")}</b> · ${esc(T.subject(t, key, data) || "(subject set by ACME)")}`;
+    document.getElementById("frame").srcdoc = await T.renderVariant(data, t, key);
+  }
+  const desk = document.getElementById("w-desk"), mob = document.getElementById("w-mob"), shell = document.getElementById("shell");
+  desk.onclick = () => { shell.classList.remove("mobile"); desk.setAttribute("aria-pressed", "true"); mob.setAttribute("aria-pressed", "false"); };
+  mob.onclick = () => { shell.classList.add("mobile"); mob.setAttribute("aria-pressed", "true"); desk.setAttribute("aria-pressed", "false"); };
+  show();
+})();
+</script>
+</body>
+</html>

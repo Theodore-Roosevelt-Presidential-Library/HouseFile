@@ -47,6 +47,14 @@ jobs:
           CC_ROTATED_TOKEN_FILE: ${{ runner.temp }}/rotated_token
         run: python collect.py
 
+      # ACME confirmation templates in SendGrid. Needs a read-only key
+      # (Template Engine: Read Access); without it the step just warns.
+      - name: Collect SendGrid confirmation templates
+        if: ${{ github.event.schedule == '17 11 * * *' || inputs.task == 'stats' }}
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        run: python collect_sendgrid.py
+
       # Diagnostics and the date-to-text sync. Output is counts only (public log) and
       # is checked by the guard step below.
       - name: ACME sync timing (counts only)
@@ -117,6 +125,7 @@ jobs:
           # Automations: email templates, not contact records. Only the Library's own
           # sender addresses and the fake sample contact may appear.
           python collect_automations.py --check
+          python collect_sendgrid.py --check
           echo "Privacy guard passed."
 
       - name: Commit updated data
@@ -124,7 +133,7 @@ jobs:
         run: |
           git config user.name "housefile-bot"
           git config user.email "housefile-bot@users.noreply.github.com"
-          git add docs/data/stats.json docs/data/history.json docs/data/zip_centroids.json docs/data/automations.json docs/data/emails
+          git add docs/data/stats.json docs/data/history.json docs/data/zip_centroids.json docs/data/automations.json docs/data/emails docs/data/transactional.json docs/data/transactional
           if git diff --cached --quiet; then echo "No changes."; exit 0; fi
           git commit -m "Daily stats refresh $(date -u +%F)"
           git push

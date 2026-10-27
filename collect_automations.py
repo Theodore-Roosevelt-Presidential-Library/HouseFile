@@ -36,6 +36,7 @@ Usage:
 
 import argparse
 import datetime as dt
+import itertools
 import json
 import re
 import sys
@@ -108,12 +109,96 @@ def check_output(cfg: dict, out: Path) -> int:
     data = json.loads(f.read_text())
     htmls = [h.read_text() for h in (out / "emails").glob("*.html")]
     htmls += [h.read_text() for h in (out.parent / "proposals").glob("*.html")]
+    htmls += [h.read_text() for h in (out.parent / "proposals" / "live").glob("*.html")]
     bad = find_disallowed(acfg, data, htmls)
     if bad:
         print(f"::error::{len(bad)} unexpected email address(es) in automation data")
         return 1
     print("Automation data privacy check passed.")
     return 0
+
+
+WORD_RE = re.compile(r"[a-z0-9']{3,}")
+
+
+def _words(html: str) -> set:
+    text = re.sub(r"<(style|script)[^>]*>.*?</\1>", " ", html or "", flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>|\[\[[^\]]*\]\]|&[a-z#0-9]+;", " ", text)
+    return set(WORD_RE.findall(text.lower()))
+
+
+def _variant_file(p: dict, name: str, root: Path):
+    """docs/proposals/live/<slug>-member.html or -nonmember.html for a branch name."""
+    slug = (p.get("proposal") or {}).get("slug") or Path((p.get("proposal") or {}).get("html", "")).stem
+    if not slug:
+        return None
+    kind = "nonmember" if re.search(r"not a member|non-?member", name, re.I) else "member"
+    f = root / "proposals" / "live" / f"{slug}-{kind}.html"
+    return f if f.exists() else None
+
+
+def match_branches(p: dict, wanted: list, acts: list, fetched: dict, root: Path):
+    """Pick the activity for each branch email named in config.
+
+    Constant Contact's API gives a path's emails no name, so names alone can't
+    match them. Each branch is matched to the copy that was built into it
+    (docs/proposals/live/<slug>-member|nonmember.html) by shared wording; an
+    API name, if one is ever returned, wins. Returns (activities in config
+    order, each tagged with its branch name in "_task", and missing names)."""
+    by_name = {(fetched.get(a["campaign_activity_id"]) or {}).get("name"): a for a in acts}
+    if all(n in by_name for n in wanted):
+        return [dict(by_name[n], _task=n) for n in wanted], []
+    refs = [_words(f.read_text()) if (f := _variant_file(p, n, root)) else None for n in wanted]
+    if not acts:
+        return [], list(wanted)
+    if all(r is None for r in refs):
+        # No built copy to compare with: keep the API's order when the counts line up.
+        if len(acts) == len(wanted):
+            return [dict(a, _task=n) for a, n in zip(acts, wanted)], []
+        return [], list(wanted)
+    words = [_words((fetched.get(a["campaign_activity_id"]) or {}).get("html_content", "")) for a in acts]
+    def jac(r, w):
+        return len(r & w) / max(1, len(r | w)) if r is not None else 0.0
+    # Branches share most of their wording, so what tells them apart is the words only
+    # one branch's copy has (the member thank-you versus the membership offer).
+    distinct = [(r - set().union(*(o for o in refs if o is not None and o is not r))) if r is not None else set()
+                for r in refs]
+
+    def fit(i, w):
+        d = distinct[i]
+        return (len(d & w) / len(d) if d else 0.0) + jac(refs[i], w)
+    # Best one-to-one assignment (a path has two or three branches, so brute force is fine).
+    k = min(len(wanted), len(acts))
+    best, best_score = None, -1.0
+    for perm in itertools.permutations(range(len(acts)), k):
+        sc = sum(fit(i, words[j]) for i, j in enumerate(perm))
+        if sc > best_score:
+            best, best_score = perm, sc
+    chosen, missing = [], list(wanted[k:])
+    for i, j in enumerate(best):
+        if refs[i] is None or jac(refs[i], words[j]) >= 0.4:
+            chosen.append(dict(acts[j], _task=wanted[i]))
+        else:
+            missing.append(wanted[i])
+    return chosen, missing
+
+
+def built_branch_emails(p: dict, root: Path) -> list:
+    """The copy that was built into each branch of a live path (docs/proposals/live),
+    shown when the API can't give us the emails. Falls back to the combined proposal."""
+    wanted = p.get("emails") or []
+    out = []
+    for n in wanted:
+        f = _variant_file(p, n, root)
+        if not f:
+            continue
+        base = proposal_email(p)
+        kind = f.stem.rsplit("-", 1)[-1]
+        out.append(dict(base, slug=f"{base['slug']}-{kind}", task=n,
+                        html=str(f.relative_to(root)), proposed=False, stale=True))
+    if len(out) != len(wanted) or not out:
+        return [dict(proposal_email(p), proposed=False, stale=True)] if p.get("proposal") else []
+    return out
 
 
 def safe_get(cc: CC, url: str, **params):
@@ -201,7 +286,7 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                     pages[f.name] = f.read_text()
             if not path["emails"] and p.get("proposal"):
                 # Just went live and not refreshed from the API yet: show the built copy.
-                path["emails"].append(proposal_email(p))
+                path["emails"] = built_branch_emails(p, out.parent)
             print(f"  {p['name']}: kept last refresh ({len(path['emails'])} email)")
         elif cid:
             camp = safe_get(cc, f"/emails/{cid}")
@@ -211,13 +296,12 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             acts = [a for a in (camp or {}).get("campaign_activities", [])
                     if a.get("role") in ("primary_email", "multistep_email")]
             wanted = p.get("emails") or []
+            fetched = {}  # activity id -> /emails/activities/{id}
             if wanted:
-                named = {}
                 for a in acts:
-                    meta = safe_get(cc, f"/emails/activities/{a['campaign_activity_id']}") or {}
-                    named.setdefault(meta.get("name") or "", a)
-                acts = [named[n] for n in wanted if n in named]
-                missing = [n for n in wanted if n not in named]
+                    fetched[a["campaign_activity_id"]] = safe_get(
+                        cc, f"/emails/activities/{a['campaign_activity_id']}") or {}
+                acts, missing = match_branches(p, wanted, acts, fetched, out.parent)
                 if missing:
                     print(f"  ! {p['name']}: emails not found in campaign: {missing}", file=sys.stderr)
             if not acts:
@@ -229,7 +313,7 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 path["cc_status"] = camp["current_status"]
             for i, a in enumerate(acts):
                 aid = a["campaign_activity_id"]
-                act = safe_get(cc, f"/emails/activities/{aid}") or {}
+                act = fetched.get(aid) or safe_get(cc, f"/emails/activities/{aid}") or {}
                 prev = safe_get(cc, f"/emails/activities/{aid}/previews") or {}
                 html = prev.get("preview_html_content") or act.get("html_content") or ""
                 html = detokenize(html, account)
@@ -247,7 +331,7 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                     }
                 email = {
                     "slug": slug,
-                    "task": act.get("name") or p["name"],
+                    "task": a.get("_task") or act.get("name") or p["name"],
                     "subject": detokenize(act.get("subject", ""), account),
                     "preheader": detokenize(act.get("preheader", ""), account),
                     "from_name": act.get("from_name", ""),
@@ -272,6 +356,13 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                         pages.pop(Path(e["html"]).name, None)
                     path["emails"] = kept
                     print(f"  ! {p['name']}: API returned no email; kept the last good copy", file=sys.stderr)
+                elif p.get("proposal"):
+                    # Live, but the API gave nothing usable: show the copy that was built
+                    # into Constant Contact rather than an empty card.
+                    for e in path["emails"]:
+                        pages.pop(Path(e["html"]).name, None)
+                    path["emails"] = built_branch_emails(p, out.parent)
+                    print(f"  ! {p['name']}: API returned no email; showing the built copy", file=sys.stderr)
         else:
             print(f"  {p['name']}: no campaign_id (draft or not built yet)")
         flow = by_flow.get(p.get("flow"))
@@ -299,7 +390,8 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
     # Privacy check before anything is written.
     proposal_html = [(out.parent / e["html"]).read_text()
                      for f in flows for pp in f["paths"] for e in pp["emails"]
-                     if e.get("proposed") and (out.parent / e["html"]).exists()]
+                     if (e.get("proposed") or e["html"].startswith("proposals/"))
+                     and (out.parent / e["html"]).exists()]
     bad = find_disallowed(acfg, data, list(pages.values()) + proposal_html)
     if bad:
         sys.exit(f"Privacy check failed: {len(bad)} unexpected email address(es) in automation output")

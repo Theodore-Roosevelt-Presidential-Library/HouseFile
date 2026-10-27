@@ -467,3 +467,71 @@ automations:
         reply_to: "membership@trlibrary.com"
         notes:
           - "Someone on the membership team should own the replies to membership@trlibrary.com."
+
+# ---------------------------------------------------------------------------
+# Transactional emails sent through SendGrid (shown on the Automations tab).
+# collect_sendgrid.py reads each template's ACTIVE version (HTML, subject,
+# version name, last edited) with a read-only SENDGRID_API_KEY. SendGrid's
+# stored test data is never read. Previews are filled in the browser with the
+# FAKE sample orders below; nothing here is a real order or person.
+# ---------------------------------------------------------------------------
+transactional:
+  allowed_emails: ["hello@trlibrary.com", "membership@trlibrary.com", "tickets@trlibrary.com", "info@trlibrary.com"]
+  allowed_email_domains: ["example.com", "trlibrary.com"]
+  templates:
+    - template_id: d-4c059ec3eb5f4b499ae9994684082b89
+      slug: acme-order-confirmation
+      label: "ACME order confirmation"
+      sent_by: "ACME, through SendGrid"
+      trigger: "When an order is completed in ACME"
+      description: "One template for every ACME order. Sections switch on what was bought: tickets, combos, add-ons, donations and memberships, then the total, payments and the scannable tickets."
+      variants:
+        - key: tickets
+          label: "Ticket order"
+        - key: membership
+          label: "Membership order"
+  samples:
+    common: &common
+      tenantName: "Theodore Roosevelt Presidential Library"
+      orderDate: "October 27, 2026"
+      purchaserName: "Jane Doe"
+      firstName: "Jane"
+      lastName: "Doe"
+      email: "jane.doe@example.com"
+      baseUrl: "https://example.com"
+      tenantId: "sample"
+      themes:
+        email-confirmation-intro-message-1: "Thank you for your order!"
+    tickets:
+      <<: *common
+      orderNumber: "100001"
+      events:
+        - name: "General Admission"
+          startTime: "Saturday, November 7, 2026"
+          tickets:
+            - { type: "Adult", quantity: 2, price: "$25.00" }
+            - { type: "Youth (6–17)", quantity: 1, price: "$15.00" }
+          total: "$65.00"
+      totalItems: 3
+      totalAmount: "$65.00"
+      payments:
+        - { transactionAmount: "$65.00", paymentMethod: "Credit card", creditCardBrand: "Visa", ccLastFourDigits: "0000" }
+      balanceAmount: "$0.00"
+      confirmationMessages:
+        - { name: "Know before you go", value: "Sample message. Show this email or your mobile tickets at the Welcome Desk." }
+    membership:
+      <<: *common
+      orderNumber: "100002"
+      memberships:
+        - - membershipLevelName: "Family Membership"
+            pricePointName: "1 year"
+            memberName: "Jane Doe"
+            benefitsStartDate: "October 27, 2026"
+            expirationDate: "October 31, 2027"
+            discountedAmount: "$150.00"
+            confirmationMessage: "Sample message. Your member card arrives by email; show it at the Welcome Desk for free admission."
+      totalItems: 1
+      totalAmount: "$150.00"
+      payments:
+        - { transactionAmount: "$150.00", paymentMethod: "Credit card", creditCardBrand: "Visa", ccLastFourDigits: "0000" }
+      balanceAmount: "$0.00"
