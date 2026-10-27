@@ -382,6 +382,11 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                         stats["clicks"] = count_tracking(cc, aid, "clicks") or 0
                         stats["source"] = "tracking"
                     print(f"    tracking counts: sends={stats.get('sends')} opens={stats.get('opens')} clicks={stats.get('clicks')}")
+                if not stats.get("sends"):
+                    # Constant Contact's API reports bounces for automation emails but not
+                    # sends, opens or clicks (Oct 2026). Say so rather than show zeros.
+                    stats = {"bounces": stats.get("bounces"), "unsubscribes": stats.get("unsubscribes"),
+                             "unreported": True}
                 email = {
                     "slug": slug,
                     "task": a.get("_task") or act.get("name") or p["name"],

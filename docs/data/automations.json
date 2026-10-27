@@ -58,11 +58,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-30-plan-ahead-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -75,11 +73,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-30-plan-ahead-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -109,11 +105,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-3-pre-visit-excitement-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -126,11 +120,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-3-pre-visit-excitement-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -160,11 +152,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-24h-trailblazer.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 41,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -194,11 +184,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-1-welcome-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -211,11 +199,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-1-welcome-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 1,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -252,11 +238,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-2-thank-you-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -269,11 +253,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-2-thank-you-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 1,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -303,11 +285,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-7-keep-exploring-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 1,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -320,11 +300,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-7-keep-exploring-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 1,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -354,11 +332,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-14-from-the-shop-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -371,11 +347,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-14-from-the-shop-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -405,11 +379,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-30-host-an-event-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -422,11 +394,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-30-host-an-event-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 0,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],
@@ -456,11 +426,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-60-reasons-to-come-back-1.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 1,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       },
       {
@@ -473,11 +441,9 @@
        "reply_to": "hello@trlibrary.com",
        "html": "data/emails/visit-t-60-reasons-to-come-back-2.html",
        "stats": {
-        "sends": 0,
-        "opens": 0,
-        "clicks": 0,
         "bounces": 3,
-        "unsubscribes": 0
+        "unsubscribes": 0,
+        "unreported": true
        }
       }
      ],

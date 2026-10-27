@@ -331,7 +331,7 @@ details summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:10px
     </div>
     <div id="auto-flows"></div>
     <div id="auto-confirm"></div>
-    <p class="auto-note"><b>Proposed</b> paths are drafts for team review. They are not in Constant Contact and send nothing; they live in the HouseFile repo until approved and built. Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender, email content and send stats are pulled from the Constant Contact API. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
+    <p class="auto-note"><b>Proposed</b> paths are drafts for team review. They are not in Constant Contact and send nothing; they live in the HouseFile repo until approved and built. Trigger and timing come from each Constant Contact automation path (mirrored in <code>config.yml</code>); subject, sender and email content are pulled from the Constant Contact API. Its API reports bounces for automation emails but not sends, opens or clicks, so those stay in Constant Contact's own path reports. Previews fill personalization with a sample contact, <b>Jane Doe</b>. No real contact data is used.</p>
     <p class="auto-note"><b>Sent through SendGrid</b>: ACME's order confirmation and the Trailblazer Takeaway are sent through SendGrid, not Constant Contact. The active version of each SendGrid dynamic template is read daily with a read-only key; SendGrid's stored test data is never read. Previews are filled with fake sample orders and a fake visitor from <code>config.yml</code>.</p>
   </div>
 
@@ -690,7 +690,10 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
     const own = p.emails.reduce((a, x) => a + ((x.stats && x.stats.sends) || 0), 0);
     const st = own || !p.campaign_stats ? ((e && e.stats) || {}) : p.campaign_stats;
     const pathTotal = !own && p.campaign_stats && p.emails.length > 1;
-    const chips = e && st.sends != null ? `<div class="chips">${pathTotal ? `<span class="chip" title="Constant Contact reports this path's totals, not each version">Both versions</span>` : ""}
+    const unrep = p.emails.length && p.emails.every(x => x.stats && x.stats.unreported);
+    const bounced = p.emails.reduce((a, x) => a + ((x.stats && x.stats.bounces) || 0), 0);
+    const chips = unrep ? `<div class="chips"><span class="chip" title="Constant Contact's API doesn't report sends, opens or clicks for automation emails; see the path's report in Constant Contact">Sends, opens, clicks: in Constant Contact only</span>${bounced ? `<span class="chip">${fmtN(bounced)} bounced</span>` : ""}</div>`
+      : e && st.sends != null ? `<div class="chips">${pathTotal ? `<span class="chip" title="Constant Contact reports this path's totals, not each version">Both versions</span>` : ""}
         <span class="chip">${fmtN(st.sends)} sent</span>
         <span class="chip">${pct(st.opens, st.sends)} opened</span>
         <span class="chip">${pct(st.clicks, st.sends)} clicked</span></div>` : "";
@@ -804,7 +807,7 @@ main().catch(err => { document.getElementById("stamp").innerHTML = `<span style=
       ["Active paths", active.length], ["Drafts in Constant Contact", paths.length - active.length - proposed.length],
       ["Proposed for review", proposed.length],
       ["Live emails", active.reduce((a, p) => a + p.emails.length, 0)],
-      ["Emails sent", fmtN(sends)], ["Click rate", pct(clicks, sends)],
+      ["Emails sent", sends ? fmtN(sends) : "—"], ["Click rate", pct(clicks, sends)],
     ].map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join("");
     const when = new Date(DATA.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
     document.getElementById("auto-stamp").innerHTML = `Automation paths in Constant Contact, grouped by flow and ordered by when they send relative to their trigger date. Data as of <b>${when}</b>${DATA.source === "seed" ? " (initial snapshot; daily refresh starts once the API token has email access)" : ""}.`;
