@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order confirmation from {{tenantName}}</title>
+  <style>
+    @media only screen and (max-width: 640px) {
+      .email-shell { width: 100% !important; }
+      .mobile-block { display: block !important; width: 100% !important; box-sizing: border-box !important; }
+      .mobile-left { text-align: left !important; }
+      .mobile-pad { padding-left: 20px !important; padding-right: 20px !important; }
+      .ticket-code { width: 150px !important; height: 150px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; width:100%; background:#ededec; color:#4a4a4a; font-family:Arial,Helvetica,sans-serif;">
+  <!--
+    Reconstructed ACME order-confirmation template for the SendGrid Code Editor.
+    Dynamic content is populated from personalizations.dynamic_template_data.
+  -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%; background:#ededec;">
+    <tr>
+      <td align="center" style="padding:24px 10px;">
+        <table role="presentation" class="email-shell" width="600" cellspacing="0" cellpadding="0" border="0" style="width:600px; max-width:600px; background:#ffffff;">
+
+          <!-- 1. HEADER: venue identity, order date, and order number -->
+          <tr>
+            <td class="mobile-pad" style="padding:30px; border-top:8px solid #4a4a4a; border-bottom:2px solid #f4f4f4;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td class="mobile-block" width="50%" valign="middle">
+                    {{#if themes.email-header-logo}}
+                      <img src="{{themes.email-header-logo}}" alt="{{tenantName}}" width="150" style="display:block; width:150px; max-width:100%; height:auto; border:0;">
+                    {{else}}
+                      <strong style="font-size:22px; line-height:28px; color:#222222;">{{tenantName}}</strong>
+                    {{/if}}
+                  </td>
+                  <td class="mobile-block mobile-left" width="50%" align="right" valign="middle" style="padding-top:8px;">
+                    {{#if orderDate}}
+                      <div style="font-size:14px; line-height:18px; color:#888888;">Order Date</div>
+                      <div style="font-size:20px; line-height:24px; color:#111111;">{{orderDate}}</div>
+                    {{/if}}
+                    {{#if orderNumber}}
+                      <div style="margin-top:14px; font-size:14px; line-height:18px; color:#888888;">Order Number</div>
+                      <div style="font-size:20px; line-height:24px; color:#111111;">#{{orderNumber}}</div>
+                    {{/if}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- 2. SALUTATION AND CLIENT-CONTROLLED INTRODUCTION -->
+          <tr>
+            <td class="mobile-pad" style="padding:22px 30px 10px;">
+              {{#if purchaserName}}
+                <p style="margin:0 0 14px; font-size:18px; line-height:26px;">Hello {{purchaserName}},</p>
+              {{/if}}
+              {{#if themes.email-confirmation-intro-message-1}}
+                <div style="margin:0 0 10px; font-size:18px; line-height:26px;">{{{themes.email-confirmation-intro-message-1}}}</div>
+              {{else}}
+                <p style="margin:0 0 10px; font-size:18px; line-height:26px;">Thank you for your order from {{tenantName}}!</p>
+              {{/if}}
+              {{#if themes.email-confirmation-intro-message-2}}
+                <div style="margin:0; font-size:16px; line-height:24px;">{{{themes.email-confirmation-intro-message-2}}}</div>
+              {{/if}}
+            </td>
+          </tr>
+
+          <!-- 3. ORDER DETAILS: events -->
+          {{#if events}}
+          <tr>
+            <td class="mobile-pad" style="padding:18px 30px 0;">
+              <h2 style="margin:0; padding-bottom:8px; border-bottom:2px solid #f1f1f1; font-size:28px; line-height:34px; font-weight:normal;">Tickets</h2>
+            </td>
+          </tr>
+          {{#each events}}
+          <tr>
+            <td class="mobile-pad" style="padding:20px 30px; border-bottom:1px solid #eeeeee;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td class="mobile-block" width="155" valign="top" style="padding-right:18px;">
+                    {{#if logo}}<img src="{{logo}}" alt="{{name}}" width="140" style="display:block; width:140px; max-width:100%; height:auto; border:0;">{{/if}}
+                  </td>
+                  <td class="mobile-block" valign="top">
+                    <div style="font-size:22px; line-height:28px; color:#444444;">{{name}}</div>
+                    {{#each tickets}}
+                      <div style="margin-top:6px; font-size:14px; line-height:20px;">{{type}} &nbsp; {{quantity}} at ${{price}} each</div>
+                    {{/each}}
+                    {{#if startTime}}<div style="margin-top:12px; font-size:14px; line-height:20px; font-weight:bold;">{{startTime}}</div>{{/if}}
+                    {{#if expireDate}}<div style="margin-top:4px; font-size:13px; line-height:18px;">Expires: {{expireDate}}</div>{{/if}}
+                  </td>
+                  <td class="mobile-block mobile-left" width="90" align="right" valign="top" style="font-size:20px; line-height:28px; color:#333333;">${{total}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+
+          <!-- 4. ORDER DETAILS: combo products and their component events -->
+          {{#each combos}}
+          <tr>
+            <td class="mobile-pad" style="padding:20px 30px; border-bottom:1px solid #eeeeee;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td valign="top">
+                    <div style="font-size:22px; line-height:28px; color:#444444;">{{comboTemplateName}}</div>
+                    {{#if comboEmailMessage}}<div style="margin-top:6px; font-size:14px; line-height:20px;">{{{comboEmailMessage}}}</div>{{/if}}
+                  </td>
+                  <td width="90" align="right" valign="top" style="font-size:20px; line-height:28px; color:#333333;">${{comboTotal}}</td>
+                </tr>
+              </table>
+              {{#each events}}
+                <div style="margin-top:14px; padding:12px; background:#f7f7f7;">
+                  <strong>{{name}}</strong>{{#if startTime}}<br><span style="font-size:13px;">{{startTime}}</span>{{/if}}
+                  {{#each tickets}}<br><span style="font-size:13px;">{{type}} &nbsp; {{quantity}} at ${{price}} each</span>{{/each}}
+                </div>
+              {{/each}}
+            </td>
+          </tr>
+          {{/each}}
+
+          <!-- 5. ORDER DETAILS: add-ons -->
+          {{#if addOns}}
+          <tr><td class="mobile-pad" style="padding:20px 30px 6px;"><h2 style="margin:0; font-size:24px; font-weight:normal;">Add-ons</h2></td></tr>
+          {{#each addOns}}
+          <tr>
+            <td class="mobile-pad" style="padding:10px 30px; border-bottom:1px solid #eeeeee;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                <td><strong>{{name}}</strong>{{#if description}}<br><span style="font-size:13px;">{{description}}</span>{{/if}}<br><span style="font-size:13px;">{{quantity}} at ${{unitPrice}} each</span></td>
+                <td width="90" align="right">${{amount}}</td>
+              </tr></table>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+
+          <!-- 6. ORDER DETAILS: donations -->
+          {{#if donations}}
+          <tr><td class="mobile-pad" style="padding:20px 30px 6px;"><h2 style="margin:0; font-size:24px; font-weight:normal;">Donations</h2></td></tr>
+          {{#each donations}}
+          <tr>
+            <td class="mobile-pad" style="padding:10px 30px; border-bottom:1px solid #eeeeee;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                <td><strong>{{name}}</strong>{{#if fundName}}<br><span style="font-size:13px;">Fund: {{fundName}}</span>{{/if}}</td>
+                <td width="90" align="right">${{amount}}</td>
+              </tr></table>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+
+          <!-- 7. ORDER DETAILS: membership lifecycle actions grouped by action -->
+          {{#if memberships}}
+          <tr><td class="mobile-pad" style="padding:20px 30px 6px;"><h2 style="margin:0; font-size:24px; font-weight:normal;">Memberships</h2></td></tr>
+          {{#each memberships}}
+            {{#each this}}
+            <tr>
+              <td class="mobile-pad" style="padding:12px 30px 18px; border-bottom:1px solid #eeeeee;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                  <td class="mobile-block" width="155" valign="top" style="padding-right:18px;">{{#if logo}}<img src="{{logo}}" alt="{{membershipLevelName}}" width="140" style="display:block; width:140px; max-width:100%; height:auto; border:0;">{{/if}}</td>
+                  <td class="mobile-block" valign="top">
+                    <div style="font-size:21px; line-height:27px;">{{membershipLevelName}}</div>
+                    {{#if pricePointName}}<div style="font-size:14px; line-height:20px;">{{pricePointName}}</div>{{/if}}
+                    {{#if memberName}}<div style="margin-top:7px; font-size:13px; line-height:19px;">Member: {{memberName}}</div>{{/if}}
+                    {{#if benefitsStartDate}}<div style="font-size:13px; line-height:19px;">Benefits begin: {{benefitsStartDate}}</div>{{/if}}
+                    {{#if expirationDate}}<div style="font-size:13px; line-height:19px;">Expires: {{expirationDate}}</div>{{/if}}
+                  </td>
+                  <td class="mobile-block mobile-left" width="90" align="right" valign="top">${{discountedAmount}}</td>
+                </tr></table>
+                {{#if confirmationMessage}}<div style="margin-top:16px; font-size:14px; line-height:21px;">{{{confirmationMessage}}}</div>{{/if}}
+              </td>
+            </tr>
+            {{/each}}
+          {{/each}}
+          {{/if}}
+
+          <!-- 8. TOTAL -->
+          <tr>
+            <td class="mobile-pad" style="padding:24px 30px 8px;">
+              <h2 style="margin:0; padding-bottom:8px; border-bottom:2px solid #f1f1f1; font-size:28px; line-height:34px; font-weight:normal;">Total</h2>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:12px;">
+                <tr>
+                  <td style="font-size:18px; line-height:26px;">{{totalItems}} Item(s)</td>
+                  <td align="right" style="font-size:20px; line-height:26px;">${{totalAmount}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- 9. PAY-BALANCE ACTION; payBalanceUUID is the safest supplied signal that a link is actionable -->
+          {{#if payBalanceUUID}}
+          <tr>
+            <td align="right" class="mobile-pad" style="padding:4px 30px 18px;">
+              <a href="{{baseUrl}}pay-balance/{{tenantId}}/{{payBalanceUUID}}" style="display:inline-block; padding:11px 18px; background:#4b168c; color:#ffffff; font-size:15px; font-weight:bold; text-decoration:none;">Pay Online Now &gt;</a>
+            </td>
+          </tr>
+          {{/if}}
+
+          <!-- 10. PAYMENT HISTORY AND BALANCE -->
+          {{#if payments}}
+          <tr>
+            <td class="mobile-pad" style="padding:12px 30px 0;">
+              <h2 style="margin:0; padding-bottom:8px; border-bottom:2px solid #f1f1f1; font-size:28px; line-height:34px; font-weight:normal;">Payments</h2>
+            </td>
+          </tr>
+          {{#each payments}}
+          <tr>
+            <td class="mobile-pad" style="padding:12px 30px 4px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                <td align="right" style="font-size:14px; line-height:20px;">${{transactionAmount}} &nbsp;&nbsp; {{paymentMethod}}{{#if creditCardBrand}} - {{creditCardBrand}}{{/if}}{{#if ccLastFourDigits}} ending in {{ccLastFourDigits}}{{/if}}</td>
+              </tr></table>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+          <tr>
+            <td class="mobile-pad" style="padding:10px 30px 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                <td width="50%">&nbsp;</td>
+                <td align="right" style="padding-top:10px; border-top:1px solid #bbbbbb; font-size:14px; line-height:20px; font-weight:bold;">Balance Due: &nbsp;&nbsp; ${{balanceAmount}}</td>
+              </tr></table>
+            </td>
+          </tr>
+
+          <!-- 11. DELIVERY INSTRUCTIONS -->
+          {{#if willcallTicketDelivery}}
+          <tr>
+            <td align="center" class="mobile-pad" style="padding:24px 30px 30px; font-size:16px; line-height:24px; color:#111111;">
+              <strong>Your tickets will be ready for you at will-call.</strong><br>
+              Please bring this confirmation email with you when you pick up your tickets.
+            </td>
+          </tr>
+          {{else}}
+            {{#if tickets}}
+            <tr>
+              <td align="center" class="mobile-pad" style="padding:18px 30px; font-size:15px; line-height:22px;">Digital tickets are included in this email below.</td>
+            </tr>
+            {{/if}}
+          {{/if}}
+
+          <!-- 12. PRINT-AT-HOME / MOBILE TICKETS -->
+          {{#if tickets}}
+          <tr>
+            <td class="mobile-pad" style="padding:20px 30px 4px;">
+              <h2 style="margin:0; text-align:center; font-size:24px; line-height:31px;">Your Digital Tickets</h2>
+              <p style="margin:8px 0 0; text-align:center; font-size:14px; line-height:21px;">Print the tickets below, or present this email on your mobile device.</p>
+            </td>
+          </tr>
+          {{#each tickets}}
+          <tr>
+            <td class="mobile-pad" style="padding:20px 30px; border-bottom:2px solid #eeeeee;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+                <td class="mobile-block" valign="top">
+                  <div style="font-size:20px; line-height:26px;">{{eventName}}</div>
+                  <div style="margin-top:4px; font-size:16px; line-height:22px;">1 {{ticketType}}</div>
+                  <div style="font-size:16px; line-height:22px;">${{discountedTicketPrice}}</div>
+                  {{#if showEventDate}}<div style="margin-top:14px; font-size:13px; line-height:19px;">Date: {{eventDate}}<br>Time: {{eventTime}}</div>{{/if}}
+                  {{#if firstName}}<div style="font-size:13px; line-height:19px;">Name: {{firstName}} {{lastName}}</div>{{/if}}
+                  {{#if email}}<div style="font-size:13px; line-height:19px;">Email: {{email}}</div>{{/if}}
+                  {{#if expires}}<div style="font-size:13px; line-height:19px;">Expires: {{expires}}</div>{{/if}}
+                  {{#each ticketPrintLines}}<div style="font-size:13px; line-height:19px;">{{this}}</div>{{/each}}
+                </td>
+                {{#if showQRCode}}
+                <td class="mobile-block" width="190" align="right" valign="top" style="padding-top:8px;">
+                  <img class="ticket-code" src="{{qrCodeImg}}" alt="QR code for {{eventName}}" width="180" height="180" style="display:inline-block; width:180px; height:180px; border:0;">
+                  <div style="font-family:Courier,monospace; font-size:12px; line-height:18px; word-break:break-all;">{{ticketUUID}}</div>
+                </td>
+                {{/if}}
+              </tr></table>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+
+          <!-- 13. EVENT-SPECIFIC CONFIRMATION MESSAGES / IMPORTANT INFORMATION -->
+          {{#if confirmationMessages}}
+          <tr>
+            <td class="mobile-pad" style="padding:24px 30px 8px;">
+              <h2 style="margin:0; padding-bottom:8px; border-bottom:2px solid #f1f1f1; font-size:28px; line-height:34px; font-weight:normal;">Important Information</h2>
+            </td>
+          </tr>
+          {{#each confirmationMessages}}
+          <tr>
+            <td class="mobile-pad" style="padding:12px 30px 20px;">
+              {{#if name}}<h3 style="margin:0 0 10px; font-size:20px; line-height:26px;">{{name}}</h3>{{/if}}
+              <div style="font-size:14px; line-height:21px;">{{{value}}}</div>
+            </td>
+          </tr>
+          {{/each}}
+          {{/if}}
+
+          <!-- 14. FOOTER -->
+          {{#unless themes.b2c-hide-footer}}
+          <tr>
+            <td align="center" class="mobile-pad" style="padding:24px 30px; border-top:8px solid #ededec; background:#fafafa; font-size:12px; line-height:18px; color:#777777;">
+              <strong>{{tenantName}}</strong>
+              {{#if themes.b2c-support-email}}<br>Questions? <a href="mailto:{{themes.b2c-support-email}}" style="color:#555555;">{{themes.b2c-support-email}}</a>{{/if}}
+              {{#unless themes.b2c-hide-powered}}<br><span style="color:#aaaaaa;">Powered by ACME Ticketing</span>{{/unless}}
+            </td>
+          </tr>
+          {{/unless}}
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

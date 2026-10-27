@@ -1,47 +1,6 @@
 {
- "generated_at": null,
- "source": "config",
- "templates": [
-  {
-   "slug": "acme-order-confirmation",
-   "label": "ACME order confirmation",
-   "template_name": "ACME order confirmation",
-   "html": null,
-   "sent_by": "ACME, through SendGrid",
-   "trigger": "When an order is completed in ACME",
-   "description": "One template for every ACME order. Sections switch on what was bought: tickets, combos, add-ons, donations and memberships, then the total, payments and the scannable tickets.",
-   "variants": [
-    {
-     "key": "tickets",
-     "label": "Ticket order"
-    },
-    {
-     "key": "membership",
-     "label": "Membership order"
-    }
-   ],
-   "when": null
-  },
-  {
-   "slug": "trailblazer-takeaway",
-   "label": "Trailblazer Takeaway",
-   "template_name": "Trailblazer Takeaway",
-   "html": null,
-   "sent_by": "The Cortina visitor system (VMS), through SendGrid",
-   "trigger": "After a visit, to each Trailblazer wristband holder",
-   "description": "\"From the journal of\" the visitor: the photo stations they explored and the takeaways they created, each linked, with the 30-day reminder to save their photos.",
-   "variants": [
-    {
-     "key": "takeaway",
-     "label": "Post-visit journal"
-    }
-   ],
-   "when": {
-    "value": "After",
-    "note": "the visit"
-   }
-  }
- ],
+ "generated_at": "2026-10-27T16:22:00+00:00",
+ "source": "sendgrid",
  "samples": {
   "common": {
    "tenantName": "Theodore Roosevelt Presidential Library",
@@ -178,5 +137,56 @@
    "expiresOn": "November 26, 2026",
    "physicalAddress": "Theodore Roosevelt Presidential Library, 3410 Chateau Rd, Medora, ND 58645"
   }
- }
+ },
+ "templates": [
+  {
+   "slug": "acme-order-confirmation",
+   "label": "ACME order confirmation",
+   "template_name": "Acme-TicketConfirmation",
+   "sent_by": "ACME, through SendGrid",
+   "trigger": "When an order is completed in ACME",
+   "description": "One template for every ACME order. Sections switch on what was bought: tickets, combos, add-ons, donations and memberships, then the total, payments and the scannable tickets.",
+   "variants": [
+    {
+     "key": "tickets",
+     "label": "Ticket order"
+    },
+    {
+     "key": "membership",
+     "label": "Membership order"
+    }
+   ],
+   "when": null,
+   "version_name": "Test-1",
+   "editor": "code",
+   "subject": "",
+   "updated_at": "2026-09-28 21:13:55",
+   "html": "data/transactional/acme-order-confirmation.html",
+   "other_versions": 0
+  },
+  {
+   "slug": "trailblazer-takeaway",
+   "label": "Trailblazer Takeaway",
+   "template_name": "Trailblazer Takeaway",
+   "sent_by": "The Cortina visitor system (VMS), through SendGrid",
+   "trigger": "After a visit, to each Trailblazer wristband holder",
+   "description": "\"From the journal of\" the visitor: the photo stations they explored and the takeaways they created, each linked, with the 30-day reminder to save their photos.",
+   "variants": [
+    {
+     "key": "takeaway",
+     "label": "Post-visit journal"
+    }
+   ],
+   "when": {
+    "value": "After",
+    "note": "the visit"
+   },
+   "version_name": "v1.3-20261002-expiry",
+   "editor": "code",
+   "subject": "{{subject}}",
+   "updated_at": "2026-10-02 18:59:54",
+   "html": "data/transactional/trailblazer-takeaway.html",
+   "other_versions": 5
+  }
+ ]
 }
