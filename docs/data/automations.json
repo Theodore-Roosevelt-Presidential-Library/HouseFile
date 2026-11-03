@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-11-03T11:25:16+00:00",
- "rebuilt_at": "2026-11-03T22:13:55+00:00",
+ "rebuilt_at": "2026-11-03T22:15:19+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -655,30 +655,30 @@
    "description": "Founding Member renewal campaign, separate from the RENEW series. Every Founding Membership ends December 31, 2026, so these paths land on fixed dates. A Founding Member leaves the campaign as soon as they renew at any level. Those who have not renewed by then get a lapsed recovery in January, February and March.",
    "paths": [
     {
-     "name": "FOUNDING: T-53 Thank You",
+     "name": "FOUNDING: T-55 Thank You",
      "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
       "field": "Acme - Membership Expiration Date",
-      "offset_days": -53,
-      "label": "53 days before the Acme - Membership Expiration Date"
+      "offset_days": -55,
+      "label": "55 days before the Acme - Membership Expiration Date"
      },
      "filters": [
       "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
-     "action": "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Sun Nov 8.",
+     "action": "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Fri Nov 6.",
      "split": null,
      "emails": [
       {
-       "slug": "founding-t-53-thank-you",
-       "task": "FOUNDING: T-53 Thank You",
+       "slug": "founding-t-55-thank-you",
+       "task": "FOUNDING: T-55 Thank You",
        "subject": "You helped open the Theodore Roosevelt Presidential Library",
        "preheader": "Your name is on the Digital Donor Wall for good. Here is what you made possible.",
        "from_name": "Theodore Roosevelt Presidential Library",
        "from_email": "membership@trlibrary.com",
        "reply_to": "membership@trlibrary.com",
-       "html": "proposals/founding-t-53-thank-you.html",
+       "html": "proposals/founding-t-55-thank-you.html",
        "proposed": true,
        "notes": [
         "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",

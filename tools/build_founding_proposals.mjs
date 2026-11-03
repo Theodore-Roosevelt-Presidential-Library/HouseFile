@@ -21,7 +21,7 @@ const CARD = '<b>Membership number:</b> [[custom.acme_-_membership_number]]<br><
 const NOTE = 'You are receiving this email because you are a Founding Member of the Theodore Roosevelt Presidential Library.';
 
 const HEADERS = {
-  'founding-t-53-thank-you':      'renew-t-plus-45-last-note-header.jpg',        // Sand / Black · the Library on the prairie
+  'founding-t-55-thank-you':      'renew-t-plus-45-last-note-header.jpg',        // Sand / Black · the Library on the prairie
   'founding-t-41-benefits':       'renew-t-30-reminder-header.jpg',              // Deep Orange / Black · the Library Shop
   'founding-t-30-giving-tuesday': 'renew-t-60-renewal-notice-header.jpg',        // Dark Forest / White · above the badlands
   'founding-t-21-two-ways':       'renew-t-plus-7-membership-ended-header.jpg',  // Dark Gray / White · Elkhorn campfire
@@ -95,8 +95,8 @@ const SIGN_TEAM = 'With gratitude,<br><b>The Membership Team</b><br>Theodore Roo
 
 const emails = [
   {
-    slug: 'founding-t-53-thank-you',
-    title: 'FOUNDING: T-53 Thank You',
+    slug: 'founding-t-55-thank-you',
+    title: 'FOUNDING: T-55 Thank You',
     preheader: 'Your name is on the Digital Donor Wall for good. Here is what you made possible.',
     blocks: [
       'HEADER',
