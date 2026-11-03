@@ -403,7 +403,7 @@ automations:
         notes:
           - "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here."
           - "Signed by Robbie Lauf. Confirm his title and sign-off before this goes live."
-          - "The 160,000 visits figure is tickets with a visit date through October 7 (ticketing monitor). Replace it with the current total from the ticketing dashboard before sending."
+          - "Visit figure updated to more than 180,000 (Matt, 2026-11-03)."
           - "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign."
           - "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone."
           - "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."

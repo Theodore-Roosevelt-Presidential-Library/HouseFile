@@ -103,7 +103,7 @@ const emails = [
       h('You Helped Open the Library'),
       p(CARD, 'center'),
       p(`${GREET}<br><br>You joined as a Founding Member before the Library had a track record. Thank you.`),
-      p('Since opening day on July 4, the Library has welcomed more than 160,000 visits from across the country. Theodore Roosevelt\'s 1884 diary, on loan from the Library of Congress, is on view in the galleries. <i>In the Room</i>, the photography of David Hume Kennerly, opened this fall. The Library\'s programs, school groups and member events are under way. None of it happens without the people who signed on first.'),
+      p('Since opening day on July 4, the Library has welcomed more than 180,000 visits from across the country. Theodore Roosevelt\'s 1884 diary, on loan from the Library of Congress, is on view in the galleries. <i>In the Room</i>, the photography of David Hume Kennerly, opened this fall. The Library\'s programs, school groups and member events are under way. None of it happens without the people who signed on first.'),
       p(`<b>Permanent recognition.</b> ${WALL}`),
       div,
       h('Stay On at Contributing'),
