@@ -21,7 +21,7 @@ const CARD = '<b>Membership number:</b> [[custom.acme_-_membership_number]]<br><
 const NOTE = 'You are receiving this email because you are a Founding Member of the Theodore Roosevelt Presidential Library.';
 
 const HEADERS = {
-  'founding-t-55-thank-you':      'renew-t-plus-45-last-note-header.jpg',        // Sand / Black · the Library on the prairie
+  'founding-t-53-thank-you':      'renew-t-plus-45-last-note-header.jpg',        // Sand / Black · the Library on the prairie
   'founding-t-41-benefits':       'renew-t-30-reminder-header.jpg',              // Deep Orange / Black · the Library Shop
   'founding-t-30-giving-tuesday': 'renew-t-60-renewal-notice-header.jpg',        // Dark Forest / White · above the badlands
   'founding-t-21-two-ways':       'renew-t-plus-7-membership-ended-header.jpg',  // Dark Gray / White · Elkhorn campfire
@@ -95,8 +95,8 @@ const SIGN_TEAM = 'With gratitude,<br><b>The Membership Team</b><br>Theodore Roo
 
 const emails = [
   {
-    slug: 'founding-t-55-thank-you',
-    title: 'FOUNDING: T-55 Thank You',
+    slug: 'founding-t-53-thank-you',
+    title: 'FOUNDING: T-53 Thank You',
     preheader: 'Your name is on the Digital Donor Wall for good. Here is what you made possible.',
     blocks: [
       'HEADER',
@@ -125,8 +125,7 @@ const emails = [
       p(`${GREET}<br><br>Your Founding Membership runs through December 31. Here is everything it includes, and everything that carries into next year when you renew.`),
       img('renew-members.jpg', 'Members gather on the Library terrace outside the lobby'),
       p(CORE),
-      ...visited('Thank you for using your membership in Medora this year. Renew, and your next visit is free again.',
-        `There is still time to use it. The lobby, Library Shop and café are decorated for the holidays. <a href="${VISIT_URL}">Plan a visit</a>.`),
+      p(`Your free admission runs through December 31, and the lobby, Library Shop and café are decorated for the holidays. <a href="${VISIT_URL}">Plan a visit</a>.`),
       p('<b>A gift for someone else.</b> Members save 10% on gift memberships, in time for the holidays.'),
       div,
       h('Stay On at Contributing'),
@@ -254,8 +253,7 @@ const emails = [
       'HEADER',
       h('Your Place Is Still Here'),
       p(`${GREET}<br><br>The Library is open through the winter, and the badlands are at their quietest. As a member, every visit is free for the people your level covers, with the member line at the entrance and 10% off in the Library Shop and at Salt+Scoria.`),
-      ...visited('Thank you for visiting as a Founding Member. Rejoin, and your next visit is free again.',
-        `If you did not make it to Medora during your Founding year, this is a good time to start. <a href="${VISIT_URL}">Plan a visit</a>.`),
+      p(`Rejoin, and your next visit is free again. <a href="${VISIT_URL}">Plan a visit</a>.`),
       p('<b>Contributing</b> is the same $250 as your Founding Membership and covers you and five guests. <b>Family</b> covers you and three guests for $175.'),
       p(BOTH),
       btn('Renew My Membership'),

@@ -384,15 +384,15 @@ automations:
           - "Member benefits (early ticket access, member events) from trlibrary.com/membership, checked 2026-10-20."
 
     # ---- Proposed: Founding Member renewal campaign (not in Constant Contact) ----
-    - name: "FOUNDING: T-55 Thank You"
+    - name: "FOUNDING: T-53 Thank You"
       flow: founding
       status: proposed
-      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -55}
+      trigger: {type: date_field, field: "Acme - Membership Expiration Date", offset_days: -53}
       filters: ["Acme - Membership Level is Founding Membership", "Acme - Is Active Member is active", "Acme - Membership Card Type is Primary"]
-      action: "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Fri Nov 6."
+      action: "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Sun Nov 8."
       proposal:
-        slug: founding-t-55-thank-you
-        html: proposals/founding-t-55-thank-you.html
+        slug: founding-t-53-thank-you
+        html: proposals/founding-t-53-thank-you.html
         subject: "You helped open the Theodore Roosevelt Presidential Library"
         preheader: "Your name is on the Digital Donor Wall for good. Here is what you made possible."
         from_name: "Theodore Roosevelt Presidential Library"
