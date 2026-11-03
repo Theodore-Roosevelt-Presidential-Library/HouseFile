@@ -254,6 +254,7 @@ def proposal_email(p: dict) -> dict:
         "html": pr["html"],
         "proposed": True,
         "notes": pr.get("notes") or [],
+        "sample": pr.get("sample") or {},  # per-email overrides of the fake sample contact
         "stats": {},
     }
 

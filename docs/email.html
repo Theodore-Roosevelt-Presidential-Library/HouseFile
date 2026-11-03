@@ -178,7 +178,7 @@ td input:focus{outline:2px solid var(--s1);outline-offset:-1px}
   const list = A.allEmails(data), idx = list.findIndex(x => x.email.slug === slug);
   if (idx < 0) { document.getElementById("title").innerHTML = '<span class="err">Email not found.</span> <a href="index.html#automations">Back to automations</a>'; return; }
   const { flow, path, email } = list[idx];
-  const BASE = Object.assign({}, data.sample_contact);
+  const BASE = Object.assign({}, data.sample_contact, email.sample || {});
   let sample = Object.assign({}, BASE), raw = false, html = await A.loadEmail(email.html);
 
   document.title = `${email.task || path.name} · Email Preview`;

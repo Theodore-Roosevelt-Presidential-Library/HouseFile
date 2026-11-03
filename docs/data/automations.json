@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-11-03T11:25:16+00:00",
- "rebuilt_at": "2026-11-03T11:25:16+00:00",
+ "rebuilt_at": "2026-11-03T11:42:04+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -468,6 +468,7 @@
      },
      "filters": [
       "Acme - Is Active Member is active",
+      "Acme - Membership Level is not Founding Membership (they get the FOUNDING campaign)",
       "Acme - Subscription is blank or cancelled (not on auto-renew)",
       "Acme - Membership Card Type is Primary"
      ],
@@ -495,6 +496,7 @@
         "Confirm the Founding Member wording on the Digital Donor Wall with Development.",
         "The Renew My Membership button URL is correct (Katie, 2026-10-20)."
        ],
+       "sample": {},
        "stats": {}
       }
      ]
@@ -511,6 +513,7 @@
      },
      "filters": [
       "Acme - Is Active Member is active",
+      "Acme - Membership Level is not Founding Membership (they get the FOUNDING campaign)",
       "Acme - Subscription is blank or cancelled (not on auto-renew)",
       "Acme - Membership Card Type is Primary"
      ],
@@ -530,6 +533,7 @@
        "notes": [
         "Already renewed? ACME marks them new, so the active-only filter leaves them out (Katie, 2026-10-20)."
        ],
+       "sample": {},
        "stats": {}
       }
      ]
@@ -546,6 +550,7 @@
      },
      "filters": [
       "Acme - Is Active Member is active",
+      "Acme - Membership Level is not Founding Membership (they get the FOUNDING campaign)",
       "Acme - Subscription is blank or cancelled (not on auto-renew)",
       "Acme - Membership Card Type is Primary"
      ],
@@ -563,6 +568,7 @@
        "html": "proposals/renew-t-7-last-week.html",
        "proposed": true,
        "notes": [],
+       "sample": {},
        "stats": {}
       }
      ]
@@ -579,6 +585,7 @@
      },
      "filters": [
       "Acme - Is Active Member is lapsed",
+      "Acme - Membership Level is not Founding Membership (they get the FOUNDING campaign)",
       "Acme - Subscription is blank or cancelled (not on auto-renew)",
       "Acme - Membership Card Type is Primary"
      ],
@@ -598,6 +605,7 @@
        "notes": [
         "Confirm with ACME that a lapsed member renews with the same membership number."
        ],
+       "sample": {},
        "stats": {}
       }
      ]
@@ -614,6 +622,7 @@
      },
      "filters": [
       "Acme - Is Active Member is lapsed",
+      "Acme - Membership Level is not Founding Membership (they get the FOUNDING campaign)",
       "Acme - Subscription is blank or cancelled (not on auto-renew)",
       "Acme - Membership Card Type is Primary"
      ],
@@ -633,6 +642,433 @@
        "notes": [
         "Someone on the membership team should own the replies to membership@trlibrary.com."
        ],
+       "sample": {},
+       "stats": {}
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "key": "founding",
+   "label": "Founding Members",
+   "description": "Founding Member renewal campaign, separate from the RENEW series. Every Founding Membership ends December 31, 2026, so these paths land on fixed dates. A Founding Member leaves the campaign as soon as they renew at any level. Those who have not renewed by then get a lapsed recovery in January, February and March.",
+   "paths": [
+    {
+     "name": "FOUNDING: T-55 Thank You",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -55,
+      "label": "55 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Fri Nov 6.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-55-thank-you",
+       "task": "FOUNDING: T-55 Thank You",
+       "subject": "You helped open the Theodore Roosevelt Presidential Library",
+       "preheader": "Your name is on the Digital Donor Wall for good. Here is what you made possible.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-55-thank-you.html",
+       "proposed": true,
+       "notes": [
+        "Signed by Robbie Lauf. Confirm his title and sign-off before this goes live.",
+        "The 160,000 visits figure is tickets with a visit date through October 7 (ticketing monitor). Replace it with the current total from the ticketing dashboard before sending.",
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-41 Your Member Benefits",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -41,
+      "label": "41 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Full list of member benefits, a thank-you or a holiday visit invitation depending on their last ticket, gift memberships, and the Contributing invitation. Sends Fri Nov 20.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-41-benefits",
+       "task": "FOUNDING: T-41 Your Member Benefits",
+       "subject": "What your membership includes",
+       "preheader": "Free admission, the member line, 10% off in the Shop and at Salt+Scoria, and more.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-41-benefits.html",
+       "proposed": true,
+       "notes": [
+        "Holiday decorating line assumes the lobby, Shop and caf\u00e9 are decorated from November 17. Confirm with Jenn.",
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-30 Giving Tuesday",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -30,
+      "label": "30 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Giving Tuesday: what membership supports, the Library's first-season recognition, permanent recognition, and Contributing with the 10% auto-renew and two-year savings. Sends Tue Dec 1 (Giving Tuesday).",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-30-giving-tuesday",
+       "task": "FOUNDING: T-30 Giving Tuesday",
+       "subject": "One month left in your Founding year",
+       "preheader": "One month left in your Founding year, and what your membership supports.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-30-giving-tuesday.html",
+       "proposed": true,
+       "notes": [
+        "10Best nomination is embargoed until November 23 at noon EST; this email sends after that. If voting is still open on December 1, add the voting link.",
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-21 Two Ways to Stay",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -21,
+      "label": "21 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Contributing and Family side by side, with prices, how to renew and permanent recognition. Sends Thu Dec 10.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-21-two-ways",
+       "task": "FOUNDING: T-21 Two Ways to Stay",
+       "subject": "Two ways to stay a member",
+       "preheader": "Contributing keeps your whole party covered. Family keeps you on for less.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-21-two-ways.html",
+       "proposed": true,
+       "notes": [
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-10 Ten Days Left",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -10,
+      "label": "10 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Short reminder with both options, signed by the membership team. Sends Mon Dec 21.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-10-ten-days",
+       "task": "FOUNDING: T-10 Ten Days Left",
+       "subject": "Ten days left in your Founding Membership",
+       "preheader": "Your Founding Membership ends December 31. Renew and nothing lapses.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-10-ten-days.html",
+       "proposed": true,
+       "notes": [
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-3 Ends Thursday",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": -3,
+      "label": "3 days before the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Short reminder with both options and an offer of help from the membership team. Sends Mon Dec 28.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-3-ends-thursday",
+       "task": "FOUNDING: T-3 Ends Thursday",
+       "subject": "Your Founding Membership ends Thursday",
+       "preheader": "Your Founding Membership ends Thursday, December 31.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-3-ends-thursday.html",
+       "proposed": true,
+       "notes": [
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T-0 Last Day",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 0,
+      "label": "On the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is active",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Last-day note: thank you, permanent recognition, Contributing or Family, one button. Sends Thu Dec 31.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-0-last-day",
+       "task": "FOUNDING: T-0 Last Day",
+       "subject": "Today is the last day of your Founding Membership",
+       "preheader": "Renew today and your membership carries into the new year without a gap.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-0-last-day.html",
+       "proposed": true,
+       "notes": [
+        "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
+        "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T+7 Membership Ended",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 7,
+      "label": "7 days after the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is lapsed",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Lapsed notice: still a Founding Member and permanently on the Digital Donor Wall, rejoin at Contributing or Family, what membership brings back and how to rejoin. Sends Thu Jan 7.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-plus-7-membership-ended",
+       "task": "FOUNDING: T+7 Membership Ended",
+       "subject": "Your Founding Membership has ended",
+       "preheader": "You are still a Founding Member. Rejoin and free admission comes right back.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-plus-7-membership-ended.html",
+       "proposed": true,
+       "notes": [
+        "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
+        "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026",
+        "custom.acme_-_is_active_member": "lapsed"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T+30 Come Back",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 30,
+      "label": "30 days after the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is lapsed",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Winter invitation: free visits again for members, a thank-you or visit invitation depending on their last ticket, Contributing and Family prices. Sends Sat Jan 30.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-plus-30-come-back",
+       "task": "FOUNDING: T+30 Come Back",
+       "subject": "Your place at the Library is still here",
+       "preheader": "The Library is open through the winter. Rejoin and your visits are free again.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-plus-30-come-back.html",
+       "proposed": true,
+       "notes": [
+        "Confirm winter hours before sending; the Library runs a reduced winter schedule.",
+        "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
+        "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026",
+        "custom.acme_-_is_active_member": "lapsed"
+       },
+       "stats": {}
+      }
+     ]
+    },
+    {
+     "name": "FOUNDING: T+60 Last Note",
+     "status": "proposed",
+     "activated": null,
+     "trigger": {
+      "type": "date_field",
+      "field": "Acme - Membership Expiration Date",
+      "offset_days": 60,
+      "label": "60 days after the Acme - Membership Expiration Date"
+     },
+     "filters": [
+      "Acme - Membership Level is Founding Membership",
+      "Acme - Is Active Member is lapsed",
+      "Acme - Membership Card Type is Primary"
+     ],
+     "action": "Final invitation: permanent recognition, Contributing and Family prices, and a one-question reply survey on why not. Sends Mon Mar 1.",
+     "split": null,
+     "emails": [
+      {
+       "slug": "founding-t-plus-60-last-note",
+       "task": "FOUNDING: T+60 Last Note",
+       "subject": "One last note about your membership",
+       "preheader": "Your membership is ready when you are, and one question.",
+       "from_name": "Theodore Roosevelt Presidential Library",
+       "from_email": "membership@trlibrary.com",
+       "reply_to": "membership@trlibrary.com",
+       "html": "proposals/founding-t-plus-60-last-note.html",
+       "proposed": true,
+       "notes": [
+        "Someone on the membership team should own the replies to membership@trlibrary.com.",
+        "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
+        "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
+        "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
+       ],
+       "sample": {
+        "custom.acme_-_membership_level": "Founding Membership",
+        "custom.acme_-_membership_expiration_text": "December 31, 2026",
+        "custom.acme_-_is_active_member": "lapsed"
+       },
        "stats": {}
       }
      ]
