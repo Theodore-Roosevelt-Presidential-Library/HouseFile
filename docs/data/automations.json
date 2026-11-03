@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-11-03T11:25:16+00:00",
- "rebuilt_at": "2026-11-03T21:38:00+00:00",
+ "rebuilt_at": "2026-11-03T22:12:13+00:00",
  "source": "api",
  "sample_contact": {
   "FIRSTNAME": "Jane",
@@ -656,7 +656,7 @@
    "paths": [
     {
      "name": "FOUNDING: T-53 Thank You",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -665,9 +665,7 @@
       "label": "53 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Thank-you letter: what the Library has done since July 4 and that it could not have happened without them, permanent recognition on the Digital Donor Wall, and the invitation to continue at Contributing ($250, the same price). Sends Sun Nov 8.",
      "split": null,
@@ -683,6 +681,7 @@
        "html": "proposals/founding-t-53-thank-you.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Signed by Robbie Lauf. Confirm his title and sign-off before this goes live.",
         "The 160,000 visits figure is tickets with a visit date through October 7 (ticketing monitor). Replace it with the current total from the ticketing dashboard before sending.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
@@ -699,7 +698,7 @@
     },
     {
      "name": "FOUNDING: T-41 Your Member Benefits",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -708,9 +707,7 @@
       "label": "41 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Full list of member benefits, a thank-you or a holiday visit invitation depending on their last ticket, gift memberships, and the Contributing invitation. Sends Fri Nov 20.",
      "split": null,
@@ -726,6 +723,7 @@
        "html": "proposals/founding-t-41-benefits.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Holiday decorating line assumes the lobby, Shop and caf\u00e9 are decorated from November 17. Confirm with Jenn.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
@@ -741,7 +739,7 @@
     },
     {
      "name": "FOUNDING: T-30 Giving Tuesday",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -750,9 +748,7 @@
       "label": "30 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Giving Tuesday: what membership supports, the Library's first-season recognition, permanent recognition, and Contributing with the 10% auto-renew and two-year savings. Sends Tue Dec 1 (Giving Tuesday).",
      "split": null,
@@ -768,6 +764,7 @@
        "html": "proposals/founding-t-30-giving-tuesday.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "10Best nomination is embargoed until November 23 at noon EST; this email sends after that. If voting is still open on December 1, add the voting link.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
@@ -783,7 +780,7 @@
     },
     {
      "name": "FOUNDING: T-21 Two Ways to Stay",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -792,9 +789,7 @@
       "label": "21 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Contributing and Family side by side, with prices, how to renew and permanent recognition. Sends Thu Dec 10.",
      "split": null,
@@ -810,6 +805,7 @@
        "html": "proposals/founding-t-21-two-ways.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
         "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
@@ -824,7 +820,7 @@
     },
     {
      "name": "FOUNDING: T-10 Ten Days Left",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -833,9 +829,7 @@
       "label": "10 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Short reminder with both options, signed by the membership team. Sends Mon Dec 21.",
      "split": null,
@@ -851,6 +845,7 @@
        "html": "proposals/founding-t-10-ten-days.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
         "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
@@ -865,7 +860,7 @@
     },
     {
      "name": "FOUNDING: T-3 Ends Thursday",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -874,9 +869,7 @@
       "label": "3 days before the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Short reminder with both options and an offer of help from the membership team. Sends Mon Dec 28.",
      "split": null,
@@ -892,6 +885,7 @@
        "html": "proposals/founding-t-3-ends-thursday.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
         "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
@@ -906,7 +900,7 @@
     },
     {
      "name": "FOUNDING: T-0 Last Day",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -915,9 +909,7 @@
       "label": "On the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is active",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Active Founding Members (ACME: active): Acme - Membership Level contains Founding, Acme - Is Active Member is active, Primary Card Holder is set"
      ],
      "action": "Last-day note: thank you, permanent recognition, Contributing or Family, one button. Sends Thu Dec 31.",
      "split": null,
@@ -933,6 +925,7 @@
        "html": "proposals/founding-t-0-last-day.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Exit rule: the moment a Founding Member renews at any level, ACME marks them new (and their level changes), so the active and Founding Membership filters drop them from every later email in this campaign.",
         "Every Founding Membership ends December 31, 2026, so the offset off Acme - Membership Expiration Date lands on the same calendar date for everyone.",
         "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
@@ -947,7 +940,7 @@
     },
     {
      "name": "FOUNDING: T+7 Membership Ended",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -956,9 +949,7 @@
       "label": "7 days after the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is lapsed",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Lapsed Founding Members (ACME: lapsed): Acme - Membership Level contains Founding, Acme - Is Active Member is lapsed"
      ],
      "action": "Lapsed notice: still a Founding Member and permanently on the Digital Donor Wall, rejoin at Contributing or Family, what membership brings back and how to rejoin. Sends Thu Jan 7.",
      "split": null,
@@ -974,6 +965,7 @@
        "html": "proposals/founding-t-plus-7-membership-ended.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
         "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
         "Founding Members are left out of every RENEW path, so no one gets both series; the lapsed recovery for Founding Members is FOUNDING T+7, T+30 and T+60."
@@ -989,7 +981,7 @@
     },
     {
      "name": "FOUNDING: T+30 Come Back",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -998,9 +990,7 @@
       "label": "30 days after the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is lapsed",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Lapsed Founding Members (ACME: lapsed): Acme - Membership Level contains Founding, Acme - Is Active Member is lapsed"
      ],
      "action": "Winter invitation: free visits again for members, a thank-you or visit invitation depending on their last ticket, Contributing and Family prices. Sends Sat Jan 30.",
      "split": null,
@@ -1016,6 +1006,7 @@
        "html": "proposals/founding-t-plus-30-come-back.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Confirm winter hours before sending; the Library runs a reduced winter schedule.",
         "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
         "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
@@ -1032,7 +1023,7 @@
     },
     {
      "name": "FOUNDING: T+60 Last Note",
-     "status": "proposed",
+     "status": "draft",
      "activated": null,
      "trigger": {
       "type": "date_field",
@@ -1041,9 +1032,7 @@
       "label": "60 days after the Acme - Membership Expiration Date"
      },
      "filters": [
-      "Acme - Membership Level is Founding Membership",
-      "Acme - Is Active Member is lapsed",
-      "Acme - Membership Card Type is Primary"
+      "Segment FOUNDING - Lapsed Founding Members (ACME: lapsed): Acme - Membership Level contains Founding, Acme - Is Active Member is lapsed"
      ],
      "action": "Final invitation: permanent recognition, Contributing and Family prices, and a one-question reply survey on why not. Sends Mon Mar 1.",
      "split": null,
@@ -1059,6 +1048,7 @@
        "html": "proposals/founding-t-plus-60-last-note.html",
        "proposed": true,
        "notes": [
+        "Built in Constant Contact 2026-11-03 as a draft path (custom-code email from docs/proposals/cc/). Activate in Constant Contact, then set status: active here.",
         "Someone on the membership team should own the replies to membership@trlibrary.com.",
         "Exit rule: rejoining at any level changes the ACME status and level, so the lapsed and Founding Membership filters drop them from the rest of the recovery emails.",
         "Confirm with ACME that Acme - Membership Level keeps the value Founding Membership after the membership lapses; if it clears, filter on a Founding Member tag or list instead.",
