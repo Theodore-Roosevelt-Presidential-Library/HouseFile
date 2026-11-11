@@ -131,6 +131,9 @@ stale_days: 365
 # refresh never touches docs/proposals/. When a proposal is built in Constant
 # Contact, change its status, add the real campaign_id and drop the proposal
 # block; from then on it refreshes from the API like any live path.
+# A path with a campaign_id is always checked in Constant Contact: once it is
+# activated there, the dashboard shows it as live (with stats) on the next
+# refresh even if status here still says draft. Update status here anyway.
 automations:
   # Fake contact used to fill personalization tags in previews. Never real data.
   sample_contact:

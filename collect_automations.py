@@ -300,7 +300,25 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
             "emails": [],
         }
         cid = p.get("campaign_id")
-        if p.get("proposal") and not (cid and p.get("status") == "active"):
+        # A path with a campaign_id is checked against Constant Contact even while
+        # config.yml still calls it a draft, so activating it there is enough: the
+        # dashboard switches to the live emails and stats on the next refresh.
+        camp = None
+        live = bool(cid) and (not p.get("proposal") or p.get("status") == "active")
+        if cid and not live:
+            if offline:
+                st = previous.get(p["name"], {}).get("cc_status")
+            else:
+                camp = safe_get(cc, f"/emails/{cid}")
+                st = (camp or {}).get("current_status")
+            if st:
+                path["cc_status"] = st
+            if st and st.upper() != "DRAFT":
+                live = True
+                path["status"] = "active" if st.upper() == "ACTIVE" else st.lower()
+                print(f"  {p['name']}: {st} in Constant Contact (config.yml still says "
+                      f"{p.get('status', 'draft')!r}; set status: active there)")
+        if p.get("proposal") and not live:
             email = proposal_email(p)
             path["emails"].append(email)
             if not (out.parent / email["html"]).exists():
@@ -323,7 +341,7 @@ def collect(cfg: dict, cc, out: Path, dry: bool, offline: bool = False):
                 path["emails"] = built_branch_emails(p, out.parent)
             print(f"  {p['name']}: kept last refresh ({len(path['emails'])} email)")
         elif cid:
-            camp = safe_get(cc, f"/emails/{cid}")
+            camp = camp or safe_get(cc, f"/emails/{cid}")
             # Single-email paths use a primary_email; split paths hold one multistep_email per
             # branch. A path's campaign can also keep unattached drafts, so when config lists
             # `emails` (exact email names, in branch order) only those are shown.
